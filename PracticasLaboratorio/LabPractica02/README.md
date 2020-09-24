@@ -9,14 +9,16 @@ Tarea Asignada : Crear un formulario para registrar los principales datos de un 
 # Resultados
 
   - Diseño Final
-    ![diseñoCaptura](https://raw.githubusercontent.com/edwinsaavedra99/IDNP/master/PracticasLaboratorio/LabPractica02/recursos/image1.png?token=AJVQYFSVSODUQOYUQIV4XQC7NUMSW)
+
+    ![Screenshot](recursos/image1.png)
 
   - Eventos Programados
   
-    ![diseñoCaptura](https://raw.githubusercontent.com/edwinsaavedra99/IDNP/master/PracticasLaboratorio/LabPractica02/recursos/image.png?token=AJVQYFW6NX4QFFRNZ3AIWXS7NUL26) 
+    ![Screenshot](recursos/image.png)
 
   - Validación de Formulario
- ![diseñoCaptura](https://raw.githubusercontent.com/edwinsaavedra99/IDNP/master/PracticasLaboratorio/LabPractica02/recursos/image2.png?token=AJVQYFU5KKXIH3Q45XGYCYC7NUMWE)
+
+    ![Screenshot](recursos/image2.png)
   
 
 **UNSA**
