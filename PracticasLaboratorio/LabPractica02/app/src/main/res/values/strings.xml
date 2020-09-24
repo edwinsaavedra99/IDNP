@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Practica02</string>
+    <string name="form_title">S Y S T E M</string>
+    <string name="form_subTitle">E N G I N E E R I N G</string>
+    <string name="form_titleForm">DATA REGISTRATION FORM</string>
+    <string name="form_hintName">Full Name</string>
+    <string name="form_hintEmail">Email</string>
+    <string name="form_hintCUI">CUI</string>
+    <string name="form_hintPhone">Phone</string>
+    <string name="form_author">BY EDWIN SAAVEDRA</string>
+    <string name="form_textButton">REGISTER</string>
+</resources>
