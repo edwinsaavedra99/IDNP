@@ -1,11 +1,8 @@
 package com.practica03.appejercicio2;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -21,7 +18,6 @@ import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.io.File;
 import java.util.ArrayList;
 
@@ -30,14 +26,10 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private static final int PERMISSION_REQUEST_CODE_EXTERNAL_STORAGE = 1;
     private ListView listMusic;
-    private String [] items;
-    private ImageView play,pause;
+    private ImageView pause;
     private TextView nameSong;
     private SeekBar seekBar;
     private static MediaPlayer mediaPlayer;
-    private int position;
-    //private ArrayList<File> mySongs;
-    private Thread updateseekbar;
     private ArrayList<File> myMusic;
     private String songName;
     private boolean flagPause;
@@ -48,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initialComponents();
         permits();
-
     }
 
     protected void onPause() {
@@ -63,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
     protected void onRestart() {
         super.onRestart();
-        if(!mediaPlayer.isPlaying() && flagPause == false){
+        if(!mediaPlayer.isPlaying() && !flagPause){
             pause.setBackgroundResource(R.drawable.ic_baseline_pause_circle_outline_24);
             mediaPlayer.start();
         }
@@ -71,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void initialComponents(){
         this.listMusic = (ListView) findViewById(R.id.listMusic);
-        this.play = findViewById(R.id.play);
         this.pause = findViewById(R.id.pause);
         this.nameSong = findViewById(R.id.nameSong);
         this.seekBar = findViewById(R.id.barSong);
@@ -97,48 +87,59 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void playSongName(String songName, int position){
+        pause.setBackgroundResource(R.drawable.ic_baseline_pause_circle_outline_24);
         seekBar.setProgress(0);
-        updateseekbar = new Thread(){
+        Thread updateseekbar = new Thread() {
             @Override
-            public void run(){
+            public void run() {
                 int totalDuration = mediaPlayer.getDuration();
                 int currentPosition = 0;
-                while (currentPosition<totalDuration){
+                int adv = 0;
+
+                while ((adv = ((adv = totalDuration - currentPosition) < 500)?adv:500) > 2) {
+                    try {
+                        currentPosition = mediaPlayer.getCurrentPosition();
+                        if (seekBar != null) {
+                            seekBar.setProgress(currentPosition);
+                        }
+                        sleep(adv);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (IllegalStateException e) {
+                        seekBar.setProgress(totalDuration);
+                        break;
+                    }
+
+                }
+                /*while (currentPosition < totalDuration) {
                     try {
                         sleep(500);
                         currentPosition = mediaPlayer.getCurrentPosition();
                         seekBar.setProgress(currentPosition);
-                    }catch (InterruptedException e){
+                    } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                }
+                }*/
             }
-
         };
-
         if(mediaPlayer!=null){
             mediaPlayer.stop();
             mediaPlayer.release();
         }
-
         this.nameSong.setText(songName);
         this.nameSong.setSelected(true);
         Uri uri = Uri.parse(myMusic.get(position).toString());
         mediaPlayer=MediaPlayer.create(getApplicationContext(),uri);
         mediaPlayer.start();
         seekBar.setMax(mediaPlayer.getDuration());
-        //updateseekbar.start();
+        updateseekbar.start();
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
             }
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
             }
-
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 mediaPlayer.seekTo(seekBar.getProgress());
@@ -163,12 +164,12 @@ public class MainActivity extends AppCompatActivity {
 
     void display(){
         this.myMusic = findMusic(Environment.getExternalStorageDirectory());
-        items = new String[myMusic.size()];
-        System.out.println("display ::"+items.length);
+        String[] items = new String[myMusic.size()];
+        System.out.println("display ::"+ items.length);
         for( int i = 0 ; i < myMusic.size() ; i++){
-            items[i]  = myMusic.get(i).getName().toString().replace(".mp3","").replace(".wav","");
+            items[i]  = myMusic.get(i).getName().replace(".mp3","").replace(".wav","");
         }
-        ArrayAdapter<String> arrayAdapter =  new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,items);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
         listMusic.setAdapter(arrayAdapter);
 
         listMusic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -184,20 +185,16 @@ public class MainActivity extends AppCompatActivity {
     public void permits(){
         if (Build.VERSION.SDK_INT >= 23){
             if(ContextCompat.checkSelfPermission(getApplicationContext(),
-                    Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
-                // Permisos concedidos
+                    Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){           // Permisos concedidos
                 display();
                 Log.println(Log.INFO,TAG,"API >= 23");
             } else{
-                if(shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)){
-                    // Mensaje de error
+                if(shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)){                    // Mensaje de error
                     Toast.makeText(getApplicationContext(), "External storage and camera permission required to read media", Toast.LENGTH_SHORT).show();
-                }
-                // Callback para solicitar permisos
+                }            // Callback para solicitar permisos
                 requestPermissions(new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE_EXTERNAL_STORAGE);
             }
-        } else {
-            //callCameraApp();
+        } else {       //callCameraApp();
             Log.println(Log.INFO,TAG,"API < 23");
             display();
         }
@@ -208,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
         if(requestCode == PERMISSION_REQUEST_CODE_EXTERNAL_STORAGE){
             if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(getApplicationContext(), "External read permission", Toast.LENGTH_SHORT).show();
-                display();//LLAMAR METODO
+                display();
             }else {
                 Toast.makeText(getApplicationContext(), "External read permission has not been granted, cannot open media", Toast.LENGTH_SHORT).show();
             }
@@ -216,6 +213,4 @@ public class MainActivity extends AppCompatActivity {
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
-
-
 }

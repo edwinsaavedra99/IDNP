@@ -37,14 +37,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </SeekBar>
-        <ImageView
-            android:id="@+id/play"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/ic_baseline_play_circle_filled_24"
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </ImageView>
 
     </RelativeLayout>
     <LinearLayout
