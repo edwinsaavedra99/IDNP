@@ -5,13 +5,60 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+    <RelativeLayout
+        android:padding="15dp"
+        android:id="@+id/oneMusic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/imageNote"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/ic_baseline_music_note_24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </ImageView>
+        <TextView
+            android:id="@+id/nameSong"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </TextView>
+        <ImageView
+            android:id="@+id/pause"
+            android:layout_alignParentRight="true"
+            android:visibility="visible"
+            android:layout_width="30dp"
+            android:layout_height="30dp">
+        </ImageView>
+        <SeekBar
+            android:id="@+id/barSong"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/pause"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </SeekBar>
+        <ImageView
+            android:id="@+id/play"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_baseline_play_circle_filled_24"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </ImageView>
 
+    </RelativeLayout>
+    <LinearLayout
+        android:background="#000000"
+        android:layout_below="@id/oneMusic"
+        android:layout_width="match_parent"
+        android:layout_height="1px">
+
+    </LinearLayout>
     <ListView
+        android:layout_below="@+id/oneMusic"
         android:id="@+id/listMusic"
         android:layout_height="match_parent"
         android:layout_width="match_parent">
-
-
     </ListView>
 
 </RelativeLayout>
