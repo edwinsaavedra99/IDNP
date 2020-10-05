@@ -1,4 +1,5 @@
 package com.practica03.appejercicio2;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -44,19 +45,22 @@ public class MainActivity extends AppCompatActivity {
 
     protected void onPause() {
         super.onPause();
-        seekBar.setMax(mediaPlayer.getDuration());
-        if(mediaPlayer.isPlaying()){
-            pause.setBackgroundResource(R.drawable.ic_baseline_play_circle_filled_24);
-            mediaPlayer.pause();
+        if(mediaPlayer!=null) {
+            seekBar.setMax(mediaPlayer.getDuration());
+            if (mediaPlayer.isPlaying()) {
+                stopAudio();
+            }
         }
 
     }
 
     protected void onRestart() {
         super.onRestart();
-        if(!mediaPlayer.isPlaying() && !flagPause){
-            pause.setBackgroundResource(R.drawable.ic_baseline_pause_circle_outline_24);
-            mediaPlayer.start();
+        if(mediaPlayer!=null) {
+            if (!mediaPlayer.isPlaying() && !flagPause) {
+                restartAudio();
+                restartAudio();
+            }
         }
     }
 
@@ -75,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
             for (File singleFile: files){
                 if (singleFile.isDirectory() && !singleFile.isHidden()){
                     arrayList.addAll(findMusic(singleFile));
-                    System.out.println(singleFile.getName());
                 }else{
                     if(singleFile.getName().endsWith(".mp3") || singleFile.getName().endsWith(".wav")){
                         arrayList.add(singleFile);
@@ -87,21 +90,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void playSongName(String songName, int position){
+        flagPause = false;
         pause.setBackgroundResource(R.drawable.ic_baseline_pause_circle_outline_24);
         seekBar.setProgress(0);
-        Thread updateseekbar = new Thread() {
+        Thread updateSeekBar = new Thread() {
             @Override
             public void run() {
-                int totalDuration = mediaPlayer.getDuration();
-                int currentPosition = 0;
-                int adv = 0;
-
+                int adv,currentPosition = 0,totalDuration = mediaPlayer.getDuration();
                 while ((adv = ((adv = totalDuration - currentPosition) < 500)?adv:500) > 2) {
                     try {
                         currentPosition = mediaPlayer.getCurrentPosition();
-                        if (seekBar != null) {
+                        if (seekBar != null)
                             seekBar.setProgress(currentPosition);
-                        }
                         sleep(adv);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -109,17 +109,7 @@ public class MainActivity extends AppCompatActivity {
                         seekBar.setProgress(totalDuration);
                         break;
                     }
-
                 }
-                /*while (currentPosition < totalDuration) {
-                    try {
-                        sleep(500);
-                        currentPosition = mediaPlayer.getCurrentPosition();
-                        seekBar.setProgress(currentPosition);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }*/
             }
         };
         if(mediaPlayer!=null){
@@ -132,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
         mediaPlayer=MediaPlayer.create(getApplicationContext(),uri);
         mediaPlayer.start();
         seekBar.setMax(mediaPlayer.getDuration());
-        updateseekbar.start();
+        updateSeekBar.start();
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -152,26 +142,34 @@ public class MainActivity extends AppCompatActivity {
                 seekBar.setMax(mediaPlayer.getDuration());
                 if(mediaPlayer.isPlaying()){
                     flagPause = true;
-                    pause.setBackgroundResource(R.drawable.ic_baseline_play_circle_filled_24);
-                    mediaPlayer.pause();
+                    stopAudio();
                 }else{
-                    pause.setBackgroundResource(R.drawable.ic_baseline_pause_circle_outline_24);
-                    mediaPlayer.start();
+                    restartAudio();
                 }
             }
         });
     }
 
+    void stopAudio(){
+        pause.setBackgroundResource(R.drawable.ic_baseline_play_circle_filled_24);
+        mediaPlayer.pause();
+    }
+
+    void restartAudio(){
+        flagPause = false;
+        pause.setBackgroundResource(R.drawable.ic_baseline_pause_circle_outline_24);
+        mediaPlayer.start();
+    }
+
+
     void display(){
-        this.myMusic = findMusic(Environment.getExternalStorageDirectory());
+        this.myMusic = findMusic(Environment.getExternalStorageDirectory()); //problem with API
         String[] items = new String[myMusic.size()];
-        System.out.println("display ::"+ items.length);
-        for( int i = 0 ; i < myMusic.size() ; i++){
+        Log.println(Log.INFO,TAG,"display :"+ items.length + "items");
+        for( int i = 0 ; i < myMusic.size() ; i++)
             items[i]  = myMusic.get(i).getName().replace(".mp3","").replace(".wav","");
-        }
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
         listMusic.setAdapter(arrayAdapter);
-
         listMusic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -181,20 +179,17 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
     public void permits(){
         if (Build.VERSION.SDK_INT >= 23){
-            if(ContextCompat.checkSelfPermission(getApplicationContext(),
-                    Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){           // Permisos concedidos
+            if(ContextCompat.checkSelfPermission(getApplicationContext(),Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){ // Permits ready
                 display();
                 Log.println(Log.INFO,TAG,"API >= 23");
             } else{
-                if(shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)){                    // Mensaje de error
+                if(shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) // Message of error
                     Toast.makeText(getApplicationContext(), "External storage and camera permission required to read media", Toast.LENGTH_SHORT).show();
-                }            // Callback para solicitar permisos
-                requestPermissions(new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE_EXTERNAL_STORAGE);
+                requestPermissions(new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE_EXTERNAL_STORAGE); // Callback for permits
             }
-        } else {       //callCameraApp();
+        } else {
             Log.println(Log.INFO,TAG,"API < 23");
             display();
         }
@@ -210,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "External read permission has not been granted, cannot open media", Toast.LENGTH_SHORT).show();
             }
         } else {
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 }
