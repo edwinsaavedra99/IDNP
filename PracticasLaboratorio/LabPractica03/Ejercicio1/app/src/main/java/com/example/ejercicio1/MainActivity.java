@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SaludoActivity.class);
                 startActivity(intent);
+                //this is a comment
             }
         });
     }
