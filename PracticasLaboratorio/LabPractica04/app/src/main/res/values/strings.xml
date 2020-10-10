@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">ejercicio1_2lab04</string>
+    <string name="form_title">I D N P</string>
+    <string name="form_subTitle">A N D R O I D</string>
+    <string name="form_titleForm">DATA REGISTRATION FORM</string>
+    <string name="form_hintName">Full Name</string>
+    <string name="form_hintEmail">Email</string>
+    <string name="form_hintCUI">CUI</string>
+    <string name="form_author">TEACHER : ERNESTO SUAREZ</string>
+    <string name="form_textButton">REGISTER</string>
+    <string name="cancelar">CANCELAR</string>
+</resources>

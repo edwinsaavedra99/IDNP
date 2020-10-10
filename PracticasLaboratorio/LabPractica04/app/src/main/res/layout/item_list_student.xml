@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    app:cardCornerRadius="5dp"
+    app:cardBackgroundColor="@android:color/transparent"
+    android:background="@android:color/transparent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </LinearLayout>
+        <RelativeLayout
+            android:gravity="center"
+            android:background="@android:color/transparent"
+            android:padding="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@drawable/ic_baseline_school_24"
+                android:layout_centerVertical="true"
+                android:id="@+id/image_user_item"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:adjustViewBounds="true"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:scaleType="centerCrop">
+            </ImageView>
+            <TextView
+                android:layout_marginTop="8dp"
+                android:layout_toRightOf="@+id/image_user_item"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Nombre de Estudiante"
+                android:id="@+id/name_user_item"
+                android:textSize="17sp"
+                android:textColor="@android:color/black"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="40dp"
+                android:layout_alignParentTop="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </TextView>
+            <ImageView
+                android:id="@+id/optionItem"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_baseline_more_vert_24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </ImageView>
+
+
+            <TextView
+
+                android:layout_toRightOf="@+id/image_user_item"
+                android:textColor="@android:color/black"
+                android:text="DNI: 75586974 , CUI : 20162753"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@+id/name_user_item"
+                android:id="@+id/cod_user_item"
+                android:textSize="10sp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </TextView>
+            <TextView
+
+                android:layout_toRightOf="@+id/image_user_item"
+                android:textColor="@android:color/black"
+                android:text="Correo: esaavedra@unsa.edu.pe"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@+id/cod_user_item"
+                android:id="@+id/email_user_item"
+                android:textSize="10sp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </TextView>
+
+        </RelativeLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
