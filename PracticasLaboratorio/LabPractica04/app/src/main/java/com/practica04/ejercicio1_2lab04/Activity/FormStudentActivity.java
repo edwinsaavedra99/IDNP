@@ -1,5 +1,6 @@
 package com.practica04.ejercicio1_2lab04.Activity;
 
+import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -9,7 +10,9 @@ import android.widget.RelativeLayout;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+import com.practica04.ejercicio1_2lab04.Model.Student;
 import com.practica04.ejercicio1_2lab04.R;
+import com.practica04.ejercicio1_2lab04.repository.StudentRepository;
 
 import java.util.Objects;
 
@@ -19,6 +22,7 @@ public class FormStudentActivity extends AppCompatActivity {
     private TextInputEditText inputCUI;
     private Button registerForm;
     private RelativeLayout rootLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +37,7 @@ public class FormStudentActivity extends AppCompatActivity {
         });
     }
 
-    private void loadItems(){
+    private void loadItems() {
         this.inputName = findViewById(R.id.txt_user_name);
         this.inputEmail = findViewById(R.id.txt_user_email);
         this.inputCUI = findViewById(R.id.txt_user_CUI);
@@ -41,7 +45,7 @@ public class FormStudentActivity extends AppCompatActivity {
         this.rootLayout = findViewById(R.id.rootLayout);
     }
 
-    private void validateForm(){
+    private void validateForm() {
 
         String nameString = Objects.requireNonNull(inputName.getText()).toString();
         String emailString = Objects.requireNonNull(inputEmail.getText()).toString();
@@ -49,26 +53,39 @@ public class FormStudentActivity extends AppCompatActivity {
 
         boolean flag = true;
 
-        if(TextUtils.isEmpty(emailString.trim())){
+        if (TextUtils.isEmpty(emailString.trim())) {
             inputEmail.setError("Please enter email address");
-            flag=false;
+            flag = false;
         }
-        if(TextUtils.isEmpty(nameString.trim())){
+        if (TextUtils.isEmpty(nameString.trim())) {
             inputName.setError("Please enter full name");
-            flag=false;
+            flag = false;
         }
-        if(TextUtils.isEmpty(cuiString.trim()) || cuiString.length()!=8){
+        if (TextUtils.isEmpty(cuiString.trim()) || cuiString.length() != 8) {
             inputCUI.setError("Please enter CUI - 8 digits");
-            flag=false;
+            flag = false;
         }
 
-        if(flag){
+        if (flag) {
             submit();
         }
     }
 
-    private void submit(){
-        Snackbar.make(this.rootLayout,"Register successfully !!!",Snackbar.LENGTH_SHORT).show();
+    private void submit() {
+        Snackbar.make(this.rootLayout, "Register successfully !!!", Snackbar.LENGTH_SHORT).show();
+        /*
+         * Descomposición del texto en 2: NOMBRES Y APELLIDOS.
+         */
+        String[] fullName = Objects.requireNonNull(this.inputName.getText()).toString().split(" ");
+        String names = null, lastNames = null;
+        if (fullName.length == 4) {
+            names = fullName[0] + " " + fullName[1];
+            lastNames = fullName[2] + " " + fullName[4];
+        } else if (fullName.length == 3) {
+            names = fullName[0];
+            lastNames = fullName[1] + " " + fullName[2];
+        }
+        StudentRepository.addStudent(new Student(lastNames, names, inputEmail.getText().toString(), this.inputCUI.getText().toString()));
         this.inputName.setText("");
         this.inputEmail.setText("");
         this.inputCUI.setText("");
