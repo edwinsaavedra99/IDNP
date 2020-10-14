@@ -121,7 +121,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
                 String filterPattern = constraint.toString().toLowerCase().trim();
                 for ( Student student : itemsFull){
                     String fullName = student.getName() + " " + student.getLastName();
-                    if(fullName.toLowerCase().contains(filterPattern)){
+                    if(fullName.toLowerCase().contains(filterPattern) || student.getEmail().contains(filterPattern)){
                         filterPatient.add(student);
                     }
                 }

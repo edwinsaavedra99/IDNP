@@ -21,8 +21,9 @@ public class StudentRepository {
         students.add(new Student("Monroy", "Luis", "luis@unsa.edu.pe", "20162753"));
         students.add(new Student("Vilcahuman", "Jose", "jose@unsa.edu.pe", "20162753"));
         students.add(new Student("Mamani", "Pedro", "pedro@unsa.edu.pe", "20162753"));
-        students.add(new Student("Perez", "Juan", "juan@unsa.edu.pe", "20162753"));
-    }
+        students.add(new Student("Chire", "Braulio", "bchireq@unsa.edu.pe", "20170623"));
+        students.add(new Student("Perez", "Juan", "juan@gmail.com", "20162753"));
+   }
 
     public static void addStudent(Student student) {
         students.add(student);
