@@ -73,8 +73,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean searchInData(Student student1, String newText) {
-        return student1.getName().toLowerCase().contains(newText.toLowerCase())
-                || student1.getLastName().toLowerCase().contains(newText.toLowerCase());
+        String fullName = student1.getName() + " " + student1.getLastName();
+        return fullName.toLowerCase().contains(newText.toLowerCase());
     }
 
     private void addStudent() {
