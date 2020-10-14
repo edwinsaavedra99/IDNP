@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.practica04.ejercicio1_2lab04.Activity.FormStudentActivity;
 import com.practica04.ejercicio1_2lab04.Adapter.StudentAdapter;
 import com.practica04.ejercicio1_2lab04.Model.Student;
@@ -22,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private SearchView searchView;
     private List<Student> list;
-    private FloatingActionButton addElement;
+    private LinearLayout addElement;
     private StudentAdapter adapter;
 
     @Override

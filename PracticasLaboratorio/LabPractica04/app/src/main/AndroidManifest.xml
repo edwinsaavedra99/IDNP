@@ -9,10 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.FormStudentActivity"
-            android:theme="@style/AppThemeForm"
-            >
-
+        <activity android:name=".Activity.FormStudentActivity">
         </activity>
 
         <activity android:name=".MainActivity">

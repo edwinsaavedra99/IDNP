@@ -6,10 +6,10 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputEditText;
 import com.practica04.ejercicio1_2lab04.Model.Student;
 import com.practica04.ejercicio1_2lab04.R;
 import com.practica04.ejercicio1_2lab04.repository.StudentRepository;
@@ -17,9 +17,9 @@ import com.practica04.ejercicio1_2lab04.repository.StudentRepository;
 import java.util.Objects;
 
 public class FormStudentActivity extends AppCompatActivity {
-    private TextInputEditText inputName;
-    private TextInputEditText inputEmail;
-    private TextInputEditText inputCUI;
+    private EditText inputName;
+    private EditText inputEmail;
+    private EditText inputCUI;
     private Button registerForm;
     private RelativeLayout rootLayout;
 
@@ -27,7 +27,7 @@ public class FormStudentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_student);
-        Objects.requireNonNull(getSupportActionBar()).hide();
+        //Objects.requireNonNull(getSupportActionBar()).hide();
         loadItems();
         this.registerForm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +72,8 @@ public class FormStudentActivity extends AppCompatActivity {
     }
 
     private void submit() {
-        Snackbar.make(this.rootLayout, "Register successfully !!!", Snackbar.LENGTH_SHORT).show();
+        //Snackbar.make(this.rootLayout, , Snackbar.LENGTH_SHORT).show();
+        Toast.makeText(FormStudentActivity.this ,"Register successfully !!!",Toast.LENGTH_SHORT).show();
         /*
          * Descomposición del texto en 2: NOMBRES Y APELLIDOS.
          */
