@@ -74,7 +74,9 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean searchInData(Student student1, String newText) {
         String fullName = student1.getName() + " " + student1.getLastName();
-        return fullName.toLowerCase().contains(newText.toLowerCase()) || student1.getEmail().contains(newText.toLowerCase());
+        return fullName.toLowerCase().contains(newText.toLowerCase()) ||
+                student1.getEmail().toLowerCase().contains(newText.toLowerCase()) ||
+                String.valueOf(student1.getCui()).contains(newText);
     }
 
     private void addStudent() {

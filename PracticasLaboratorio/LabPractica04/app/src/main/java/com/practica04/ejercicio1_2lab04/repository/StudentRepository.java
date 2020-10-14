@@ -14,12 +14,12 @@ public class StudentRepository {
         students.add(new Student("Lorenzo", "Luis", "luis@unsa.edu.pe", "20162753"));
         students.add(new Student("Calderon", "Valeria", "valeria@unsa.edu.pe", "20162753"));
         students.add(new Student("Carpio", "Erick", "erick@unsa.edu.pe", "20162753"));
-        students.add(new Student("Fuentes", "Nelson", "nelson@unsa.edu.pe", "20162753"));
+        students.add(new Student("Fuentes", "Nelson", "nelson@unsa.edu.pe", "20142753"));
         students.add(new Student("Gutierrez", "Anyelo", "anyelo@unsa.edu.pe", "20162753"));
         students.add(new Student("Cruz", "Piero", "piero@unsa.edu.pe", "20162753"));
-        students.add(new Student("Davila", "Elmer", "elmer@unsa.edu.pe", "20162753"));
+        students.add(new Student("Davila", "Elmer", "elmer@unsa.edu.pe", "20132753"));
         students.add(new Student("Monroy", "Luis", "luis@unsa.edu.pe", "20162753"));
-        students.add(new Student("Vilcahuman", "Jose", "jose@unsa.edu.pe", "20162753"));
+        students.add(new Student("Vilcahuman", "Jose", "jose@outlook.es", "20162753"));
         students.add(new Student("Mamani", "Pedro", "pedro@unsa.edu.pe", "20162753"));
         students.add(new Student("Chire", "Braulio", "bchireq@unsa.edu.pe", "20170623"));
         students.add(new Student("Perez", "Juan", "juan@gmail.com", "20162753"));
