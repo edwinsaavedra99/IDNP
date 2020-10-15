@@ -11,8 +11,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.practica04.ejercicio1_2lab04.Adapter.StudentAdapter;
+import com.practica04.ejercicio1_2lab04.MainActivity;
 import com.practica04.ejercicio1_2lab04.Model.Student;
 import com.practica04.ejercicio1_2lab04.R;
 import com.practica04.ejercicio1_2lab04.repository.StudentRepository;
@@ -21,11 +24,18 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class FormStudentActivity extends AppCompatActivity {
+
+    // edit student
+    private TextView Textdata;
+    private int edit;
+    private int all_correct;
+    // edit student
     private EditText inputName;
     private EditText inputLastName;
     private EditText inputEmail;
     private EditText inputCUI;
     private Button registerForm;
+    private Button cancelForm;
     private RelativeLayout rootLayout;
 
     @Override
@@ -37,21 +47,40 @@ public class FormStudentActivity extends AppCompatActivity {
         this.registerForm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                validateForm();
+                validateForm(edit);
+                if(all_correct ==1) {
+                    finish();
+                }
+            }
+        });
+        this.cancelForm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+
             }
         });
     }
 
     private void loadItems() {
+        this.all_correct =0;
         this.inputName = findViewById(R.id.txt_user_name);
         this.inputLastName = findViewById(R.id.txt_user_lastName);
         this.inputEmail = findViewById(R.id.txt_user_email);
         this.inputCUI = findViewById(R.id.txt_user_CUI);
         this.registerForm = findViewById(R.id.btnRegister);
+        this.cancelForm = findViewById(R.id.btnCancelar);
         this.rootLayout = findViewById(R.id.rootLayout);
     }
+    private void loadItemsStudent(){
+        Student example = StudentRepository.getStudent(edit);
+        this.inputName.setText(example.getName());
+        this.inputLastName.setText(example.getLastName());
+        this.inputEmail.setText(example.getEmail());
+        this.inputCUI.setText(example.getCui());
+    }
 
-    private void validateForm() {
+    private void validateForm( int k ) {
 
         String nameString = Objects.requireNonNull(inputName.getText()).toString();
         String lastNameString = Objects.requireNonNull(inputLastName.getText()).toString();

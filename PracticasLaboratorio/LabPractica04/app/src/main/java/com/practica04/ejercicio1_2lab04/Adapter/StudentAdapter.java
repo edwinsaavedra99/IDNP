@@ -29,6 +29,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentViewHolder> implements Filterable {
+    //edit user
+    public static final String EXTRA_MESSAGE = "com.practica04.ejercicio1_2lab04.MESSAGE";
+    // edit user
 
     private static final int THIRD_ACTIVITY_REQUEST_CODE = 2;
     private List<Student> items;
@@ -61,7 +64,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
         notifyDataSetChanged();
     }
     public void editElement(Student student, int position){
-        items.get(position).setName(student.getName());
+        items.get(position).setName(student.getName()+" "+student.getLastName() );
         items.get(position).setEmail(student.getEmail());
         items.get(position).setCui(student.getCui());
         notifyDataSetChanged();
@@ -102,7 +105,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
                             intent.putExtra("data",items.get(i));
                             intent.putExtra("position",i);
                             ((Activity) context).startActivityForResult(intent, THIRD_ACTIVITY_REQUEST_CODE);
-                            //context.startActivity(intent);
+
                         }else if(item.getTitle().equals("Delete")){
                             showAlertDialogDelete(i);
                         }
