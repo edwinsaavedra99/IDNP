@@ -9,4 +9,6 @@
     <string name="form_author">TEACHER : ERNESTO SUAREZ</string>
     <string name="form_textButton">REGISTER</string>
     <string name="cancelar">CANCELAR</string>
+    <string name="last_name">Last Name</string>
+    <string name="name">Name</string>
 </resources>

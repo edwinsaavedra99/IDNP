@@ -1,6 +1,7 @@
 package com.practica04.ejercicio1_2lab04.Adapter;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,6 +21,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.practica04.ejercicio1_2lab04.Activity.FormStudentActivity;
+import com.practica04.ejercicio1_2lab04.Activity.FormStudentActivity2;
 import com.practica04.ejercicio1_2lab04.MainActivity;
 import com.practica04.ejercicio1_2lab04.Model.Student;
 import com.practica04.ejercicio1_2lab04.R;
@@ -28,6 +30,7 @@ import java.util.List;
 
 public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentViewHolder> implements Filterable {
 
+    private static final int THIRD_ACTIVITY_REQUEST_CODE = 2;
     private List<Student> items;
     private List<Student> itemsFull;
     private Context context;
@@ -95,8 +98,11 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         if(item.getTitle().equals("Edit")){
-                            Intent intent = new Intent (context, FormStudentActivity.class);
-                            context.startActivity(intent);
+                            Intent intent = new Intent (context, FormStudentActivity2.class);
+                            intent.putExtra("data",items.get(i));
+                            intent.putExtra("position",i);
+                            ((Activity) context).startActivityForResult(intent, THIRD_ACTIVITY_REQUEST_CODE);
+                            //context.startActivity(intent);
                         }else if(item.getTitle().equals("Delete")){
                             showAlertDialogDelete(i);
                         }

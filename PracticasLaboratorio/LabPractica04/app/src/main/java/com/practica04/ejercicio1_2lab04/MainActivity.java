@@ -21,6 +21,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int SECOND_ACTIVITY_REQUEST_CODE = 1;
+    private static final int THIRD_ACTIVITY_REQUEST_CODE = 2;
     private RecyclerView recyclerView;
     private SearchView searchView;
     private List<Student> list;
@@ -83,29 +85,34 @@ public class MainActivity extends AppCompatActivity {
 
     private void addStudent() {
         Intent intent = new Intent(getApplicationContext(), FormStudentActivity.class);
-        startActivity(intent);
-        //Utils.typeForm = true;
+        startActivityForResult(intent, SECOND_ACTIVITY_REQUEST_CODE);
+    }
+
+    // This method is called when the second activity finishes
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == SECOND_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Object returnString = data.getSerializableExtra("student");
+                Student s = (Student) returnString;
+                adapter.addElement(s);
+                adapter.notifyDataSetChanged();
+            }
+        }else if (requestCode == THIRD_ACTIVITY_REQUEST_CODE){
+            if (resultCode == RESULT_OK) {
+                Object returnString = data.getSerializableExtra("student");
+                int position = data.getIntExtra("position",0);
+                Student s = (Student) returnString;
+                adapter.editElement(s,position);
+                adapter.notifyDataSetChanged();
+            }
+        };
     }
 
     public void createMockInfo() {
-        ///list = new ArrayList<>();
-        //adapter = new StudentAdapter(list, MainActivity.this);
         adapter = new StudentAdapter(StudentRepository.getStudents(), MainActivity.this);
         recyclerView.setAdapter(adapter);
-        /*
-         list.add(new Student("Saavedra", "Edwin", "esaavedra@unsa.edu.pe", "20162753"));
-         list.add(new Student("Lorenzo", "Luis", "luis@unsa.edu.pe", "20162753"));
-         list.add(new Student("Calderon", "Valeria", "valeria@unsa.edu.pe", "20162753"));
-         list.add(new Student("Carpio", "Erick", "erick@unsa.edu.pe", "20162753"));
-         list.add(new Student("Fuentes", "Nelson", "nelson@unsa.edu.pe", "20162753"));
-         list.add(new Student("Gutierrez", "Anyelo", "anyelo@unsa.edu.pe", "20162753"));
-         list.add(new Student("Cruz", "Piero", "piero@unsa.edu.pe", "20162753"));
-         list.add(new Student("Davila", "Elmer", "elmer@unsa.edu.pe", "20162753"));
-         list.add(new Student("Monroy", "Luis", "luis@unsa.edu.pe", "20162753"));
-         list.add(new Student("Vilcahuman", "Jose", "jose@unsa.edu.pe", "20162753"));
-         list.add(new Student("Mamani", "Pedro", "pedro@unsa.edu.pe", "20162753"));
-         list.add(new Student("Perez", "Juan", "juan@unsa.edu.pe", "20162753"));
-         */
         adapter.notifyDataSetChanged();
     }
 }

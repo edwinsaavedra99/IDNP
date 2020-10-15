@@ -1,28 +1,30 @@
 package com.practica04.ejercicio1_2lab04.Activity;
 
-import android.annotation.SuppressLint;
-import android.content.ClipData;
-import android.content.Intent;
-import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
+import android.widget.TextView;
 
+import com.practica04.ejercicio1_2lab04.Adapter.StudentAdapter;
 import com.practica04.ejercicio1_2lab04.Model.Student;
 import com.practica04.ejercicio1_2lab04.R;
-import com.practica04.ejercicio1_2lab04.repository.StudentRepository;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-public class FormStudentActivity extends AppCompatActivity {
+public class FormStudentActivity2 extends AppCompatActivity {
+
     private EditText inputName;
     private EditText inputLastName;
+    private TextView titleForm;
+    private int edit;
+    private Student student;
     private EditText inputEmail;
     private EditText inputCUI;
     private Button registerForm;
@@ -33,7 +35,11 @@ public class FormStudentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_student);
         //Objects.requireNonNull(getSupportActionBar()).hide();
+        Intent intent = getIntent();
+        edit = intent.getIntExtra("position",-2);
+        student = ( Student) intent.getSerializableExtra("data");
         loadItems();
+        loadItemsStudent();
         this.registerForm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,8 +55,17 @@ public class FormStudentActivity extends AppCompatActivity {
         this.inputCUI = findViewById(R.id.txt_user_CUI);
         this.registerForm = findViewById(R.id.btnRegister);
         this.rootLayout = findViewById(R.id.rootLayout);
+        this.titleForm = findViewById(R.id.titleForm);
+        titleForm.setText("EDIT DATA STUDENT");
+        this.registerForm.setText("UPDATE");
     }
-
+    private void loadItemsStudent(){
+        Student example = this.student;
+        this.inputName.setText(example.getName());
+        this.inputLastName.setText(example.getLastName());
+        this.inputEmail.setText(example.getEmail());
+        this.inputCUI.setText(example.getCui());
+    }
     private void validateForm() {
 
         String nameString = Objects.requireNonNull(inputName.getText()).toString();
@@ -91,8 +106,8 @@ public class FormStudentActivity extends AppCompatActivity {
         Student aux = new Student(lastName, name, email, cui);
         Intent intent = new Intent();
         intent.putExtra("student", aux);
+        intent.putExtra("position",this.edit);
         setResult(RESULT_OK, intent);
-        setRequestedOrientation(2);
         finish();
     }
 }
