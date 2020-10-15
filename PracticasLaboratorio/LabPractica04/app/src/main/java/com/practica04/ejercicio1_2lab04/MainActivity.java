@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private SearchView searchView;
     private List<Student> list;
     private LinearLayout addElement;
-    private StudentAdapter adapter;
+    public static  StudentAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

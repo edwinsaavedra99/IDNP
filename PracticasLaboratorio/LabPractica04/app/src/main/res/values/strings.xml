@@ -3,7 +3,8 @@
     <string name="form_title">I D N P</string>
     <string name="form_subTitle">A N D R O I D</string>
     <string name="form_titleForm">DATA REGISTRATION FORM</string>
-    <string name="form_hintName">Full Name</string>
+    <string name="form_hintName">Names</string>
+    <string name="form_hintLastName">Last Name</string>
     <string name="form_hintEmail">Email</string>
     <string name="form_hintCUI">CUI</string>
     <string name="form_author">TEACHER : ERNESTO SUAREZ</string>

@@ -27,14 +27,16 @@
             android:textColor="@color/colorPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+
         <TextView
-            android:text="@string/form_titleForm"
-            android:textSize="16sp"
+            android:id="@+id/TextEdit1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_margin="20dp"
+            android:text="@string/form_titleForm"
             android:textAlignment="center"
             android:textColor="@color/colorPrimary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:textSize="16sp" />
 
     </LinearLayout>
     <LinearLayout
@@ -55,6 +57,14 @@
             android:autofillHints=""
             tools:ignore="LabelFor" />
 
+
+        <EditText
+            android:id="@+id/txt_user_lastname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/form_hintLastName"
+            android:inputType="text" />
 
         <EditText
             android:hint="@string/form_hintEmail"

@@ -36,4 +36,7 @@ public class StudentRepository {
     public static boolean removeStudent(Student student){
         return students.remove(student);
     }
-}
+    public static void editStudent(int position, Student student){ students.set(position,student); }
+    public static  Student getStudent(int position ){ return  students.get(position);}
+
+    }
