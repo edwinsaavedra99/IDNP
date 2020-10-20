@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int THIRD_ACTIVITY_REQUEST_CODE = 2;
     private RecyclerView recyclerView;
     private SearchView searchView;
-    private List<Student> list;
+    //private List<Student> list;
     private LinearLayout addElement;
     public static  StudentAdapter adapter;
 

@@ -1,8 +1,7 @@
-package com.practica04.myappdeport;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.myappdeport;
 
 import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.practica04.myappdeport;
+package com.myappdeport;
 
 import org.junit.Test;
 

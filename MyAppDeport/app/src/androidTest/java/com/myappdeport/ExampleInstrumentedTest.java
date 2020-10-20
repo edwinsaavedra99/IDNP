@@ -1,4 +1,4 @@
-package com.practica04.myappdeport;
+package com.myappdeport;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.practica04.myappdeport", appContext.getPackageName());
+        assertEquals("com.myappdeport", appContext.getPackageName());
     }
 }
