@@ -4,11 +4,13 @@ import com.google.firebase.firestore.Exclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(callSuper = true)
 public class RouteFirebase {
     @Exclude
     private String documentId;

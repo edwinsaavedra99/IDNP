@@ -1,31 +1,38 @@
 package com.myappdeport.repository;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
+import com.google.android.gms.tasks.Task;
+import com.myappdeport.model.database.firebase.FirebaseEntity;
+
+import java.util.Collection;
 import java.util.Optional;
 
-/**
- * Se implementa las operaiocens crud que seran las base para todos los repositorios existentes.
- *
- * @param <E> Es la clase que se sera persistida.
- * @param <I> Es la clave de la clase que sera persistida.
- */
-public interface CrudRepository<E, I> {
+public interface IRepository<E> {
     /**
      * Operación guardar o actualizar en el almacen de datos.
      *
      * @param entity Es el objeto que sera persistido
-     * @param <S>    Es algun elemento que extiende de la clase persistida.
      * @return Es el objeto persistido con cierto cambio.
      */
-    <S extends E> S save(S entity);
+    Task<E> save(E entity);
+
+    /**
+     * Operación  actualizar en el almacen de datos.
+     *
+     * @param entity Es el objeto que sera persistido
+     */
+    Task<Void> update(E entity);
 
     /**
      * Operación que guarda todos los elementos dentro del almacen de datos.
      *
      * @param entities Son todos los objetos a ser guardados.
-     * @param <S>      Es algun elemento que extiende de la clase persistida.
      * @return Son los objetos que fueron persistidos con ciertos cambios.
      */
-    <S extends E> Iterable<S> saveAll(Iterable<S> entities);
+    Task<Collection<E>> saveAll(Collection<E> entities);
 
     /**
      * Operación obtener por su id del almacen de datos.
@@ -34,33 +41,34 @@ public interface CrudRepository<E, I> {
      * @return Es el elemento que se encontro envuelto por un optional si no se encuentra.
      * @see Optional
      */
-    Optional<E> findById(I identifier);
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    Task<Optional<E>> findById(String identifier);
 
     /**
      * Operación optener todos los elementos de el almacen de datos.
      *
      * @return RSon todas las instancias que se encuentran en el almacen de datos.
      */
-    Iterable<E> findAll();
+    Task<Collection<E>> findAll();
 
     /**
      * Es la operación eliminar de el almacen de datos
      *
      * @param entity Es la entidad que se borrara de el almacen de datos.
      */
-    void delete(E entity);
+    Task<Void> delete(E entity);
 
     /**
      * Es la operacion borrar varios elementos de el almacen de datos.
      *
-     * @param entities
+     * @param entities Son las entidades a ser borradas
      */
-    void deleteAll(Iterable<? extends E> entities);
+    Task<Collection<Void>> deleteAll(Collection<E> entities);
 
     /**
      * Operación obtener el total de elemetos del alamcen de datos.
      *
      * @return Es el numero total de entidades disponibles.
      */
-    long count();
+    Task<Integer> count();
 }

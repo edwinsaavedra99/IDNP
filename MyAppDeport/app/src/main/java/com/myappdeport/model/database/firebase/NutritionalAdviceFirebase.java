@@ -4,12 +4,14 @@ import com.google.firebase.firestore.Exclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.io.File;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(callSuper = true)
 public class NutritionalAdviceFirebase {
     @Exclude
     private String documentId;

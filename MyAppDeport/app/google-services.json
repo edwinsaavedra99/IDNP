@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1032374828067",
+    "firebase_url": "https://myappdeporttest.firebaseio.com",
+    "project_id": "myappdeporttest",
+    "storage_bucket": "myappdeporttest.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1032374828067:android:709da5e50479e302fd0596",
+        "android_client_info": {
+          "package_name": "com.myappdeport"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1032374828067-p2dio224bmhcifn72rals6eg4p5sdn55.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0FnWtib9jXlfE2Js9gafrvFnDl-DZpoM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1032374828067-p2dio224bmhcifn72rals6eg4p5sdn55.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
