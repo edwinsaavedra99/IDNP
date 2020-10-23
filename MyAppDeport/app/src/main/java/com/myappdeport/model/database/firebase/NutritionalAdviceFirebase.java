@@ -1,8 +1,8 @@
 package com.myappdeport.model.database.firebase;
 
-import com.google.firebase.firestore.Exclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -12,21 +12,11 @@ import java.io.File;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString(callSuper = true)
-public class NutritionalAdviceFirebase {
-    @Exclude
-    private String documentId;
+@EqualsAndHashCode(callSuper = true)
+public class NutritionalAdviceFirebase extends FirebaseEntity {
     private String title;
     private String shortDescription;
     private String longDescription;
-    /*
-        DUDA -> XD
-     */
-    private File file;
+    private File image;
 
-    public NutritionalAdviceFirebase(String title, String shortDescription, String longDescription, File file) {
-        this.title = title;
-        this.shortDescription = shortDescription;
-        this.longDescription = longDescription;
-        this.file = file;
-    }
 }

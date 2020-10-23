@@ -18,5 +18,8 @@ public class ActivityFirebase extends FirebaseEntity {
     private String startTime;
     private String endTime;
     private Integer kiloCalories;
-    private RouteFirebase routeFirebase;
+    /**
+     * Id del documento route firebase.
+     */
+    private String routeFirebaseDocumentId;
 }

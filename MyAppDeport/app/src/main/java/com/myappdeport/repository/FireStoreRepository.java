@@ -49,7 +49,6 @@ public class FireStoreRepository<E extends FirebaseEntity> implements IRepositor
                 return Tasks.forResult(entity);
             }
         });
-
     }
 
     /**

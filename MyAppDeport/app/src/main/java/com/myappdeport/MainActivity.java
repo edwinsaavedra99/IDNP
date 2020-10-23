@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.myappdeport.model.database.firebase.ActivityFirebase;
 import com.myappdeport.model.database.firebase.PointFirebase;
 import com.myappdeport.repository.IRepository;
 import com.myappdeport.repository.ManagerSingletonRepository;
