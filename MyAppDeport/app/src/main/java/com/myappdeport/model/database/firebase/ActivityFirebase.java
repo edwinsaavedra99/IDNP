@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * Es la actividad que se almacenara en Firebase
@@ -12,9 +13,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class ActivityFirebase extends FirebaseEntity {
     private String startTime;
     private String endTime;
     private Integer kiloCalories;
-    private RouteFirebase routeFirebase;
+    /**
+     * Id del documento route firebase.
+     */
+    private String routeFirebaseDocumentId;
 }

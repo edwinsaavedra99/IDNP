@@ -1,24 +1,20 @@
 package com.myappdeport.model.database.firebase;
 
-import com.google.firebase.firestore.Exclude;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
+
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RouteFirebase {
-    @Exclude
-    private String documentId;
-    private List<PointFirebase> pointFirebaseList;
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
+public class RouteFirebase extends FirebaseEntity {
     private Double totalDistance;
     private Double rhythm;
-
-    public RouteFirebase(List<PointFirebase> pointFirebaseList, Double totalDistance, Double rhythm) {
-        this.pointFirebaseList = pointFirebaseList;
-        this.totalDistance = totalDistance;
-        this.rhythm = rhythm;
-    }
+    /**
+     * Lista de point firebase documentId
+     */
+    private List<String> pointFirebaseDocumentIdList;
 }
