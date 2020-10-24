@@ -1,4 +1,4 @@
-package com.myappdeport;
+package com.myappdeport.view;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.myappdeport.R;
 import com.myappdeport.model.database.firebase.PointFirebase;
 import com.myappdeport.repository.IRepository;
 import com.myappdeport.repository.ManagerSingletonRepository;
@@ -18,7 +19,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        try {
+        //el codigo inserta datos a la coleccion -->
+        /*try {
             IRepository<PointFirebase> activityRepository = ManagerSingletonRepository.getInstance(PointFirebase.class);
             PointFirebase pointFirebase = new PointFirebase(12.3, 45.5, 32.4);
             Task<PointFirebase> pointTask = activityRepository.save(pointFirebase);
@@ -32,6 +34,6 @@ public class MainActivity extends AppCompatActivity {
             Log.e(TAG, "Instantiation Exception: ", e.getCause());
         } catch (IllegalAccessException e) {
             Log.e(TAG, "Illegal Access Exception: ", e.getCause());
-        }
+        }*/
     }
 }
