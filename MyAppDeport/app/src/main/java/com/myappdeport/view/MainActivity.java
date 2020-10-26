@@ -1,24 +1,43 @@
 package com.myappdeport.view;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.myappdeport.R;
-import com.myappdeport.model.database.firebase.PointFirebase;
-import com.myappdeport.repository.IRepository;
-import com.myappdeport.repository.ManagerSingletonRepository;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
+
+    private Button iniciarSesion;
+    private Button registrate;
+    private Button usuarioAnonimo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        iniciarSesion = (Button) findViewById(R.id.login);
+        registrate = (Button) findViewById(R.id.registrate);
+        usuarioAnonimo = (Button) findViewById(R.id.anonimo);
+
+        iniciarSesion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openIniciarSesion();
+            }
+        });
+        registrate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openRegister();
+            }
+        });
+
         //el codigo inserta datos a la coleccion -->
         /*try {
             IRepository<PointFirebase> activityRepository = ManagerSingletonRepository.getInstance(PointFirebase.class);
@@ -35,5 +54,14 @@ public class MainActivity extends AppCompatActivity {
         } catch (IllegalAccessException e) {
             Log.e(TAG, "Illegal Access Exception: ", e.getCause());
         }*/
+    }
+
+    public void openIniciarSesion(){
+        Intent intent = new Intent(this, Login.class);
+        startActivity(intent);
+    }
+    public void openRegister(){
+        Intent intent = new Intent(this, Register.class);
+        startActivity(intent);
     }
 }
