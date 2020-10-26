@@ -37,7 +37,12 @@ public class MainActivity extends AppCompatActivity {
                 openRegister();
             }
         });
-
+        usuarioAnonimo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDeportActivity();
+            }
+        });
         //el codigo inserta datos a la coleccion -->
         /*try {
             IRepository<PointFirebase> activityRepository = ManagerSingletonRepository.getInstance(PointFirebase.class);
@@ -62,6 +67,10 @@ public class MainActivity extends AppCompatActivity {
     }
     public void openRegister(){
         Intent intent = new Intent(this, Register.class);
+        startActivity(intent);
+    }
+    public void openDeportActivity(){
+        Intent intent = new Intent(this, DeportActivity.class);
         startActivity(intent);
     }
 }
