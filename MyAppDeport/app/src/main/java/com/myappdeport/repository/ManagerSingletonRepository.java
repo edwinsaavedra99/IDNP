@@ -2,7 +2,7 @@ package com.myappdeport.repository;
 
 import androidx.annotation.NonNull;
 
-import com.myappdeport.model.database.firebase.FirebaseEntity;
+import com.myappdeport.model.entity.database.firebase.FirebaseEntity;
 
 import java.util.HashMap;
 import java.util.Map;

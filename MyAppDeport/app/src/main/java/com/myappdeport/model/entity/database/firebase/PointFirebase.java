@@ -1,4 +1,5 @@
-package com.myappdeport.model.database.firebase;
+package com.myappdeport.model.entity.database.firebase;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,15 +7,13 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class SongFirebase extends FirebaseEntity{
-    private String name;
-    private String author;
-    private String duration;
-    private String songRoute;
+public class PointFirebase extends FirebaseEntity {
+    private Double latitude;
+    private Double longitude;
+    private Double distance;
 }

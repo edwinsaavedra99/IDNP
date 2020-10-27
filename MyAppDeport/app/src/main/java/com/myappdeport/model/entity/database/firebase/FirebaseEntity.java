@@ -1,4 +1,4 @@
-package com.myappdeport.model.database.firebase;
+package com.myappdeport.model.entity.database.firebase;
 
 import com.google.firebase.firestore.Exclude;
 

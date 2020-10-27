@@ -1,4 +1,4 @@
-package com.myappdeport.model.database.firebase;
+package com.myappdeport.model.entity.database.firebase;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

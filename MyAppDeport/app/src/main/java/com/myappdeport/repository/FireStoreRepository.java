@@ -1,7 +1,6 @@
 package com.myappdeport.repository;
 
 import android.os.Build;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -14,11 +13,10 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.myappdeport.model.database.firebase.FirebaseEntity;
+import com.myappdeport.model.entity.database.firebase.FirebaseEntity;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 public class FireStoreRepository<E extends FirebaseEntity> implements IRepository<E> {

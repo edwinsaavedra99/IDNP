@@ -5,7 +5,6 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 
 import com.google.android.gms.tasks.Task;
-import com.myappdeport.model.database.firebase.FirebaseEntity;
 
 import java.util.Collection;
 import java.util.Optional;

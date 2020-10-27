@@ -1,4 +1,4 @@
-package com.myappdeport.view;
+package com.myappdeport.view.activitys;
 
 import android.content.Intent;
 import android.os.Bundle;

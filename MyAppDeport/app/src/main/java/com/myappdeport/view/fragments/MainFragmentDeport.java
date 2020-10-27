@@ -5,9 +5,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Chronometer;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -16,8 +19,14 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.myappdeport.R;
+import com.myappdeport.service.usecase.interfaces.TimerInterface;
+import com.myappdeport.viewmodel.MainDeportPresenter;
 
-public class MainFragmentDeport extends Fragment {
+public class MainFragmentDeport extends Fragment implements TimerInterface.TimerInterfaceView {
+    private Button btnStart,btnPause,btnStop;
+    private Chronometer chronometer;
+    private TimerInterface.TimerInterfacePresenter mPresenter;
+
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
@@ -43,16 +52,74 @@ public class MainFragmentDeport extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_main_deport, container, false);
+        ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_main_deport, container, false);
+        btnStart = viewGroup.findViewById(R.id.btnStart);
+        btnPause = viewGroup.findViewById(R.id.btnPause);
+        btnStop = viewGroup.findViewById(R.id.btnStop);
+        chronometer = viewGroup.findViewById(R.id.valueTimer);
+        initView();
+        return viewGroup;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        SupportMapFragment mapFragment =
-                (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {
             mapFragment.getMapAsync(callback);
+        }
+    }
+
+    @Override
+    public void initView() {
+        //chronometer.setFormat("Time: %"); --> este es un formato alternativo
+        chronometer.setBase(SystemClock.elapsedRealtime());
+        chronometer.setFormat("00:%s");
+        //Listener en escuchador de reloj , cambia el formato a hh:mm:ss
+        chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+            public void onChronometerTick(Chronometer c) {
+                long elapsedMillis = SystemClock.elapsedRealtime() -c.getBase();
+                if(elapsedMillis > 3600000L){
+                    c.setFormat("0%s");
+                }else{
+                    c.setFormat("00:%s");
+                }
+            }
+        });
+        mPresenter = new MainDeportPresenter(this,chronometer);
+        btnStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.startChronometer();
+                btnStart.setVisibility(View.GONE);
+                btnPause.setVisibility(View.VISIBLE);
+                btnStop.setVisibility(View.VISIBLE);
+            }
+        });
+        btnPause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.pauseChronometer();
+            }
+        });
+        btnStop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.stopChronometer();
+                btnStart.setVisibility(View.VISIBLE);
+                btnPause.setVisibility(View.GONE);
+                btnStop.setVisibility(View.GONE);
+                btnPause.setText("PAUSE");
+            }
+        });
+    }
+
+    @Override
+    public void setViewData(boolean flag) {
+        if(flag){
+            btnPause.setText("PAUSE");
+        }else{
+            btnPause.setText("CONTINUE");
         }
     }
 }

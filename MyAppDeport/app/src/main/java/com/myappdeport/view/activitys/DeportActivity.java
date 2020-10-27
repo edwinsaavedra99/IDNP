@@ -1,4 +1,4 @@
-package com.myappdeport.view;
+package com.myappdeport.view.activitys;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
