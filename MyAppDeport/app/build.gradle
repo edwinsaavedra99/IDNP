@@ -47,4 +47,8 @@ dependencies {
     annotationProcessor "org.projectlombok:lombok:1.18.16"
     implementation "org.mapstruct:mapstruct:1.4.1.Final"
     annotationProcessor "org.mapstruct:mapstruct-processor:1.4.1.Final"
+
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:2.2.0"
+
 }

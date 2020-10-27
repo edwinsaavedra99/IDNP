@@ -1,10 +1,10 @@
-package com.myappdeport.viewmodel;
+package com.myappdeport.service.usecase;
 
 import android.os.SystemClock;
 import android.widget.Chronometer;
 import com.myappdeport.service.usecase.interfaces.TimerInterface;
 
-public class MainDeportPresenter implements TimerInterface.TimerInterfacePresenter {
+public class ChronometerUseCase implements TimerInterface.TimerInterfaceUseCase {
 
     private TimerInterface.TimerInterfaceView mView;
     private boolean running;
@@ -14,7 +14,7 @@ public class MainDeportPresenter implements TimerInterface.TimerInterfacePresent
     /**
      * Constructor de presentador para el activity deport, inicializa el cronometro
      **/
-    public MainDeportPresenter(TimerInterface.TimerInterfaceView view,Chronometer chronometer){
+    public ChronometerUseCase(TimerInterface.TimerInterfaceView view, Chronometer chronometer){
         mView = view;
         this.chronometer = chronometer;
         initPresenter();

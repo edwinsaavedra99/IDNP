@@ -20,12 +20,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.myappdeport.R;
 import com.myappdeport.service.usecase.interfaces.TimerInterface;
-import com.myappdeport.viewmodel.MainDeportPresenter;
+import com.myappdeport.service.usecase.ChronometerUseCase;
 
 public class MainFragmentDeport extends Fragment implements TimerInterface.TimerInterfaceView {
     private Button btnStart,btnPause,btnStop;
     private Chronometer chronometer;
-    private TimerInterface.TimerInterfacePresenter mPresenter;
+    private TimerInterface.TimerInterfaceUseCase mUCTimer;
 
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
@@ -86,11 +86,11 @@ public class MainFragmentDeport extends Fragment implements TimerInterface.Timer
                 }
             }
         });
-        mPresenter = new MainDeportPresenter(this,chronometer);
+        mUCTimer = new ChronometerUseCase(this,chronometer);
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.startChronometer();
+                mUCTimer.startChronometer();
                 btnStart.setVisibility(View.GONE);
                 btnPause.setVisibility(View.VISIBLE);
                 btnStop.setVisibility(View.VISIBLE);
@@ -99,13 +99,13 @@ public class MainFragmentDeport extends Fragment implements TimerInterface.Timer
         btnPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.pauseChronometer();
+                mUCTimer.pauseChronometer();
             }
         });
         btnStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.stopChronometer();
+                mUCTimer.stopChronometer();
                 btnStart.setVisibility(View.VISIBLE);
                 btnPause.setVisibility(View.GONE);
                 btnStop.setVisibility(View.GONE);

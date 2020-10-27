@@ -1,20 +1,11 @@
 package com.myappdeport.service.usecase.interfaces;
 
 public interface TimerInterface {
+
     /**
-     * Operations offered to Model to communicate with Presenter
-     * Handles all data business logic.
+     * Operations Use Case _ control de cronometro
      */
-    interface TimerInterfaceInteract {
-        // Model operations permitted to Presenter
-        String getData();
-        void setData(String data);
-    }
-    /**
-     * Operations offered to View to communicate with Presenter.
-     * Processes user interactions, sends data requests to Model, etc.
-     */
-    interface TimerInterfacePresenter{
+    interface TimerInterfaceUseCase{
         // Presenter operations permitted to View
         void initPresenter();
         void startChronometer();
@@ -22,9 +13,7 @@ public interface TimerInterface {
         void stopChronometer();
     }
     /**
-     * Required View methods available to Presenter.
-     * A passive layer, responsible to show data
-     * and receive user interactions
+     * UI cargar datos y metodo para actualizar
      */
     interface TimerInterfaceView{
         // View operations permitted to Presenter
