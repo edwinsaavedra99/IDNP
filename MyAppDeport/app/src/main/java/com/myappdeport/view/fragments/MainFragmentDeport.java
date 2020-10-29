@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Chronometer;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -78,6 +77,7 @@ public class MainFragmentDeport extends Fragment implements TimerInterface.Timer
         //Listener en escuchador de reloj , cambia el formato a hh:mm:ss
         chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             public void onChronometerTick(Chronometer c) {
+                //CODIGO CANDIDATO A IR EN UTILS
                 long elapsedMillis = SystemClock.elapsedRealtime() -c.getBase();
                 if(elapsedMillis > 3600000L){
                     c.setFormat("0%s");
