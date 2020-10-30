@@ -1,1 +1,0 @@
-package com.myappdeport.model.entity.database.sqlite;

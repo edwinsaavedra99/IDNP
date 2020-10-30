@@ -1,4 +1,4 @@
-package com.myappdeport.repository;
+package com.myappdeport.repository.firebase;
 
 import android.os.Build;
 
@@ -13,23 +13,25 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.myappdeport.model.entity.database.firebase.FirebaseEntity;
+import com.myappdeport.model.entity.database.EntityDatabase;
+import com.myappdeport.repository.IRepository;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
-public class FireStoreRepository<E extends FirebaseEntity> implements IRepository<E> {
+public abstract class FireStoreRepository<E extends EntityDatabase> implements IRepository<E, String> {
 
     private static final String TAG = FireStoreRepository.class.getSimpleName();
 
     private final CollectionReference collectionReference;
 
-    private final Class<E> eClass;
+    private final Class<E> entityClass;
 
-    public FireStoreRepository(Class<E> eClass) {
-        this.eClass = eClass;
-        this.collectionReference = FirebaseFirestore.getInstance().collection(this.eClass.getSimpleName());
+    public FireStoreRepository(Class<E> entityClass) {
+        this.entityClass = entityClass;
+        this.collectionReference = FirebaseFirestore.getInstance().collection(this.entityClass.getSimpleName());
     }
 
     /**
@@ -40,12 +42,9 @@ public class FireStoreRepository<E extends FirebaseEntity> implements IRepositor
      */
     @Override
     public Task<E> save(E entity) {
-        return this.collectionReference.add(entity).continueWithTask(new Continuation<DocumentReference, Task<E>>() {
-            @Override
-            public Task<E> then(@NonNull Task<DocumentReference> task) throws Exception {
-                entity.setDocumentId(task.getResult().getId());
-                return Tasks.forResult(entity);
-            }
+        return this.collectionReference.add(entity).continueWithTask(task -> {
+            entity.setDocumentId(task.getResult().getId());
+            return Tasks.forResult(entity);
         });
     }
 
@@ -70,8 +69,8 @@ public class FireStoreRepository<E extends FirebaseEntity> implements IRepositor
      * @return Son los objetos que fueron persistidos con ciertos cambios.
      */
     @Override
-    public Task<Collection<E>> saveAll(Collection<E> entities) {
-        Collection<E> entitiesList = new ArrayList<>();
+    public Task<List<E>> saveAll(List<E> entities) {
+        List<E> entitiesList = new ArrayList<>();
         for (E entity : entities) {
             entitiesList.add(save(entity).getResult());
         }
@@ -88,12 +87,7 @@ public class FireStoreRepository<E extends FirebaseEntity> implements IRepositor
     @Override
     @RequiresApi(api = Build.VERSION_CODES.N)
     public Task<Optional<E>> findById(String identifier) {
-        return this.collectionReference.document(identifier).get().continueWithTask(new Continuation<DocumentSnapshot, Task<Optional<E>>>() {
-            @Override
-            public Task<Optional<E>> then(@NonNull Task<DocumentSnapshot> task) throws Exception {
-                return Tasks.forResult(Optional.of(task.getResult().toObject(eClass)));
-            }
-        });
+        return this.collectionReference.document(identifier).get().continueWithTask(task -> Tasks.forResult(Optional.of(task.getResult().toObject(entityClass))));
     }
 
     /**
@@ -102,13 +96,8 @@ public class FireStoreRepository<E extends FirebaseEntity> implements IRepositor
      * @return RSon todas las instancias que se encuentran en el almacen de datos.
      */
     @Override
-    public Task<Collection<E>> findAll() {
-        return this.collectionReference.get().continueWithTask(new Continuation<QuerySnapshot, Task<Collection<E>>>() {
-            @Override
-            public Task<Collection<E>> then(@NonNull Task<QuerySnapshot> task) throws Exception {
-                return Tasks.forResult(task.getResult().toObjects(eClass));
-            }
-        });
+    public Task<List<E>> findAll() {
+        return this.collectionReference.get().continueWithTask(task -> Tasks.forResult(task.getResult().toObjects(entityClass)));
     }
 
     /**
@@ -118,10 +107,7 @@ public class FireStoreRepository<E extends FirebaseEntity> implements IRepositor
      */
     @Override
     public Task<Void> delete(E entity) {
-        if (entity.getDocumentId() != null)
-            return this.collectionReference.document(entity.getDocumentId()).delete();
-        else
-            return null;
+        return Tasks.call(this.collectionReference.document(entity.getDocumentId()).delete()::getResult);
     }
 
     /**
@@ -130,13 +116,27 @@ public class FireStoreRepository<E extends FirebaseEntity> implements IRepositor
      * @param entities Son las entidades a ser borradas
      */
     @Override
-    public Task<Collection<Void>> deleteAll(Collection<E> entities) {
-        Collection<Void> entitiesList = new ArrayList<>();
-        for (E entity : entities) {
-            entitiesList.add(delete(entity).getResult());
-        }
-        return Tasks.forResult(entitiesList);
+    public Task<List<Void>> delete(List<E> entities) {
+        return Tasks.call(() -> {
+            List<Void> entitiesList = new ArrayList<>();
+            for (E entity : entities) {
+                entitiesList.add(delete(entity).getResult());
+            }
+            return entitiesList;
+        });
     }
+
+    /**
+     * Es la operacion borrar todos los elementos del almacen de datos.
+     */
+    @Override
+    public Task<Void> deleteAll() {
+        return Tasks.call(() -> {
+            this.collectionReference.getParent().delete();
+            return null;
+        });
+    }
+
 
     /**
      * Operación obtener el total de elemetos del alamcen de datos.
@@ -145,11 +145,6 @@ public class FireStoreRepository<E extends FirebaseEntity> implements IRepositor
      */
     @Override
     public Task<Integer> count() {
-        return this.collectionReference.get().continueWithTask(new Continuation<QuerySnapshot, Task<Integer>>() {
-            @Override
-            public Task<Integer> then(@NonNull Task<QuerySnapshot> task) throws Exception {
-                return Tasks.forResult(task.getResult().getDocuments().size());
-            }
-        });
+        return this.collectionReference.get().continueWithTask(task -> Tasks.forResult(task.getResult().getDocuments().size()));
     }
 }
