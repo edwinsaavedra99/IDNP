@@ -29,6 +29,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
+        <activity android:name=".view.activitys.MenuContainer" />
         <activity android:name=".view.activitys.DeportActivity" />
         <activity android:name=".view.activitys.Login" />
         <activity android:name=".view.activitys.Register" />

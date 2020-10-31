@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         usuarioAnonimo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDeportActivity();
+                openMenuContainer();
             }
         });
         //el codigo inserta datos a la coleccion -->
@@ -71,6 +71,10 @@ public class MainActivity extends AppCompatActivity {
     }
     public void openDeportActivity(){
         Intent intent = new Intent(this, DeportActivity.class);
+        startActivity(intent);
+    }
+    public void openMenuContainer(){
+        Intent intent = new Intent(this, MenuContainer.class);
         startActivity(intent);
     }
 }
