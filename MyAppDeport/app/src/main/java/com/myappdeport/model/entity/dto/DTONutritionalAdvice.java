@@ -1,9 +1,5 @@
 package com.myappdeport.model.entity.dto;
 
-import android.net.Uri;
-
-import java.io.File;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,8 +15,4 @@ public class DTONutritionalAdvice {
      * Archivo en cloud storage.
      */
     private String imageUrlCloudStorage;
-    /**
-     * Para mostrar el archivo en la interface.
-     */
-    private File image;
 }

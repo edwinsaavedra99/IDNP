@@ -4,8 +4,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.myappdeport.service.usecase.ChronometerUseCase;
-
 /**
  * Este metodo contiene diferentes casos de uso
  * Estado : En progreso

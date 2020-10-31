@@ -7,7 +7,6 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.myappdeport.model.entity.database.EActivity;
-import com.myappdeport.model.entity.database.EActivity;
 
 import java.util.List;
 

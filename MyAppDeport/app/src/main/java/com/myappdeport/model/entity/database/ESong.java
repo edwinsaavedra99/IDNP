@@ -1,12 +1,13 @@
 package com.myappdeport.model.entity.database;
 
+import androidx.room.Entity;
+
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Data
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -31,6 +32,38 @@ public class ESong extends EntityDatabase {
         this.name = name;
         this.author = author;
         this.duration = duration;
+        this.songRoute = songRoute;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getAuthor() {
+        return this.author;
+    }
+
+    public String getDuration() {
+        return this.duration;
+    }
+
+    public String getSongRoute() {
+        return this.songRoute;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
+    public void setSongRoute(String songRoute) {
         this.songRoute = songRoute;
     }
 }

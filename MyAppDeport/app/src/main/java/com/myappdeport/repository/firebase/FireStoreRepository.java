@@ -18,11 +18,11 @@ import java.util.Optional;
 
 public abstract class FireStoreRepository<E extends EntityDatabase> implements IRepository<E, String> {
 
-    private static final String TAG = FireStoreRepository.class.getSimpleName();
+    protected String TAG = FireStoreRepository.class.getSimpleName();
 
-    private final CollectionReference collectionReference;
+    protected final CollectionReference collectionReference;
 
-    private final Class<E> entityClass;
+    protected final Class<E> entityClass;
 
     public FireStoreRepository(Class<E> entityClass) {
         this.entityClass = entityClass;

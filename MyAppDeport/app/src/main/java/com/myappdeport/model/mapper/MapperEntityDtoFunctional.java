@@ -1,10 +1,5 @@
 package com.myappdeport.model.mapper;
 
-import com.myappdeport.model.entity.database.EPosition;
-import com.myappdeport.model.entity.dto.DTOPosition;
-
-import org.mapstruct.MapperConfig;
-
 public interface MapperEntityDtoFunctional<Entity, DTO, Functional> {
     /**
      * Transforma de una entidad a un dto.

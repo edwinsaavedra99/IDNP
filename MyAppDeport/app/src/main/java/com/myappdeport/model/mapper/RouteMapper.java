@@ -4,15 +4,12 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import com.myappdeport.model.entity.database.EPosition;
 import com.myappdeport.model.entity.database.ERoute;
-import com.myappdeport.model.entity.dto.DTOPosition;
 import com.myappdeport.model.entity.dto.DTORoute;
 import com.myappdeport.model.entity.funcional.Position;
 import com.myappdeport.model.entity.funcional.Route;
 
 import org.mapstruct.InheritInverseConfiguration;
-import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;

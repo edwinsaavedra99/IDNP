@@ -7,7 +7,6 @@ import com.myappdeport.model.entity.database.EActivity;
 import com.myappdeport.model.entity.database.ERoute;
 
 import lombok.Data;
-import lombok.ToString;
 
 @Data
 public class ActivityAndRoute {

@@ -1,6 +1,5 @@
 package com.myappdeport.model.entity.database;
 
-import androidx.annotation.NonNull;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 

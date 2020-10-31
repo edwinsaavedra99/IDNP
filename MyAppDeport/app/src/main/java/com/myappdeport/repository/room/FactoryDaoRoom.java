@@ -8,6 +8,9 @@ import com.myappdeport.model.entity.database.ERoute;
 import com.myappdeport.model.entity.database.EntityDatabase;
 import com.myappdeport.repository.room.dao.IRoomDao;
 
+/**
+ * Aplicar correcciones de genericos para cada doa personalizado.
+ */
 public abstract class FactoryDaoRoom {
 
     @SuppressWarnings("unchecked")
