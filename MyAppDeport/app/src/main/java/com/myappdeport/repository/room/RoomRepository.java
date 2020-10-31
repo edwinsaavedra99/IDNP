@@ -13,6 +13,7 @@ import com.myappdeport.repository.room.dao.IRoomDao;
 
 import java.util.List;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Optional;
 
 public abstract class RoomRepository<E extends EntityDatabase> implements IRepository<E, Long> {
@@ -34,7 +35,7 @@ public abstract class RoomRepository<E extends EntityDatabase> implements IRepos
     @Override
     public Task<E> save(E entity) {
         return Tasks.call(() -> this.roomDao.insert(entity)).continueWithTask(task -> {
-            entity.setId(task.getResult());
+            entity.setId(Objects.requireNonNull(task.getResult()));
             return Tasks.forResult(entity);
         });
     }
@@ -64,7 +65,7 @@ public abstract class RoomRepository<E extends EntityDatabase> implements IRepos
                 () -> this.roomDao.insertAll(entities)
         ).continueWithTask(task -> {
             Iterator<E> entityIterator = entities.iterator();
-            Iterator<Long> identifierIterator = task.getResult().iterator();
+            Iterator<Long> identifierIterator = Objects.requireNonNull(task.getResult()).iterator();
             while (entityIterator.hasNext() && identifierIterator.hasNext()) {
                 entityIterator.next().setId(identifierIterator.next());
             }

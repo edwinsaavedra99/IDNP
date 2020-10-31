@@ -15,7 +15,8 @@ public class ActivityAndRoute {
     private EActivity eActivity;
     @Relation(
             parentColumn = "id",
-            entityColumn = "id"
+            entityColumn = "id",
+            entity = ERoute.class
     )
     private ERoute eRoute;
 }

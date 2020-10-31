@@ -2,23 +2,18 @@ package com.myappdeport.repository.firebase;
 
 import android.os.Build;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
-import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.myappdeport.model.entity.database.EntityDatabase;
 import com.myappdeport.repository.IRepository;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public abstract class FireStoreRepository<E extends EntityDatabase> implements IRepository<E, String> {
@@ -43,7 +38,7 @@ public abstract class FireStoreRepository<E extends EntityDatabase> implements I
     @Override
     public Task<E> save(E entity) {
         return this.collectionReference.add(entity).continueWithTask(task -> {
-            entity.setDocumentId(task.getResult().getId());
+            entity.setDocumentId(Objects.requireNonNull(task.getResult()).getId());
             return Tasks.forResult(entity);
         });
     }
@@ -87,7 +82,7 @@ public abstract class FireStoreRepository<E extends EntityDatabase> implements I
     @Override
     @RequiresApi(api = Build.VERSION_CODES.N)
     public Task<Optional<E>> findById(String identifier) {
-        return this.collectionReference.document(identifier).get().continueWithTask(task -> Tasks.forResult(Optional.of(task.getResult().toObject(entityClass))));
+        return this.collectionReference.document(identifier).get().continueWithTask(task -> Tasks.forResult(Optional.ofNullable(Objects.requireNonNull(task.getResult()).toObject(entityClass))));
     }
 
     /**
@@ -97,7 +92,7 @@ public abstract class FireStoreRepository<E extends EntityDatabase> implements I
      */
     @Override
     public Task<List<E>> findAll() {
-        return this.collectionReference.get().continueWithTask(task -> Tasks.forResult(task.getResult().toObjects(entityClass)));
+        return this.collectionReference.get().continueWithTask(task -> Tasks.forResult(Objects.requireNonNull(task.getResult()).toObjects(entityClass)));
     }
 
     /**
@@ -132,7 +127,7 @@ public abstract class FireStoreRepository<E extends EntityDatabase> implements I
     @Override
     public Task<Void> deleteAll() {
         return Tasks.call(() -> {
-            this.collectionReference.getParent().delete();
+            Objects.requireNonNull(this.collectionReference.getParent()).delete();
             return null;
         });
     }
@@ -145,6 +140,6 @@ public abstract class FireStoreRepository<E extends EntityDatabase> implements I
      */
     @Override
     public Task<Integer> count() {
-        return this.collectionReference.get().continueWithTask(task -> Tasks.forResult(task.getResult().getDocuments().size()));
+        return this.collectionReference.get().continueWithTask(task -> Tasks.forResult(Objects.requireNonNull(task.getResult()).getDocuments().size()));
     }
 }

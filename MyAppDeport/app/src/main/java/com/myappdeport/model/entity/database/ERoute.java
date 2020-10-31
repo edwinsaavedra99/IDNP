@@ -6,12 +6,10 @@ import androidx.room.Ignore;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -54,5 +52,29 @@ public class ERoute extends EntityDatabase {
      */
     public ERoute(String documentId, Double totalDistance, Double rhythm, List<String> positionDocumentIds) {
         this(null, documentId, totalDistance, rhythm, positionDocumentIds);
+    }
+
+    public Double getTotalDistance() {
+        return this.totalDistance;
+    }
+
+    public Double getRhythm() {
+        return this.rhythm;
+    }
+
+    public List<String> getPositionDocumentIds() {
+        return this.positionDocumentIds;
+    }
+
+    public void setTotalDistance(Double totalDistance) {
+        this.totalDistance = totalDistance;
+    }
+
+    public void setRhythm(Double rhythm) {
+        this.rhythm = rhythm;
+    }
+
+    public void setPositionDocumentIds(List<String> positionDocumentIds) {
+        this.positionDocumentIds = positionDocumentIds;
     }
 }

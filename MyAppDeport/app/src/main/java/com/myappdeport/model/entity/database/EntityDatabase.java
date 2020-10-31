@@ -22,7 +22,6 @@ public abstract class EntityDatabase {
      * - Excluido de la base de datos Firebase.
      * - Incluido en la base de datos SQLite.
      */
-    @NonNull
     @PrimaryKey(autoGenerate = true)
     protected Long id;
     /**
@@ -38,7 +37,6 @@ public abstract class EntityDatabase {
         return this.documentId;
     }
 
-    @NonNull
     @Exclude
     public Long getId() {
         return this.id;

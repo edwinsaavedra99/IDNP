@@ -10,7 +10,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
 @Mapper
-public interface PositionMapper {
+public interface PositionMapper extends MapperEntityDtoFunctional<EPosition, DTOPosition, Position> {
+    @Override
     @Mappings({
             @Mapping(target = "latitude", source = "position.latitude", defaultValue = "0.0"),
             @Mapping(target = "longitude", source = "position.longitude", defaultValue = "0.0"),
@@ -18,9 +19,15 @@ public interface PositionMapper {
     })
     DTOPosition entityToDto(EPosition position);
 
+    @Override
     @InheritInverseConfiguration(name = "entityToDto")
+    @Mappings({
+            @Mapping(target = "id", ignore = true),
+            @Mapping(target = "documentId", ignore = true)
+    })
     EPosition dtoToEntity(DTOPosition position);
 
+    @Override
     @Mappings({
             @Mapping(target = "id", source = "position.id"),
             @Mapping(target = "documentId", source = "position.documentId"),
@@ -30,9 +37,11 @@ public interface PositionMapper {
     })
     Position entityToFunctional(EPosition position);
 
+    @Override
     @InheritInverseConfiguration(name = "entityToFunctional")
     EPosition functionalToEntity(Position position);
 
+    @Override
     @Mappings({
             @Mapping(target = "latitude", source = "position.latitude", defaultValue = "0.0"),
             @Mapping(target = "longitude", source = "position.longitude", defaultValue = "0.0"),
@@ -40,6 +49,11 @@ public interface PositionMapper {
     })
     DTOPosition functionalToDto(Position position);
 
+    @Override
     @InheritInverseConfiguration(name = "functionalToDto")
+    @Mappings({
+            @Mapping(target = "id", ignore = true),
+            @Mapping(target = "documentId", ignore = true)
+    })
     Position dtoToFunctional(DTOPosition position);
 }

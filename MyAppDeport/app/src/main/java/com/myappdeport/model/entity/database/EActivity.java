@@ -4,12 +4,10 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(callSuper = true)
@@ -18,14 +16,14 @@ import lombok.ToString;
 public class EActivity extends EntityDatabase {
     private String startTime;
     private String endTime;
-    private Integer kiloCalories;
+    private Double kiloCalories;
     /**
      * Id del documento route firebase.
      */
     @Ignore
     private String routeDocumentId;
 
-    public EActivity(Long id, String documentId, String startTime, String endTime, Integer kiloCalories, String routeDocumentId) {
+    public EActivity(Long id, String documentId, String startTime, String endTime, Double kiloCalories, String routeDocumentId) {
         super(id, documentId);
         this.startTime = startTime;
         this.endTime = endTime;
@@ -41,7 +39,7 @@ public class EActivity extends EntityDatabase {
      * @param endTime      Es la hora de finalización.
      * @param kiloCalories Son las kilocalorias invertidas.
      */
-    public EActivity(Long id, String startTime, String endTime, Integer kiloCalories) {
+    public EActivity(Long id, String startTime, String endTime, Double kiloCalories) {
         this(id, null, startTime, endTime, kiloCalories, null);
     }
 
@@ -54,8 +52,40 @@ public class EActivity extends EntityDatabase {
      * @param kiloCalories    Son las kilocalorias invertidas.
      * @param routeDocumentId Es el id del documento de ruta.
      */
-    public EActivity(String documentId, String startTime, String endTime, Integer kiloCalories, String routeDocumentId) {
+    public EActivity(String documentId, String startTime, String endTime, Double kiloCalories, String routeDocumentId) {
         this(null, documentId, startTime, endTime, kiloCalories, routeDocumentId);
+    }
+
+    public String getStartTime() {
+        return this.startTime;
+    }
+
+    public String getEndTime() {
+        return this.endTime;
+    }
+
+    public Double getKiloCalories() {
+        return this.kiloCalories;
+    }
+
+    public String getRouteDocumentId() {
+        return this.routeDocumentId;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public void setKiloCalories(Double kiloCalories) {
+        this.kiloCalories = kiloCalories;
+    }
+
+    public void setRouteDocumentId(String routeDocumentId) {
+        this.routeDocumentId = routeDocumentId;
     }
 }
 

@@ -1,5 +1,6 @@
 package com.myappdeport.repository.room.dao;
 
+import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -10,6 +11,7 @@ import com.myappdeport.model.entity.database.ERoute;
 
 import java.util.List;
 
+@Dao
 public abstract class RouteRoomDao implements IRoomDao<ERoute, Long> {
     @Override
     @Query("SELECT * FROM ERoute")

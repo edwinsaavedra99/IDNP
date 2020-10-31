@@ -3,12 +3,10 @@ package com.myappdeport.model.entity.database;
 import androidx.room.Entity;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -60,4 +58,27 @@ public class EPosition extends EntityDatabase {
     }
 
 
+    public Double getLatitude() {
+        return this.latitude;
+    }
+
+    public Double getLongitude() {
+        return this.longitude;
+    }
+
+    public Double getDistance() {
+        return this.distance;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public void setDistance(Double distance) {
+        this.distance = distance;
+    }
 }
