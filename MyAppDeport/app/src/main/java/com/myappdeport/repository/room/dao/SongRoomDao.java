@@ -1,5 +1,6 @@
 package com.myappdeport.repository.room.dao;
 
+import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -9,6 +10,7 @@ import com.myappdeport.model.entity.database.ESong;
 
 import java.util.List;
 
+@Dao
 public abstract class SongRoomDao implements IRoomDao<ESong, Long> {
     @Override
     @Query("SELECT * FROM ESong")

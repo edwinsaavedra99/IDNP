@@ -50,8 +50,8 @@ public interface ActivityMapper extends MapperEntityDtoFunctional<EActivity, DTO
     @Mappings({
             @Mapping(target = "id", source = "activity.id"),
             @Mapping(target = "documentId", source = "activity.documentId"),
-            @Mapping(target = "startTime", source = "activity.startTime", dateFormat = "hh:mm:ss"),
-            @Mapping(target = "endTime", source = "activity.endTime", dateFormat = "hh:mm:ss"),
+            @Mapping(target = "startTime", source = "activity.startTime", dateFormat = "HH:mm:ss"),
+            @Mapping(target = "endTime", source = "activity.endTime", dateFormat = "HH:mm:ss"),
             @Mapping(target = "kiloCalories", source = "activity.kiloCalories"),
             @Mapping(target = "routeDocumentId", source = "activity.route.documentId")
     })
@@ -75,8 +75,8 @@ public interface ActivityMapper extends MapperEntityDtoFunctional<EActivity, DTO
      */
     @Override
     @Mappings({
-            @Mapping(target = "startTime", source = "activity.startTime", dateFormat = "hh:mm:ss", defaultValue = "00:00:00"),
-            @Mapping(target = "endTime", source = "activity.endTime", dateFormat = "hh:mm:ss", defaultValue = "00:00:00"),
+            @Mapping(target = "startTime", source = "activity.startTime", dateFormat = "HH:mm:ss", defaultValue = "00:00:00"),
+            @Mapping(target = "endTime", source = "activity.endTime", dateFormat = "HH:mm:ss", defaultValue = "00:00:00"),
             @Mapping(target = "kiloCalories", source = "activity.kiloCalories", defaultValue = "0.0"),
             @Mapping(target = "dtoRoute", source = "activity.route")
     })

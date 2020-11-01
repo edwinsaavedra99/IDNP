@@ -30,41 +30,45 @@ public class PositionMapperTest {
     @DisplayName("Mapper: Entity to DTO")
     void entityToDto() {
         DTOPosition positionMapper = this.mapper.entityToDto(this.ePosition);
-        assertEquals(positionMapper, this.dtoPosition, "La comprobación de tipos no se realizo de forma exitosa.");
+        assertEquals(positionMapper, this.dtoPosition, "La transformación no fue exitosa.");
     }
 
     @Test
     @DisplayName("Mapper: DTO to Entity")
     void dtoToEntity() {
         EPosition positionMapper = this.mapper.dtoToEntity(this.dtoPosition);
-        assertEquals(positionMapper, new EPosition(null, null, positionMapper.getLatitude(), positionMapper.getLongitude(), positionMapper.getDistance()), "La comprobación de tipos no se realizo de forma exitosa.");
+        this.ePosition.setId(null);
+        this.ePosition.setDocumentId(null);
+        assertEquals(positionMapper, this.ePosition, "La transformación no fue exitosa.");
     }
 
     @Test
     @DisplayName("Mapper: Entity to Functional")
     void entityToFunctional() {
         Position positionMapper = mapper.entityToFunctional(this.ePosition);
-        assertEquals(positionMapper, this.position, "La comprobación de tipos no se realizo de forma exitosa.");
+        assertEquals(positionMapper, this.position, "La transformación no fue exitosa.");
     }
 
     @Test
     @DisplayName("Mapper: Functional to Entity")
     void functionalToEntity() {
         EPosition positionMapper = mapper.functionalToEntity(this.position);
-        assertEquals(positionMapper, this.ePosition, "La comprobación de tipos no se realizo de forma exitosa.");
+        assertEquals(positionMapper, this.ePosition, "La transformación no fue exitosa.");
     }
 
     @Test
     @DisplayName("Mapper: Functional to DTO")
     void functionalToDto() {
         DTOPosition positionMapper = mapper.functionalToDto(this.position);
-        assertEquals(positionMapper, this.dtoPosition, "La comprobación de tipos no se realizo de forma exitosa.");
+        assertEquals(positionMapper, this.dtoPosition, "La transformación no fue exitosa.");
     }
 
     @Test
     @DisplayName("Mapper: DTO to Functional")
     void dtoToFunctional() {
         Position positionMapper = mapper.dtoToFunctional(this.dtoPosition);
-        assertEquals(positionMapper, new Position(this.position.getLatitude(), this.position.getLongitude(), this.position.getDistance()), "La comprobación de tipos no se realizo de forma exitosa.");
+        this.position.setId(null);
+        this.position.setDocumentId(null);
+        assertEquals(positionMapper, this.position, "La transformación no fue exitosa.");
     }
 }

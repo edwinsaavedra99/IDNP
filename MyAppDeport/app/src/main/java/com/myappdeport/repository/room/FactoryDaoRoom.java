@@ -5,6 +5,7 @@ import android.content.Context;
 import com.myappdeport.model.entity.database.EActivity;
 import com.myappdeport.model.entity.database.EPosition;
 import com.myappdeport.model.entity.database.ERoute;
+import com.myappdeport.model.entity.database.ESong;
 import com.myappdeport.model.entity.database.EntityDatabase;
 import com.myappdeport.repository.room.dao.IRoomDao;
 
@@ -22,6 +23,8 @@ public abstract class FactoryDaoRoom {
             return (IRoomDao<E, I>) connectionRoomDatabase.getActivityRoomDao();
         } else if (entityClass.getSimpleName().equals(ERoute.class.getSimpleName())) {
             return (IRoomDao<E, I>) connectionRoomDatabase.getRouteRoomDao();
+        } else if (entityClass.getSimpleName().equals(ESong.class.getSimpleName())) {
+            return (IRoomDao<E, I>) connectionRoomDatabase.getSongRoomDao();
         } else {
             return null;
         }

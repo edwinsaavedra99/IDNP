@@ -1,13 +1,23 @@
 package com.myappdeport.view.activitys;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.myappdeport.R;
+import com.myappdeport.model.entity.database.EPosition;
+import com.myappdeport.model.entity.database.ERoute;
+import com.myappdeport.repository.firebase.PositionFireStoreRepository;
+import com.myappdeport.repository.firebase.RouteFireStoreRepository;
+
+import java.util.Collections;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -16,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private Button registrate;
     private Button usuarioAnonimo;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,37 +54,45 @@ public class MainActivity extends AppCompatActivity {
                 openMenuContainer();
             }
         });
-        //el codigo inserta datos a la coleccion -->
-        /*try {
-            IRepository<PointFirebase> activityRepository = ManagerSingletonRepository.getInstance(PointFirebase.class);
-            PointFirebase pointFirebase = new PointFirebase(12.3, 45.5, 32.4);
-            Task<PointFirebase> pointTask = activityRepository.save(pointFirebase);
-            pointTask.addOnSuccessListener(new OnSuccessListener<PointFirebase>() {
-                @Override
-                public void onSuccess(PointFirebase pointFirebase) {
-                    Log.i(TAG, pointFirebase.toString());
+        PositionFireStoreRepository repository = PositionFireStoreRepository.getInstance();
+        RouteFireStoreRepository repository2 = RouteFireStoreRepository.getInstance();
+        repository.save(new EPosition(12.4, 32.4, 23.5)).addOnSuccessListener(
+                position -> {
+                    Log.e(TAG, position.toString());
                 }
+        ).continueWithTask(task -> {
+            return repository2.save(new ERoute(12.3, 32.4, Collections.singletonList(task.getResult().getDocumentId()), Collections.singletonList(task.getResult())));
+        }).addOnSuccessListener(
+                eRoute -> {
+                    Log.e(TAG, eRoute.toString());
+                }
+        ).continueWithTask(task -> {
+            return repository2.getRouteWithPositions(task.getResult().getDocumentId());
+        }).addOnSuccessListener(optionalERoute -> {
+            optionalERoute.ifPresent(eRoute -> {
+                for (EPosition ePosition : eRoute.getPositions())
+                    Log.e(TAG, ePosition.toString());
             });
-        } catch (InstantiationException e) {
-            Log.e(TAG, "Instantiation Exception: ", e.getCause());
-        } catch (IllegalAccessException e) {
-            Log.e(TAG, "Illegal Access Exception: ", e.getCause());
-        }*/
+        });
+
     }
 
-    public void openIniciarSesion(){
+    public void openIniciarSesion() {
         Intent intent = new Intent(this, Login.class);
         startActivity(intent);
     }
-    public void openRegister(){
+
+    public void openRegister() {
         Intent intent = new Intent(this, Register.class);
         startActivity(intent);
     }
-    public void openDeportActivity(){
+
+    public void openDeportActivity() {
         Intent intent = new Intent(this, DeportActivity.class);
         startActivity(intent);
     }
-    public void openMenuContainer(){
+
+    public void openMenuContainer() {
         Intent intent = new Intent(this, MenuContainer.class);
         startActivity(intent);
     }

@@ -3,6 +3,8 @@ package com.myappdeport.model.entity.database;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 
+import com.google.firebase.firestore.Exclude;
+
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -11,7 +13,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Entity
@@ -23,6 +24,11 @@ public class ERoute extends EntityDatabase {
      */
     @Ignore
     private List<String> positionDocumentIds;
+    /**
+     * Sin referencia a sqlite y a firebase
+     */
+    @Ignore
+    private List<EPosition> positions;
 
     public ERoute(Long id, String documentId, Double totalDistance, Double rhythm, List<String> positionDocumentIds) {
         super(id, documentId);
@@ -54,6 +60,11 @@ public class ERoute extends EntityDatabase {
         this(null, documentId, totalDistance, rhythm, positionDocumentIds);
     }
 
+
+    public ERoute() {
+
+    }
+
     public Double getTotalDistance() {
         return this.totalDistance;
     }
@@ -76,5 +87,14 @@ public class ERoute extends EntityDatabase {
 
     public void setPositionDocumentIds(List<String> positionDocumentIds) {
         this.positionDocumentIds = positionDocumentIds;
+    }
+
+    @Exclude
+    public List<EPosition> getPositions() {
+        return this.positions;
+    }
+
+    public void setPositions(List<EPosition> positions) {
+        this.positions = positions;
     }
 }
