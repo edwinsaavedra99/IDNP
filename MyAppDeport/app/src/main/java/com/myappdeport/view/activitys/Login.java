@@ -85,7 +85,6 @@ public class Login extends AppCompatActivity {
                     getGoogleAuthCredential(googleSignInAccount);
                 }
             } catch (ApiException e) {
-                System.out.println("*************apiException*********+");
                 logErrorMessage(e.getMessage());
             }
         }
@@ -122,7 +121,7 @@ public class Login extends AppCompatActivity {
     }
 
     private void goToMainActivity(EUser user) {
-        Intent intent = new Intent(Login.this, DeportActivity.class);
+        Intent intent = new Intent(Login.this, MenuContainer.class);
         intent.putExtra(USER, user);
         startActivity(intent);
         finish();
