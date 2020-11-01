@@ -19,6 +19,8 @@ import com.myappdeport.repository.firebase.RouteFireStoreRepository;
 import java.util.Collections;
 import java.util.List;
 
+import lombok.SneakyThrows;
+
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private Button registrate;
     private Button usuarioAnonimo;
 
+    @SneakyThrows
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         });
         PositionFireStoreRepository repository = PositionFireStoreRepository.getInstance();
         RouteFireStoreRepository repository2 = RouteFireStoreRepository.getInstance();
+        /*
         repository.save(new EPosition(12.4, 32.4, 23.5)).addOnSuccessListener(
                 position -> {
                     Log.e(TAG, position.toString());
@@ -73,6 +77,12 @@ public class MainActivity extends AppCompatActivity {
                 for (EPosition ePosition : eRoute.getPositions())
                     Log.e(TAG, ePosition.toString());
             });
+        });
+    */
+        repository2.saveWithPositions(new ERoute(12.3, 32.4, null, Collections.singletonList(new EPosition(12.4, 32.4, 23.5)))).addOnSuccessListener(eRoute -> {
+            Log.e(TAG, eRoute.toString());
+        }).addOnFailureListener(e -> {
+            Log.e(TAG, e.getMessage(), e.getCause());
         });
 
     }

@@ -31,7 +31,7 @@ public interface IRepository<E, I> {
      * @param entities Son todos los objetos a ser guardados.
      * @return Son los objetos que fueron persistidos con ciertos cambios.
      */
-    Task<List<E>> saveAll(List<E> entities);
+    Task<List<E>> saveAll(List<E> entities) throws InstantiationException, IllegalAccessException;
 
     /**
      * Operación obtener por su id del almacen de datos.

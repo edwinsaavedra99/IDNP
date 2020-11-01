@@ -7,7 +7,9 @@ import androidx.annotation.RequiresApi;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.WriteBatch;
 import com.myappdeport.model.entity.database.EntityDatabase;
 import com.myappdeport.repository.IRepository;
 
@@ -64,12 +66,16 @@ public abstract class FireStoreRepository<E extends EntityDatabase> implements I
      * @return Son los objetos que fueron persistidos con ciertos cambios.
      */
     @Override
-    public Task<List<E>> saveAll(List<E> entities) {
-        List<E> entitiesList = new ArrayList<>();
+    public Task<List<E>> saveAll(List<E> entities) throws InstantiationException, IllegalAccessException {
+        WriteBatch batch = FirebaseFirestore.getInstance().batch();
         for (E entity : entities) {
-            entitiesList.add(save(entity).getResult());
+            DocumentReference documentReference = collectionReference.document();
+            entity.setDocumentId(documentReference.getId());
+            batch.set(documentReference, entity);
         }
-        return Tasks.forResult(entitiesList);
+        return batch.commit().continueWithTask(task -> {
+            return Tasks.forResult(entities);
+        });
     }
 
     /**
