@@ -8,7 +8,6 @@
     android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_alignParentEnd="true"
         android:layout_margin="10dp"
         android:id="@+id/cardOneSearch"
         android:background="@drawable/fondo_circular"
@@ -33,7 +32,6 @@
 
 
     <LinearLayout
-        android:layout_weight="1"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:background="@drawable/shape"

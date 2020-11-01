@@ -9,6 +9,14 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <!--
+         The INTERNET permissions are not required to use
+         Google Auth, but you must specify either coarse or fine
+         location permissions for the "Login and Register" functionality.
+    -->
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
