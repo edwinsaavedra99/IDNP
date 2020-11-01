@@ -3,12 +3,20 @@ package com.myappdeport.view.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.myappdeport.R;
+import com.myappdeport.view.adapters.AdapterFood;
+import com.myappdeport.view.adapters.AdapterStatics;
+import com.myappdeport.view.killme.Food;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,7 +24,10 @@ import com.myappdeport.R;
  * create an instance of this fragment.
  */
 public class EatingTips extends Fragment {
-
+    private List<Food> foodList;
+    private RecyclerView recyclerView;
+    private AdapterFood adapterFood;
+    private View view;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -61,6 +72,23 @@ public class EatingTips extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_eating_tips, container, false);
+        view = inflater.inflate(R.layout.fragment_eating_tips, container, false);
+        init();
+        return view;
+    }
+    private void init(){
+        foodList = new ArrayList<>();
+        foodList.add( new Food("Ensalada de Palta","Esta es un rica ensalada de palta por ahora","asdasd"));
+        foodList.add( new Food("Ensalada de Papa","Esta es un rica ensalada de adsasdasdasdasd por ahora","asdasd"));
+        foodList.add( new Food("Ensalada de Mais","Esta es un rica ensalada de paltaasdasdasdasd por ahora","asdasd"));
+        foodList.add( new Food("Ensalada de Ajo","Esta es un rica ensalada de palta poasdasdasdasdasdr ahora","asdasd"));
+
+        adapterFood = new AdapterFood(foodList,getContext());
+
+        recyclerView = view.findViewById(R.id.recicler_foos);
+        recyclerView.setLayoutManager( new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(adapterFood);
+    }
+    private void chargeData(){
     }
 }

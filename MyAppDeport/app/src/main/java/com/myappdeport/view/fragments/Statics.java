@@ -3,12 +3,19 @@ package com.myappdeport.view.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.myappdeport.R;
+import com.myappdeport.view.adapters.AdapterStatics;
+import com.myappdeport.view.killme.Activiti;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,7 +23,10 @@ import com.myappdeport.R;
  * create an instance of this fragment.
  */
 public class Statics extends Fragment {
-
+    private List<Activiti> activitiList;
+    private RecyclerView recyclerView;
+    private AdapterStatics adapterStatics;
+    View view;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -61,6 +71,28 @@ public class Statics extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_statics, container, false);
+        view = inflater.inflate(R.layout.fragment_statics, container, false);
+        init();
+        return view;
+
     }
-}
+
+    private void init(){
+        //obtencion de data de base de datoss
+        activitiList = new ArrayList<Activiti>();
+        activitiList.add( new Activiti("ACTIVIDAD 1","ESTA ES UA DESCRIPCION","12","MON","1.03km"));
+        activitiList.add( new Activiti("ACTIVIDAD 2","ESTA ES UA DESCRIPCION aaaaaa","13","WEN","10.03km"));
+        activitiList.add( new Activiti("ACTIVIDAD 3","ESTA ES UA DESCRIPCION bbbbbb","14","FRI","0.03km"));
+
+        adapterStatics = new AdapterStatics(activitiList,getContext());
+        // carga de data en UI
+        recyclerView = view.findViewById(R.id.recicler_estatics);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(this.adapterStatics);
+
+    }
+    private void chargeData(){
+
+    }
+
+    }
