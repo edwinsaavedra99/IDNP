@@ -22,7 +22,7 @@ class AuthRepository {
     private FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
     private CollectionReference usersRef = rootRef.collection(USERS);
 
-    public MutableLiveData<EUser> firebaseSignInWithGoogle(AuthCredential googleAuthCredential) {
+    public MutableLiveData<EUser> firebaseSignIn(AuthCredential googleAuthCredential) {
         MutableLiveData<EUser> authenticatedUserMutableLiveData = new MutableLiveData<>();
         firebaseAuth.signInWithCredential(googleAuthCredential).addOnCompleteListener(authTask -> {
             if (authTask.isSuccessful()) {
@@ -43,7 +43,7 @@ class AuthRepository {
         return authenticatedUserMutableLiveData;
     }
 
-    public MutableLiveData<EUser> firebaseSignInWithFacebook(AuthCredential fbAuthCredential) {
+    /*public MutableLiveData<EUser> firebaseSignInWithFacebook(AuthCredential fbAuthCredential) {
         MutableLiveData<EUser> authenticatedUserMutableLiveData = new MutableLiveData<>();
         firebaseAuth.signInWithCredential(fbAuthCredential).addOnCompleteListener(authTask -> {
             if (authTask.isSuccessful()) {
@@ -62,7 +62,7 @@ class AuthRepository {
             }
         });
         return authenticatedUserMutableLiveData;
-    }
+    }*/
 
     public MutableLiveData<EUser> createUserInFirestoreIfNotExists(EUser authenticatedUser) {
         MutableLiveData<EUser> newUserMutableLiveData = new MutableLiveData<>();

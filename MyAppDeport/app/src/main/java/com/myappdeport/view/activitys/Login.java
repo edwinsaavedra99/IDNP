@@ -180,7 +180,7 @@ public class Login extends AppCompatActivity {
     }
 
     private void signInWithFacebookAuthCredential(AuthCredential fbAuthCredential) {
-        authViewModel.signInWithFacebook(fbAuthCredential);
+        authViewModel.signIn(fbAuthCredential);
         authViewModel.authenticatedUserLiveData.observe(this, authenticatedUser -> {
             if (authenticatedUser.isNew) {
                 createNewUser(authenticatedUser);
@@ -191,7 +191,7 @@ public class Login extends AppCompatActivity {
     }
 
     private void signInWithGoogleAuthCredential(AuthCredential googleAuthCredential) {
-        authViewModel.signInWithGoogle(googleAuthCredential);
+        authViewModel.signIn(googleAuthCredential);
         authViewModel.authenticatedUserLiveData.observe(this, authenticatedUser -> {
             if (authenticatedUser.isNew) {
                 createNewUser(authenticatedUser);

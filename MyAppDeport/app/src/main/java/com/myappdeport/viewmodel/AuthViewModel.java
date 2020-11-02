@@ -19,12 +19,12 @@ public class AuthViewModel extends AndroidViewModel {
         authRepository = new AuthRepository();
     }
 
-    public void signInWithGoogle(AuthCredential googleAuthCredential) {
-        authenticatedUserLiveData = authRepository.firebaseSignInWithGoogle(googleAuthCredential);
+    public void signIn(AuthCredential uiAuthCredential) {
+        authenticatedUserLiveData = authRepository.firebaseSignIn(uiAuthCredential);
     }
-    public void signInWithFacebook(AuthCredential facebookAuthCredential) {
-        authenticatedUserLiveData = authRepository.firebaseSignInWithGoogle(facebookAuthCredential);
-    }
+    /*public void signInWithFacebook(AuthCredential facebookAuthCredential) {
+        authenticatedUserLiveData = authRepository.firebaseSignIn(facebookAuthCredential);
+    }*/
     public void createUser(EUser authenticatedUser) {
         createdUserLiveData = authRepository.createUserInFirestoreIfNotExists(authenticatedUser);
     }

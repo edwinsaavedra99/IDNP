@@ -2,12 +2,18 @@ package com.myappdeport.view.activitys;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.myappdeport.R;
@@ -19,6 +25,8 @@ import com.myappdeport.view.fragments.Statics;
 
 public class MenuContainer extends AppCompatActivity {
 
+    private static final String TAG = "MenuContainer";
+    private static final int PERMISSION_REQUEST_CODE_EXTERNAL_STORAGE = 1;
     EatingTips eatingTips = new EatingTips();
     MusicPlayer musicPlayer = new MusicPlayer();
     Statics statics = new Statics();
@@ -38,7 +46,7 @@ public class MenuContainer extends AppCompatActivity {
         loadFragment(maps);
 
         bottomNavigationView.setSelectedItemId(R.id.item3);
-
+        permits();
     }
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -71,5 +79,38 @@ public class MenuContainer extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, fragment);
         transaction.commit();
+    }
+
+    public void permits(){
+        if (Build.VERSION.SDK_INT >= 23){
+            if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){ // Permits ready
+                display();
+                Log.println(Log.INFO,TAG,"API >= 23");
+            } else{
+                if(shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) // Message of error
+                    Toast.makeText(getApplicationContext(), "External storage and camera permission required to read media", Toast.LENGTH_SHORT).show();
+                requestPermissions(new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE_EXTERNAL_STORAGE); // Callback for permits
+            }
+        } else {
+            Log.println(Log.INFO,TAG,"API < 23");
+            display();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
+        if(requestCode == PERMISSION_REQUEST_CODE_EXTERNAL_STORAGE){
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(getApplicationContext(), "External read permission", Toast.LENGTH_SHORT).show();
+                display();
+            }else {
+                Toast.makeText(getApplicationContext(), "External read permission has not been granted, cannot open media", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+    void display(){
+        //get repository
     }
 }
