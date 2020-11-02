@@ -43,6 +43,27 @@ class AuthRepository {
         return authenticatedUserMutableLiveData;
     }
 
+    public MutableLiveData<EUser> firebaseSignInWithFacebook(AuthCredential fbAuthCredential) {
+        MutableLiveData<EUser> authenticatedUserMutableLiveData = new MutableLiveData<>();
+        firebaseAuth.signInWithCredential(fbAuthCredential).addOnCompleteListener(authTask -> {
+            if (authTask.isSuccessful()) {
+                boolean isNewUser = authTask.getResult().getAdditionalUserInfo().isNewUser();
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                if (firebaseUser != null) {
+                    String uid = firebaseUser.getUid();
+                    String name = firebaseUser.getDisplayName();
+                    String email = firebaseUser.getEmail();
+                    EUser user = new EUser(uid, name, email);
+                    user.isNew = isNewUser;
+                    authenticatedUserMutableLiveData.setValue(user);
+                }
+            } else {
+                logErrorMessage(authTask.getException().getMessage());
+            }
+        });
+        return authenticatedUserMutableLiveData;
+    }
+
     public MutableLiveData<EUser> createUserInFirestoreIfNotExists(EUser authenticatedUser) {
         MutableLiveData<EUser> newUserMutableLiveData = new MutableLiveData<>();
         DocumentReference uidRef = usersRef.document(authenticatedUser.uid);

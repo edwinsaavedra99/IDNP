@@ -62,4 +62,6 @@ dependencies {
     //noinspection LifecycleAnnotationProcessorWithJava8
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:2.2.0"
 
+    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
+
 }
