@@ -41,15 +41,13 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<Double> getData(){
         ArrayList<Double> doubleArrayList = new ArrayList<>();
-        doubleArrayList.add(12d);
-        doubleArrayList.add(1d);
-        doubleArrayList.add(10d);
+        doubleArrayList.add(13.33);
+        doubleArrayList.add(12.0);
+        doubleArrayList.add(10.67);
         doubleArrayList.add(4.5d);
         doubleArrayList.add(6.3d);
         doubleArrayList.add(12d);
         doubleArrayList.add(4d);
-        doubleArrayList.add(0.5d);
-        doubleArrayList.add(0d);
         return doubleArrayList;
     }
 
