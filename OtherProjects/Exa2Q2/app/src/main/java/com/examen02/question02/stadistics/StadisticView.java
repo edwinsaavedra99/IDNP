@@ -130,9 +130,18 @@ public class StadisticView extends View {
         int init_point = (cantidad_lineas - 1) * distancia_lineas + margen_y;
 
         double variable = (init_point - margen_y) / max_value_data;
+        float prev_x = margen_x;
+        float prev_y = init_point;
         for (int i = 0; i < dias; i++) {
+            float x = i * distancia_dias + margen_x + espacio_central_texto_dias;
+            float y = (float) (init_point - data.get(i) * variable);
             Log.e("ERROR: ", "" + (init_point - data.get(i) * variable));
-            canvas.drawPoint(i * distancia_dias + margen_x + espacio_central_texto_dias, (float) (init_point - data.get(i) * variable), penceilLine);
+            canvas.drawPoint(x, y, penceilLine);
+            if (i != 0) {
+                canvas.drawLine(prev_x, prev_y, x, y, pencil);
+            }
+            prev_x = x;
+            prev_y = y;
         }
     }
 
