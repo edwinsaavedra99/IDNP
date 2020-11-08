@@ -12,18 +12,17 @@ import com.myappdeport.repository.IRepository;
 import com.myappdeport.repository.room.dao.IRoomDao;
 
 import java.util.List;
-import java.util.Iterator;
 import java.util.Objects;
 import java.util.Optional;
 
-public abstract class RoomRepository<E extends EntityDatabase> implements IRepository<E, Long> {
+public abstract class RoomRepository<E extends EntityDatabase, R extends IRoomDao<E, Long>> implements IRepository<E, Long> {
 
-    private static final String TAG = RoomRepository.class.getSimpleName();
+    private final String TAG = this.getClass().getSimpleName();
 
-    private final IRoomDao<E, Long> roomDao;
+    protected final R roomDao;
 
-    public RoomRepository(Class<E> entityClass, Context context) {
-        this.roomDao = FactoryDaoRoom.getRoomDao(entityClass, context);
+    protected RoomRepository(R roomDao) {
+        this.roomDao = roomDao;
     }
 
     /**
@@ -54,6 +53,20 @@ public abstract class RoomRepository<E extends EntityDatabase> implements IRepos
     }
 
     /**
+     * Operación que actualiza todos los elementos dentro del almacen de datos.
+     *
+     * @param entities Son todos los objetos a ser guardados.
+     * @return Son los objetos que fueron persistidos con ciertos cambios.
+     */
+    @Override
+    public Task<Void> updateAll(List<E> entities) {
+        return Tasks.call(() -> {
+            this.roomDao.updateAll(entities);
+            return null;
+        });
+    }
+
+    /**
      * Operación que guarda todos los elementos dentro del almacen de datos.
      *
      * @param entities Son todos los objetos a ser guardados.
@@ -64,10 +77,8 @@ public abstract class RoomRepository<E extends EntityDatabase> implements IRepos
         return Tasks.call(
                 () -> this.roomDao.insertAll(entities)
         ).continueWithTask(task -> {
-            Iterator<E> entityIterator = entities.iterator();
-            Iterator<Long> identifierIterator = Objects.requireNonNull(task.getResult()).iterator();
-            while (entityIterator.hasNext() && identifierIterator.hasNext()) {
-                entityIterator.next().setId(identifierIterator.next());
+            for (int i = 0; i < entities.size(); i++) {
+                entities.get(i).setId(task.getResult().get(i));
             }
             return Tasks.forResult(entities);
         });

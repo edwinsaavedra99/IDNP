@@ -12,15 +12,15 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.WriteBatch;
 import com.myappdeport.model.entity.database.EntityDatabase;
 import com.myappdeport.repository.IRepository;
+import com.myappdeport.utils.MapperObject;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 public abstract class FireStoreRepository<E extends EntityDatabase> implements IRepository<E, String> {
 
-    protected String TAG = FireStoreRepository.class.getSimpleName();
+    protected String TAG = this.getClass().getSimpleName();
 
     protected final CollectionReference collectionReference;
 
@@ -66,16 +66,30 @@ public abstract class FireStoreRepository<E extends EntityDatabase> implements I
      * @return Son los objetos que fueron persistidos con ciertos cambios.
      */
     @Override
-    public Task<List<E>> saveAll(List<E> entities) throws InstantiationException, IllegalAccessException {
+    public Task<List<E>> saveAll(List<E> entities) {
         WriteBatch batch = FirebaseFirestore.getInstance().batch();
         for (E entity : entities) {
             DocumentReference documentReference = collectionReference.document();
             entity.setDocumentId(documentReference.getId());
             batch.set(documentReference, entity);
         }
-        return batch.commit().continueWithTask(task -> {
-            return Tasks.forResult(entities);
-        });
+        return batch.commit().continueWithTask(task -> Tasks.forResult(entities));
+    }
+
+    /**
+     * Operación que actualiza todos los elementos dentro del almacen de datos.
+     *
+     * @param entities Son todos los objetos a ser guardados.
+     * @return Son los objetos que fueron persistidos con ciertos cambios.
+     */
+    @Override
+    public Task<Void> updateAll(List<E> entities) throws IllegalAccessException {
+        WriteBatch batch = FirebaseFirestore.getInstance().batch();
+        for (E entity : entities) {
+            DocumentReference documentReference = collectionReference.document(entity.getDocumentId());
+            batch.update(documentReference, MapperObject.convertMapToObject(entity));
+        }
+        return batch.commit();
     }
 
     /**
@@ -118,24 +132,19 @@ public abstract class FireStoreRepository<E extends EntityDatabase> implements I
      */
     @Override
     public Task<List<Void>> delete(List<E> entities) {
-        return Tasks.call(() -> {
-            List<Void> entitiesList = new ArrayList<>();
-            for (E entity : entities) {
-                entitiesList.add(delete(entity).getResult());
-            }
-            return entitiesList;
-        });
+        WriteBatch batch = FirebaseFirestore.getInstance().batch();
+        for (E entity : entities) {
+            batch.delete(this.collectionReference.document(entity.getDocumentId()));
+        }
+        return batch.commit().continueWithTask(task -> null);
     }
 
     /**
      * Es la operacion borrar todos los elementos del almacen de datos.
      */
     @Override
-    public Task<Void> deleteAll() {
-        return Tasks.call(() -> {
-            Objects.requireNonNull(this.collectionReference.getParent()).delete();
-            return null;
-        });
+    public Task<Void> deleteAll() throws Exception {
+        throw new Exception("This method is not recommendable use on Android.");
     }
 
 

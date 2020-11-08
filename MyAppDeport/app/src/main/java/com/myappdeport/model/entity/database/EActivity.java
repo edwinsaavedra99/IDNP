@@ -3,6 +3,8 @@ package com.myappdeport.model.entity.database;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 
+import com.google.firebase.firestore.Exclude;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -22,6 +24,8 @@ public class EActivity extends EntityDatabase {
      */
     @Ignore
     private String routeDocumentId;
+    @Ignore
+    private ERoute eRoute;
 
     public EActivity(Long id, String documentId, String startTime, String endTime, Double kiloCalories, String routeDocumentId) {
         super(id, documentId);
@@ -86,6 +90,15 @@ public class EActivity extends EntityDatabase {
 
     public void setRouteDocumentId(String routeDocumentId) {
         this.routeDocumentId = routeDocumentId;
+    }
+
+    @Exclude
+    public ERoute getERoute() {
+        return this.eRoute;
+    }
+
+    public void setERoute(ERoute eRoute) {
+        this.eRoute = eRoute;
     }
 }
 

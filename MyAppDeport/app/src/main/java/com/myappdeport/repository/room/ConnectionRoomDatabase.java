@@ -20,7 +20,7 @@ import java.util.concurrent.Executors;
 
 @Database(entities = {EActivity.class, EPosition.class, ERoute.class, ESong.class}, version = 1, exportSchema = false)
 public abstract class ConnectionRoomDatabase extends RoomDatabase {
-    public abstract PositionRoomDao getPointRoomDao();
+    public abstract PositionRoomDao getPositionRoomDao();
 
     public abstract RouteRoomDao getRouteRoomDao();
 

@@ -12,7 +12,7 @@ public interface IRoomDao<E extends EntityDatabase, I> {
 
     void update(E entity);
 
-    void update(List<E> entities);
+    void updateAll(List<E> entities);
 
     void delete(E entity);
 

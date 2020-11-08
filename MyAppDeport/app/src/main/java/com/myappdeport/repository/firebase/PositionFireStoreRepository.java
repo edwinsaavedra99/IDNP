@@ -9,12 +9,13 @@ import com.google.android.gms.tasks.Tasks;
 import com.myappdeport.model.entity.database.EPosition;
 import com.myappdeport.model.entity.database.ERoute;
 import com.myappdeport.model.entity.funcional.Position;
+import com.myappdeport.repository.IPositionRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class PositionFireStoreRepository extends FireStoreRepository<EPosition> {
+public class PositionFireStoreRepository extends FireStoreRepository<EPosition> implements IPositionRepository<String> {
 
     private static PositionFireStoreRepository INSTANCE;
 
@@ -29,11 +30,19 @@ public class PositionFireStoreRepository extends FireStoreRepository<EPosition> 
         this.TAG = PositionFireStoreRepository.class.getSimpleName();
     }
 
+
+    /**
+     * Obtener posiciones por sus ids.
+     *
+     * @param id_s Son las id con las cuales extraeremos las posiciones.
+     * @return La tarea de obtención de posiciones.
+     */
+    @Override
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public Task<List<EPosition>> findByIds(List<String> documentsIds) {
+    public Task<List<EPosition>> findByIds(List<String> id_s) {
         return Tasks.call(() -> {
             List<EPosition> positions = new ArrayList<>();
-            for (String documentId : documentsIds) {
+            for (String documentId : id_s) {
                 findById(documentId).getResult().ifPresent(positions::add);
             }
             return positions;

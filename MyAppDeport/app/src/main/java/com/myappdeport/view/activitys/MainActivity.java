@@ -13,11 +13,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.myappdeport.R;
 import com.myappdeport.model.entity.database.EPosition;
 import com.myappdeport.model.entity.database.ERoute;
+import com.myappdeport.repository.IRouteRepository;
 import com.myappdeport.repository.firebase.PositionFireStoreRepository;
 import com.myappdeport.repository.firebase.RouteFireStoreRepository;
 
 import java.util.Collections;
-import java.util.List;
 
 import lombok.SneakyThrows;
 
@@ -58,31 +58,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         PositionFireStoreRepository repository = PositionFireStoreRepository.getInstance();
-        RouteFireStoreRepository repository2 = RouteFireStoreRepository.getInstance();
-        /*
-        repository.save(new EPosition(12.4, 32.4, 23.5)).addOnSuccessListener(
-                position -> {
-                    Log.e(TAG, position.toString());
-                }
-        ).continueWithTask(task -> {
-            return repository2.save(new ERoute(12.3, 32.4, Collections.singletonList(task.getResult().getDocumentId()), Collections.singletonList(task.getResult())));
-        }).addOnSuccessListener(
-                eRoute -> {
+        IRouteRepository repository2 = RouteFireStoreRepository.getInstance();
+        repository2.saveWithPositions(new ERoute(12.3, 32.4, null, Collections.singletonList(new EPosition(12.4, 32.4, 23.5))))
+                .addOnSuccessListener(eRoute -> {
                     Log.e(TAG, eRoute.toString());
-                }
-        ).continueWithTask(task -> {
-            return repository2.getRouteWithPositions(task.getResult().getDocumentId());
-        }).addOnSuccessListener(optionalERoute -> {
-            optionalERoute.ifPresent(eRoute -> {
-                for (EPosition ePosition : eRoute.getPositions())
-                    Log.e(TAG, ePosition.toString());
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, e.getMessage(), e.getCause());
+                }).addOnCompleteListener(task -> {
+            repository2.count().addOnCompleteListener(task1 -> {
+                Log.e(TAG, "ERoute: " + task1.getResult());
             });
-        });
-    */
-        repository2.saveWithPositions(new ERoute(12.3, 32.4, null, Collections.singletonList(new EPosition(12.4, 32.4, 23.5)))).addOnSuccessListener(eRoute -> {
-            Log.e(TAG, eRoute.toString());
-        }).addOnFailureListener(e -> {
-            Log.e(TAG, e.getMessage(), e.getCause());
         });
 
     }

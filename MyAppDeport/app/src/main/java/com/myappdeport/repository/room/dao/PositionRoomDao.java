@@ -36,7 +36,7 @@ public abstract class PositionRoomDao implements IRoomDao<EPosition, Long> {
 
     @Override
     @Update
-    public abstract void update(List<EPosition> entities);
+    public abstract void updateAll(List<EPosition> entities);
 
     @Override
     @Delete
@@ -49,6 +49,9 @@ public abstract class PositionRoomDao implements IRoomDao<EPosition, Long> {
     @Override
     @Query("SELECT * FROM EPosition WHERE id =:identifier")
     public abstract EPosition findById(Long identifier);
+
+    @Query("SELECT * FROM EPosition WHERE id IN (:ids)")
+    public abstract List<EPosition> findByIds(List<Long> ids);
 
     @Override
     @Query("SELECT COUNT(*) FROM EPosition")

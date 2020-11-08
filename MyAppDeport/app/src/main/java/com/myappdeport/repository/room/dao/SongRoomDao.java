@@ -34,7 +34,7 @@ public abstract class SongRoomDao implements IRoomDao<ESong, Long> {
 
     @Override
     @Update
-    public abstract void update(List<ESong> entities);
+    public abstract void updateAll(List<ESong> entities);
 
     @Override
     @Delete

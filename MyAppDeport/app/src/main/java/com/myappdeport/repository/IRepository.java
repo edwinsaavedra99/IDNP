@@ -31,7 +31,15 @@ public interface IRepository<E, I> {
      * @param entities Son todos los objetos a ser guardados.
      * @return Son los objetos que fueron persistidos con ciertos cambios.
      */
-    Task<List<E>> saveAll(List<E> entities) throws InstantiationException, IllegalAccessException;
+    Task<List<E>> saveAll(List<E> entities);
+
+    /**
+     * Operación que actualizar todos los elementos dentro del almacen de datos.
+     *
+     * @param entities Son todos los objetos a ser guardados.
+     * @return Son los objetos que fueron persistidos con ciertos cambios.
+     */
+    Task<Void> updateAll(List<E> entities) throws IllegalAccessException;
 
     /**
      * Operación obtener por su id del almacen de datos.
@@ -67,7 +75,7 @@ public interface IRepository<E, I> {
     /**
      * Es la operacion borrar todos los elementos del almacen de datos.
      */
-    Task<Void> deleteAll();
+    Task<Void> deleteAll() throws Exception;
 
     /**
      * Operación obtener el total de elemetos del alamcen de datos.
