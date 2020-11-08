@@ -117,14 +117,14 @@ public class StadisticView extends View {
         for (int i = 0; i < cantidad_lineas; i++) {
             int x = 10;
             int y = distancia_lineas * i;
-            canvas.drawText(""+ Math.round(100*(max_value_data - (intervalo * i)))/100, x, y + margen_y, pencilText);
-            canvas.drawLine(margen_x, y + margen_y, anchoMax - margen_x, y + margen_y, pencil);
+            canvas.drawText(""+ Math.round(100.0*(max_value_data - (intervalo * i)))/100.0, x, y + margen_y, pencilText);
+            canvas.drawLine(margen_x+15, y + margen_y, anchoMax - margen_x+15, y + margen_y, pencil);
         }
 
         int dias = 7;
         int distancia_dias = ancho_disponible / dias;
         for (int i = 0; i < dias; i++) {
-            canvas.drawText("Dia " + (i + 1), margen_x + distancia_dias * i, distancia_lineas * cantidad_lineas + margen_y, pencilText);
+            canvas.drawText("Dia " + (i + 1), 15+margen_x + distancia_dias * i, distancia_lineas * cantidad_lineas + margen_y, pencilText);
         }
         int espacio_central_texto_dias = 25;
         int init_point = (cantidad_lineas - 1) * distancia_lineas + margen_y;
@@ -136,10 +136,10 @@ public class StadisticView extends View {
             float x = i * distancia_dias + margen_x + espacio_central_texto_dias;
             float y = (float) (init_point - data.get(i) * (variable));
             Log.e("ERROR: ", "" + (init_point - data.get(i) * variable));
-            canvas.drawPoint(x, y-8, penceilLine);
+            canvas.drawPoint(x, y, penceilLine);
             canvas.drawText(""+data.get(i),x,y,pencilText);
             if (i != 0) {
-                canvas.drawLine(prev_x, prev_y-8, x, y-8, pencil);
+                canvas.drawLine(prev_x, prev_y, x, y, pencil);
             }
             prev_x = x;
             prev_y = y;
