@@ -9,15 +9,13 @@ public class Audio implements Parcelable {
     private int id;
     private int numOfSong;
 
-    public Audio()
-    {
+    public Audio(){
 //        aPath = "";
 //        aName = "";
 //        id = 0;
 //        numOfSong = 0;
     }
-    public Audio(Parcel in)
-    {
+    public Audio(Parcel in){
         this.path = in.readString();
         this.name = in.readString();
         this.id = in.readInt();
@@ -29,7 +27,6 @@ public class Audio implements Parcelable {
         public Audio createFromParcel(Parcel in) {
             return new Audio(in);
         }
-
         @Override
         public Audio[] newArray(int size) {
             return new Audio[size];
@@ -39,19 +36,15 @@ public class Audio implements Parcelable {
     public int getNumOfSong() {
         return numOfSong;
     }
-
     public void setNumOfSong(int numOfSong) {
         this.numOfSong = numOfSong;
     }
-
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
-
     public String getPath() {
         return path;
     }
@@ -64,13 +57,10 @@ public class Audio implements Parcelable {
     public void setName(String name) {
         this.name = name;
     }
-
-
     @Override
     public int describeContents() {
         return 0;
     }
-
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(path);
