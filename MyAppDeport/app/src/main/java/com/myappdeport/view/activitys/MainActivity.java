@@ -6,24 +6,38 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.FacebookAuthProvider;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.myappdeport.R;
 import com.myappdeport.model.entity.database.EPosition;
 import com.myappdeport.model.entity.database.ERoute;
+import com.myappdeport.model.entity.database.EUser;
 import com.myappdeport.repository.firebase.PositionFireStoreRepository;
 import com.myappdeport.repository.firebase.RouteFireStoreRepository;
+import com.myappdeport.viewmodel.AuthViewModel;
 
 import java.util.Collections;
 import java.util.List;
 
 import lombok.SneakyThrows;
 
+import static com.myappdeport.utils.Constants.USER;
+
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
+    private AuthViewModel authViewModel;
     private Button iniciarSesion;
     private Button registrate;
     private Button usuarioAnonimo;
@@ -39,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         registrate = (Button) findViewById(R.id.registrate);
         usuarioAnonimo = (Button) findViewById(R.id.anonimo);
 
+        //authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
         iniciarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,4 +121,64 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MenuContainer.class);
         startActivity(intent);
     }
+/*
+    @Override
+    protected  void onStart(){
+        super.onStart();
+        GoogleSignInAccount googleSignInAccount =  GoogleSignIn.getLastSignedInAccount(this);
+        if (googleSignInAccount != null) {
+            getGoogleAuthCredential(googleSignInAccount);
+        }
+        AccessTokenTracker accessTokenTracker = new AccessTokenTracker() {
+            @Override
+            protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
+                if (oldAccessToken != null) {
+                    handleFacebookToken(oldAccessToken);
+                }
+            }
+        };
+        //FacebookAuthProvider
+        //FacebookAuthCredential.
+        //Face
+
+    }
+    private void handleFacebookToken(AccessToken token){
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        signInWithAuthCredential(credential);
+    }
+    private void getGoogleAuthCredential(GoogleSignInAccount googleSignInAccount) {
+        String googleTokenId = googleSignInAccount.getIdToken();
+        AuthCredential googleAuthCredential = GoogleAuthProvider.getCredential(googleTokenId, null);
+        signInWithAuthCredential(googleAuthCredential);
+    }
+
+    private void signInWithAuthCredential(AuthCredential googleAuthCredential) {
+        authViewModel.signIn(googleAuthCredential);
+        authViewModel.authenticatedUserLiveData.observe(this, authenticatedUser -> {
+            if (authenticatedUser.isNew) {
+                createNewUser(authenticatedUser);
+            } else {
+                goToMainActivity(authenticatedUser);
+            }
+        });
+    }
+    private void createNewUser(EUser authenticatedUser) {
+        authViewModel.createUser(authenticatedUser);
+        authViewModel.createdUserLiveData.observe(this, user -> {
+            if (user.isCreated) {
+                toastMessage(user.name);
+            }
+            goToMainActivity(user);
+        });
+    }
+    private void toastMessage(String name) {
+        Toast.makeText(this, "Hi " + name + "!\n" + "Your account was successfully created.", Toast.LENGTH_LONG).show();
+    }
+    private void goToMainActivity(EUser user) {
+        Intent intent = new Intent(MainActivity.this, MenuContainer.class);
+        intent.putExtra(USER, user);
+        startActivity(intent);
+        finish();
+    }*/
+
 }
