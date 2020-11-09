@@ -5,22 +5,10 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
-import android.graphics.Point;
-import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.ScaleGestureDetector;
 import android.view.View;
-import android.widget.LinearLayout;
-
-import androidx.annotation.Nullable;
-
-import com.examen02.question02.stadistics.Util;
-
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 
@@ -28,33 +16,26 @@ public class BarrasView extends View {
 
     private Paint pencil;
     private Paint pencilText;
-    private Paint penceilLine;
     private Paint penceilLineinGraph;
-    private int[] figureColour = {183, 149, 11};
-    private LinearLayout layout;
     private DisplayMetrics metrics;
-    private int alto = 0, ancho = 0;
-    private List<Double> data = new ArrayList<Double>();
-    private List<Double> listData;
+    private List<Double> data = new ArrayList<>();
 
     public BarrasView(Context context) {
         super(context);
     }
 
-    public BarrasView(Context context, LinearLayout _layout, DisplayMetrics metrics, ArrayList<Double> data) {
+    public BarrasView(Context context, DisplayMetrics metrics, ArrayList<Double> data) {
         super(context);
-        layout = _layout;
         this.metrics = metrics;
         this.data =  data.subList(data.size()-7,data.size());
         initialStyleFigure();
         initialStyleText();
-        initialStyleFigurePoint();
         initialStyleFigureLines();
         invalidate();
     }
 
     /**
-     * Method initialStyleFigure define the parameters initials of the pencil Paint
+     * Method initialStyleFigure define the parameters initials of the pencil Paint for background
      */
     public void initialStyleFigure() {
         float[] intervals = new float[]{0.0f, 0.0f};
@@ -68,7 +49,7 @@ public class BarrasView extends View {
         pencil.setPathEffect(dashPathEffect);
     }//End Method
     /**
-     * Method initialStyleFigure define the parameters initials of the pencil Paint
+     * Method initialStyleFigureLines define the parameters initials of the pencil Paint for Graph Bar
      */
     public void initialStyleFigureLines() {
         float[] intervals = new float[]{0.0f, 0.0f};
@@ -81,17 +62,7 @@ public class BarrasView extends View {
         penceilLineinGraph.setStyle(Paint.Style.FILL);
         penceilLineinGraph.setPathEffect(dashPathEffect);
     }//End Method
-    public void initialStyleFigurePoint() {
-        float[] intervals = new float[]{0.0f, 0.0f};
-        float phase = 0;
-        DashPathEffect dashPathEffect = new DashPathEffect(intervals, phase);
-        penceilLine = new Paint();
-        penceilLine.setAntiAlias(true);
-        penceilLine.setARGB(250, Util.color3[0], Util.color3[1], Util.color3[2]);
-        penceilLine.setStrokeWidth(7);
-        penceilLine.setStyle(Paint.Style.STROKE);
-        penceilLine.setPathEffect(dashPathEffect);
-    }//End Method
+
     public void initialStyleText() {
         float[] intervals = new float[]{0.0f, 0.0f};
         float phase = 0;
@@ -160,11 +131,6 @@ public class BarrasView extends View {
                 canvas.drawText(""+0.0,x,y,pencilText);
                 canvas.drawRect(x-5,y,x+25,init_point,penceilLineinGraph);
             }
-
-            if (i != 0) {
-                //canvas.drawLine(prev_x, prev_y, x, y, penceilLineinGraph);
-
-            }
             prev_x = x;
             prev_y = y;
         }
@@ -184,25 +150,5 @@ public class BarrasView extends View {
             }
         }
         return max;
-    }
-
-    public double supremoplus5() {
-        System.out.println("maximoo : " + maxValue());
-        return Math.floor(maxValue()) + 0.5;
-    }
-
-
-
-    public int maxValue() {
-        double max = 0;
-        int position = -1;
-        for (int i = data.size() - 7; i < data.size(); i++) {
-            if (this.data.get(i) >= max) {
-                max = this.data.get(i);
-                position = i;
-            }
-        }
-        return position;
-
     }
 }

@@ -1,12 +1,10 @@
 package com.examen02.question02.stadistics;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -16,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
     public LinearLayout linearLayout,linearLayout2;
     private StadisticView stadisticView;
     private BarrasView barrasView;
-    private Button button;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,12 +25,12 @@ public class MainActivity extends AppCompatActivity {
     private void initialComponent(){
         this.linearLayout = findViewById(R.id.grafico);
         this.linearLayout2 = findViewById(R.id.grafico2);
-        this.button = findViewById(R.id.simule);
+        Button button = findViewById(R.id.simule);
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        barrasView = new BarrasView(this,linearLayout2,metrics,getDataTiempo());
+        barrasView = new BarrasView(this, metrics,getDataTiempo());
         linearLayout2.addView(barrasView);
-        stadisticView = new StadisticView(this,linearLayout,metrics,getDataKilometros());
+        stadisticView = new StadisticView(this, metrics,getDataKilometros());
         linearLayout.addView(stadisticView);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,8 +41,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-    private ArrayList<Double> getDataKilometros(){
+    private ArrayList<Double> getDataKilometros(){//simula data
         ArrayList<Double> doubleArrayList = new ArrayList<>();
         doubleArrayList.add(13.33);
         doubleArrayList.add(0.0); //si ese dia no hay registro se considera como cero
@@ -56,8 +53,7 @@ public class MainActivity extends AppCompatActivity {
         doubleArrayList.add(14d);
         return doubleArrayList;
     }
-    private ArrayList<Double> getDataTiempo(){
-        //simulando ritmo de 4 min por kilometros
+    private ArrayList<Double> getDataTiempo(){//simulando ritmo de 4 min por kilometros
         ArrayList<Double> doubleArrayList = new ArrayList<>();
         doubleArrayList.add(getDataKilometros().get(0) * 4);
         doubleArrayList.add(getDataKilometros().get(1) * 4);
