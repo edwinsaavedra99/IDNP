@@ -24,7 +24,7 @@ import java.util.Comparator;
 import java.util.List;
 
 
-public class StadisticView extends View {
+public class BarrasView extends View {
 
     private Paint pencil;
     private Paint pencilText;
@@ -37,18 +37,15 @@ public class StadisticView extends View {
     private List<Double> data = new ArrayList<Double>();
     private List<Double> listData;
 
-    public StadisticView(Context context) {
+    public BarrasView(Context context) {
         super(context);
     }
 
-    public StadisticView(Context context, LinearLayout _layout, DisplayMetrics metrics, ArrayList<Double> data) {
+    public BarrasView(Context context, LinearLayout _layout, DisplayMetrics metrics, ArrayList<Double> data) {
         super(context);
         layout = _layout;
         this.metrics = metrics;
-        //this.data = new ArrayList<>(data);
-        System.out.println("dataaaaaa");
         this.data =  data.subList(data.size()-7,data.size());
-        //Collections.sort(this.data);
         initialStyleFigure();
         initialStyleText();
         initialStyleFigurePoint();
@@ -81,7 +78,7 @@ public class StadisticView extends View {
         penceilLineinGraph.setAntiAlias(true);
         penceilLineinGraph.setARGB(250, Util.color2[0], Util.color2[1], Util.color2[2]);
         penceilLineinGraph.setStrokeWidth(6);
-        penceilLineinGraph.setStyle(Paint.Style.STROKE);
+        penceilLineinGraph.setStyle(Paint.Style.FILL);
         penceilLineinGraph.setPathEffect(dashPathEffect);
     }//End Method
     public void initialStyleFigurePoint() {
@@ -122,11 +119,11 @@ public class StadisticView extends View {
         int alto_disponible = altoMax - margen_y * 2;
         int ancho_disponible = anchoMax - margen_x * 2;
         int cantidad_lineas = 10;
-        int distancia_lineas = (alto_disponible - margen_inferior) / cantidad_lineas-40;
+        int distancia_lineas = (alto_disponible - margen_inferior) / cantidad_lineas-50;
         double max_value_data = getMaxValue(data);
         double intervalo = max_value_data / (cantidad_lineas - 1);
         canvas.rotate(-90,10, alto_disponible/2 );
-        canvas.drawText("Kilometros", alto_disponible/4, alto_disponible/2 +30, pencilText);
+        canvas.drawText("Tiempo", (float) (alto_disponible/(3.5)), alto_disponible/2 +35, pencilText);
         canvas.rotate(90,10, alto_disponible/2 );
         for (int i = 0; i < cantidad_lineas; i++) {
             int x = 80;
@@ -148,20 +145,25 @@ public class StadisticView extends View {
         for (int i = 0; i < dias; i++) {
             float x = i * distancia_dias + margen_x + espacio_central_texto_dias;
             float y = 0;
+            int random = (int)(Math.random()*24);
+            penceilLineinGraph.setARGB(250,Util.getCollections()[random][0],Util.getCollections()[random][1],Util.getCollections()[random][2]);
             if(data.get(i)!=null){
                 y = (float) (init_point - data.get(i) * (variable));
                 Log.e("ERROR: ", "" + (init_point - data.get(i) * variable));
                 canvas.drawPoint(x, y, penceilLineinGraph);
+                canvas.drawRect(x-5,y,x+25,init_point,penceilLineinGraph);
                 canvas.drawText(""+data.get(i),x,y,pencilText);
             }else{
                 y = (float) (init_point - 0 * (variable));
                 Log.e("ERROR: ", "" + (init_point - 0 * variable));
                 canvas.drawPoint(x, y, penceilLineinGraph);
                 canvas.drawText(""+0.0,x,y,pencilText);
+                canvas.drawRect(x-5,y,x+25,init_point,penceilLineinGraph);
             }
 
             if (i != 0) {
-                canvas.drawLine(prev_x, prev_y, x, y, penceilLineinGraph);
+                //canvas.drawLine(prev_x, prev_y, x, y, penceilLineinGraph);
+
             }
             prev_x = x;
             prev_y = y;
