@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Stadistics</string>
+    <string name="progreso">Progreso</string>
+    <string name="simula_nueva_data">SIMULA NUEVA DATA</string>
 </resources>
