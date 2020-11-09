@@ -14,6 +14,14 @@ import com.myappdeport.repository.room.dao.RouteRoomDao;
 import java.util.Optional;
 
 public class RouteRoomRepository extends RoomRepository<ERoute, RouteRoomDao> implements IRouteRepository<Long> {
+    private static RouteRoomRepository INSTANCE;
+
+    public synchronized static RouteRoomRepository getInstance(Context context) {
+        if (INSTANCE == null)
+            INSTANCE = new RouteRoomRepository(context);
+        return INSTANCE;
+    }
+
     protected RouteRoomRepository(Context context) {
         super(ConnectionRoomDatabase.getDatabase(context).getRouteRoomDao());
     }

@@ -10,25 +10,30 @@ import com.google.android.gms.tasks.Tasks;
 import com.myappdeport.model.entity.database.EActivity;
 import com.myappdeport.model.entity.database.ERoute;
 import com.myappdeport.repository.IActivityRepository;
-import com.myappdeport.repository.firebase.FireStoreRepository;
 import com.myappdeport.repository.room.dao.ActivityRoomDao;
 
 import java.util.Optional;
 
 public class ActivityRoomRepository extends RoomRepository<EActivity, ActivityRoomDao> implements IActivityRepository<Long> {
 
-    private RouteRoomRepository routeRoomRepository;
+    private static ActivityRoomRepository INSTANCE;
+    private final RouteRoomRepository routeRoomRepository;
+
+    public synchronized static ActivityRoomRepository getInstance(Context context) {
+        if (INSTANCE == null)
+            INSTANCE = new ActivityRoomRepository(context);
+        return INSTANCE;
+    }
 
     protected ActivityRoomRepository(Context context) {
         super(ConnectionRoomDatabase.getDatabase(context).getActivityRoomDao());
+        this.routeRoomRepository = RouteRoomRepository.getInstance(context);
     }
 
     @Override
     @RequiresApi(api = Build.VERSION_CODES.N)
     public Task<Optional<EActivity>> getActivityWithRoute(Long id) {
-        return Tasks.call(() -> {
-            return Optional.of(this.roomDao.findByIdWithRoute(id));
-        });
+        return Tasks.call(() -> Optional.of(this.roomDao.findByIdWithRoute(id)));
     }
 
     @Override
@@ -43,7 +48,7 @@ public class ActivityRoomRepository extends RoomRepository<EActivity, ActivityRo
     }
 
     @Override
-    public Task<EActivity> saveWithRoute(EActivity eActivity) throws InstantiationException {
+    public Task<EActivity> saveWithRoute(EActivity eActivity) {
         return Tasks.call(() -> {
             Long id = this.roomDao.insertWithRoute(eActivity);
             eActivity.setId(id);
@@ -52,13 +57,19 @@ public class ActivityRoomRepository extends RoomRepository<EActivity, ActivityRo
     }
 
     @Override
-    public Task<EActivity> saveWithRouteAndPositions(EActivity eActivity) throws IllegalAccessException, InstantiationException {
-        return null;
+    public Task<EActivity> saveWithRouteAndPositions(EActivity eActivity) {
+        return this.routeRoomRepository.saveWithPositions(eActivity.getERoute()).continueWithTask(task -> Tasks.call(() -> {
+            eActivity.setId(this.roomDao.insertWithRoute(eActivity));
+            return eActivity;
+        }));
     }
 
     @Override
-    public Task<Void> updateWithRouteAndPositions(EActivity eActivity) throws IllegalAccessException {
-        return null;
+    public Task<Void> updateWithRouteAndPositions(EActivity eActivity) {
+        return this.routeRoomRepository.updateWithPositions(eActivity.getERoute()).continueWithTask(task -> Tasks.call(() -> {
+            this.roomDao.updateWithRoute(eActivity);
+            return null;
+        }));
     }
 
     @Override
@@ -79,6 +90,9 @@ public class ActivityRoomRepository extends RoomRepository<EActivity, ActivityRo
 
     @Override
     public Task<Void> deleteWithRouteAndPositions(EActivity eActivity) {
-        return null;
+        return this.routeRoomRepository.deleteWithPositions(eActivity.getERoute()).continueWithTask(task -> {
+            this.roomDao.deleteWithRoute(eActivity);
+            return null;
+        });
     }
 }

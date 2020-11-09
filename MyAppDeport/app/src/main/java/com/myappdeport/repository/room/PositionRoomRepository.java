@@ -11,8 +11,15 @@ import com.myappdeport.repository.room.dao.PositionRoomDao;
 import java.util.List;
 
 public class PositionRoomRepository extends RoomRepository<EPosition, PositionRoomDao> implements IPositionRepository<Long> {
+    private static PositionRoomRepository INSTANCE;
 
-    private PositionRoomRepository(Context context) {
+    public synchronized static PositionRoomRepository getInstance(Context context) {
+        if (INSTANCE == null)
+            INSTANCE = new PositionRoomRepository(context);
+        return INSTANCE;
+    }
+
+    protected PositionRoomRepository(Context context) {
         super(ConnectionRoomDatabase.getDatabase(context).getPositionRoomDao());
     }
 

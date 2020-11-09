@@ -17,7 +17,7 @@ import java.util.Optional;
 
 public abstract class RoomRepository<E extends EntityDatabase, R extends IRoomDao<E, Long>> implements IRepository<E, Long> {
 
-    private final String TAG = this.getClass().getSimpleName();
+    protected final String TAG = this.getClass().getSimpleName();
 
     protected final R roomDao;
 
