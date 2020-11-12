@@ -30,6 +30,7 @@ public class ActivityRoomRepository extends RoomRepository<EActivity, ActivityRo
         this.routeRoomRepository = RouteRoomRepository.getInstance(context);
     }
 
+
     @Override
     @RequiresApi(api = Build.VERSION_CODES.N)
     public Task<Optional<EActivity>> getActivityWithRoute(Long id) {
@@ -40,8 +41,8 @@ public class ActivityRoomRepository extends RoomRepository<EActivity, ActivityRo
     @RequiresApi(api = Build.VERSION_CODES.N)
     public Task<Optional<EActivity>> getActivityWithRouteAndPositions(Long id) {
         return Tasks.call(() -> {
-            EActivity eActivity = this.roomDao.findByIdWithRoute(id);
-            ERoute eRoute = this.routeRoomRepository.roomDao.findByIdWithPositions(eActivity.getERoute().getId());
+            EActivity eActivity = this.roomDao.findById(id);
+            ERoute eRoute = this.routeRoomRepository.roomDao.findByIdWithPositions(eActivity.getIdERoute());
             eActivity.setERoute(eRoute);
             return Optional.of(eActivity);
         });
@@ -50,26 +51,29 @@ public class ActivityRoomRepository extends RoomRepository<EActivity, ActivityRo
     @Override
     public Task<EActivity> saveWithRoute(EActivity eActivity) {
         return Tasks.call(() -> {
-            Long id = this.roomDao.insertWithRoute(eActivity);
-            eActivity.setId(id);
+            this.roomDao.insertWithRoute(eActivity);
             return eActivity;
         });
     }
 
     @Override
     public Task<EActivity> saveWithRouteAndPositions(EActivity eActivity) {
-        return this.routeRoomRepository.saveWithPositions(eActivity.getERoute()).continueWithTask(task -> Tasks.call(() -> {
-            eActivity.setId(this.roomDao.insertWithRoute(eActivity));
+        return Tasks.call(() -> {
+            Long idRoute = this.routeRoomRepository.roomDao.insertWithPositions(eActivity.getERoute());
+            eActivity.setIdERoute(idRoute);
+            Long id = roomDao.insert(eActivity);
+            eActivity.setId(id);
             return eActivity;
-        }));
+        });
     }
 
     @Override
     public Task<Void> updateWithRouteAndPositions(EActivity eActivity) {
-        return this.routeRoomRepository.updateWithPositions(eActivity.getERoute()).continueWithTask(task -> Tasks.call(() -> {
-            this.roomDao.updateWithRoute(eActivity);
+        return Tasks.call(() -> {
+            this.roomDao.update(eActivity);
+            this.routeRoomRepository.roomDao.updateWithPositions(eActivity.getERoute());
             return null;
-        }));
+        });
     }
 
     @Override
@@ -90,8 +94,9 @@ public class ActivityRoomRepository extends RoomRepository<EActivity, ActivityRo
 
     @Override
     public Task<Void> deleteWithRouteAndPositions(EActivity eActivity) {
-        return this.routeRoomRepository.deleteWithPositions(eActivity.getERoute()).continueWithTask(task -> {
-            this.roomDao.deleteWithRoute(eActivity);
+        return Tasks.call(() -> {
+            this.roomDao.delete(eActivity);
+            this.routeRoomRepository.roomDao.deleteWithPositions(eActivity.getERoute());
             return null;
         });
     }

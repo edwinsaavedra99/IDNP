@@ -23,16 +23,8 @@ public class PositionRoomRepository extends RoomRepository<EPosition, PositionRo
         super(ConnectionRoomDatabase.getDatabase(context).getPositionRoomDao());
     }
 
-    /**
-     * Obtener posiciones por sus ids.
-     *
-     * @param id_s Son las id con las cuales extraeremos las posiciones.
-     * @return La tarea de obtención de posiciones.
-     */
     @Override
-    public Task<List<EPosition>> findByIds(List<Long> id_s) {
-        return Tasks.call(() -> {
-            return roomDao.findByIds(id_s);
-        });
+    public Task<List<EPosition>> findByIdERoute(Long id) {
+        return Tasks.call(() -> this.roomDao.findByIdRoute(id));
     }
 }

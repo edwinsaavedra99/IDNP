@@ -30,7 +30,7 @@ public interface RouteMapper extends MapperEntityDtoFunctional<ERoute, DTORoute,
     @Mappings({
             @Mapping(target = "rhythm", source = "eRoute.rhythm"),
             @Mapping(target = "totalDistance", source = "eRoute.totalDistance"),
-            @Mapping(target = "dtoPositionList", source = "eRoute.positionDocumentIds", ignore = true)
+            @Mapping(target = "dtoPositionList", source = "eRoute.positions")
     })
     DTORoute entityToDto(ERoute eRoute);
 
@@ -60,21 +60,9 @@ public interface RouteMapper extends MapperEntityDtoFunctional<ERoute, DTORoute,
             @Mapping(target = "documentId", source = "route.documentId"),
             @Mapping(target = "rhythm", source = "route.rhythm", defaultValue = "0.0"),
             @Mapping(target = "totalDistance", source = "route.totalDistance", defaultValue = "0.0"),
-            @Mapping(target = "positionDocumentIds", source = "route.positionList", qualifiedByName = "positionDocumentIdsToPositionList")
+            @Mapping(target = "positions", source = "route.positionList")
     })
     ERoute functionalToEntity(Route route);
-
-    /**
-     * Transforma de una lista de posiciones a una lista con sus documentIds.
-     *
-     * @param positionList Es la lista de posiciones.
-     * @return Es la lista con los Ids.
-     */
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    @Named("positionDocumentIdsToPositionList")
-    default List<String> positionDocumentIdsToPositionList(List<Position> positionList) {
-        return positionList.stream().map(Position::getDocumentId).collect(Collectors.toList());
-    }
 
     /**
      * Transforma de una entidad a un functional.
@@ -84,26 +72,7 @@ public interface RouteMapper extends MapperEntityDtoFunctional<ERoute, DTORoute,
      */
     @Override
     @InheritInverseConfiguration(name = "functionalToEntity")
-    @Mappings({
-            @Mapping(target = "positionList", source = "eRoute.positionDocumentIds", qualifiedByName = "positionListToPositionDocumentIds")
-    })
     Route entityToFunctional(ERoute eRoute);
-
-    /**
-     * Transforma de una lista de posiciones a una lista con sus documentIds.
-     *
-     * @param positionDocumentIds Es la lista de los ids de las posiciones.
-     * @return Es la lista de posiciones.
-     */
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    @Named("positionListToPositionDocumentIds")
-    default List<Position> positionListToPositionDocumentIds(List<String> positionDocumentIds) {
-        return positionDocumentIds.stream().map(s -> {
-            Position position = new Position();
-            position.setDocumentId(s);
-            return position;
-        }).collect(Collectors.toList());
-    }
 
     /**
      * Transforma de un functional a un dto.

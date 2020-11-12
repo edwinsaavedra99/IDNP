@@ -20,11 +20,17 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.myappdeport.R;
+import com.myappdeport.model.entity.database.EActivity;
 import com.myappdeport.model.entity.database.EPosition;
 import com.myappdeport.model.entity.database.ERoute;
 import com.myappdeport.model.entity.database.EUser;
+import com.myappdeport.repository.IActivityRepository;
+import com.myappdeport.repository.IPositionRepository;
+import com.myappdeport.repository.IRouteRepository;
+import com.myappdeport.repository.firebase.ActivityFireStoreRepository;
 import com.myappdeport.repository.firebase.PositionFireStoreRepository;
 import com.myappdeport.repository.firebase.RouteFireStoreRepository;
+import com.myappdeport.repository.room.PositionRoomRepository;
 import com.myappdeport.viewmodel.AuthViewModel;
 
 import java.util.Collections;
@@ -94,8 +100,20 @@ public class MainActivity extends AppCompatActivity {
             });
         });
     */
-        repository2.saveWithPositions(new ERoute(12.3, 32.4, null, Collections.singletonList(new EPosition(12.4, 32.4, 23.5)))).addOnSuccessListener(eRoute -> {
-            Log.e(TAG, eRoute.toString());
+        IRouteRepository<String> routeRepository = RouteFireStoreRepository.getInstance();
+        IActivityRepository<String> activityRepository = ActivityFireStoreRepository.getInstance();
+        EPosition ePosition = new EPosition(12.4, 524.5, 2345.0);
+        ERoute eRoute = new ERoute(12.5, 123.5, Collections.singletonList(ePosition));
+        EActivity eActivity = new EActivity("12:00:00", "12:00:00", 123.5, eRoute);
+        routeRepository.saveWithPositions(eRoute).addOnSuccessListener(eRoute1 -> {
+            Log.e(TAG, eRoute1.toString());
+        });
+        activityRepository.saveWithRouteAndPositions(eActivity).addOnSuccessListener(eActivity1 -> {
+            Log.e(TAG, eActivity1.toString());
+        });
+        IPositionRepository<Long> positionRepository = PositionRoomRepository.getInstance(this);
+        positionRepository.save(ePosition).addOnSuccessListener(position -> {
+            Log.e(TAG, position.toString());
         }).addOnFailureListener(e -> {
             Log.e(TAG, e.getMessage(), e.getCause());
         });

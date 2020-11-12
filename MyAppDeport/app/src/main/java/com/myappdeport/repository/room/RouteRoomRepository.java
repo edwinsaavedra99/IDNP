@@ -29,13 +29,13 @@ public class RouteRoomRepository extends RoomRepository<ERoute, RouteRoomDao> im
     @Override
     @RequiresApi(api = Build.VERSION_CODES.N)
     public Task<Optional<ERoute>> findByIdWithPositions(Long id) {
-        return Tasks.call(() -> Optional.of(this.roomDao.findByIdWithPositions(id)));
+        return Tasks.forResult(Optional.of(this.roomDao.findByIdWithPositions(id)));
     }
 
     @Override
     public Task<ERoute> saveWithPositions(ERoute eRoute) {
         return Tasks.call(() -> {
-            eRoute.setId(this.roomDao.insertWithPositions(eRoute));
+            this.roomDao.insertWithPositions(eRoute);
             return eRoute;
         });
     }

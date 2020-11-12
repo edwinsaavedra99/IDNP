@@ -78,7 +78,7 @@ public abstract class RoomRepository<E extends EntityDatabase, R extends IRoomDa
                 () -> this.roomDao.insertAll(entities)
         ).continueWithTask(task -> {
             for (int i = 0; i < entities.size(); i++) {
-                entities.get(i).setId(task.getResult().get(i));
+                entities.get(i).setId(Objects.requireNonNull(task.getResult()).get(i));
             }
             return Tasks.forResult(entities);
         });

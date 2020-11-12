@@ -1,6 +1,7 @@
 package com.myappdeport.model.entity.database.relationship;
 
 import androidx.room.Embedded;
+import androidx.room.Ignore;
 import androidx.room.Relation;
 
 import com.myappdeport.model.entity.database.EPosition;
@@ -14,11 +15,12 @@ public class RouteWithPosition {
     private ERoute route;
     @Relation(
             parentColumn = "id",
-            entityColumn = "id",
+            entityColumn = "idERoute",
             entity = EPosition.class
     )
     private List<EPosition> positions;
 
+    @Ignore
     public RouteWithPosition(ERoute route, List<EPosition> positions) {
         this.route = route;
         this.positions = positions;

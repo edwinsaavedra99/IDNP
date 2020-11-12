@@ -13,6 +13,7 @@ import com.myappdeport.repository.IPositionRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class PositionFireStoreRepository extends FireStoreRepository<EPosition> implements IPositionRepository<String> {
@@ -30,22 +31,8 @@ public class PositionFireStoreRepository extends FireStoreRepository<EPosition> 
         this.TAG = PositionFireStoreRepository.class.getSimpleName();
     }
 
-
-    /**
-     * Obtener posiciones por sus ids.
-     *
-     * @param id_s Son las id con las cuales extraeremos las posiciones.
-     * @return La tarea de obtención de posiciones.
-     */
     @Override
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public Task<List<EPosition>> findByIds(List<String> id_s) {
-        return Tasks.call(() -> {
-            List<EPosition> positions = new ArrayList<>();
-            for (String documentId : id_s) {
-                findById(documentId).getResult().ifPresent(positions::add);
-            }
-            return positions;
-        });
+    public Task<List<EPosition>> findByIdERoute(String routeDocumentId) {
+        return this.collectionReference.whereEqualTo("idERoute", routeDocumentId).get().continueWithTask(task -> Tasks.forResult(Objects.requireNonNull(task.getResult()).toObjects(entityClass)));
     }
 }

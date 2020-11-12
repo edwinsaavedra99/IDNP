@@ -22,7 +22,7 @@ public interface ActivityMapper extends MapperEntityDtoFunctional<EActivity, DTO
             @Mapping(target = "startTime", source = "eActivity.startTime", defaultValue = "00:00:00"),
             @Mapping(target = "endTime", source = "eActivity.endTime", defaultValue = "00:00:00"),
             @Mapping(target = "kiloCalories", source = "eActivity.kiloCalories", defaultValue = "0.0"),
-            @Mapping(target = "dtoRoute", source = "eActivity.routeDocumentId", ignore = true)
+            @Mapping(target = "dtoRoute", source = "eActivity.ERoute")
     })
     DTOActivity entityToDto(EActivity eActivity);
 
@@ -36,7 +36,9 @@ public interface ActivityMapper extends MapperEntityDtoFunctional<EActivity, DTO
     @InheritInverseConfiguration(name = "entityToDto")
     @Mappings({
             @Mapping(target = "id", ignore = true),
-            @Mapping(target = "documentId", ignore = true)
+            @Mapping(target = "documentId", ignore = true),
+            @Mapping(target = "routeDocumentId", ignore = true),
+            @Mapping(target = "idERoute", ignore = true)
     })
     EActivity dtoToEntity(DTOActivity dtoActivity);
 
@@ -53,7 +55,9 @@ public interface ActivityMapper extends MapperEntityDtoFunctional<EActivity, DTO
             @Mapping(target = "startTime", source = "activity.startTime", dateFormat = "HH:mm:ss"),
             @Mapping(target = "endTime", source = "activity.endTime", dateFormat = "HH:mm:ss"),
             @Mapping(target = "kiloCalories", source = "activity.kiloCalories"),
-            @Mapping(target = "routeDocumentId", source = "activity.route.documentId")
+            @Mapping(target = "routeDocumentId", source = "activity.route.documentId"),
+            @Mapping(target = "ERoute", source = "activity.route"),
+            @Mapping(target = "idERoute", source = "activity.route.id")
     })
     EActivity functionalToEntity(Activity activity);
 

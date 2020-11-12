@@ -1,7 +1,6 @@
 package com.myappdeport.model.entity.funcional;
 
 import android.database.Cursor;
-import android.net.Uri;
 import android.provider.MediaStore;
 
 import androidx.lifecycle.MutableLiveData;
@@ -12,8 +11,9 @@ import java.util.List;
 public class GetAudios {
 
     private static GetAudios getAudios;
-    private MutableLiveData<List<Audio>>audioList = new MutableLiveData<>();
-    private List<Audio>dataSet = new ArrayList<>();
+    private final MutableLiveData<List<Audio>> audioList = new MutableLiveData<>();
+    private final List<Audio> dataSet = new ArrayList<>();
+
     public static GetAudios getInstance() {
         if (getAudios == null) {
             getAudios = new GetAudios();
@@ -28,7 +28,7 @@ public class GetAudios {
             if (cursor != null) {
                 if (cursor.moveToFirst()) {
                     do {
-                        Audio audio  = new Audio();
+                        Audio audio = new Audio();
                         audio.setName(cursor
                                 .getString(cursor
                                         .getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME)));
@@ -52,8 +52,7 @@ public class GetAudios {
     }
 
 
-    public static boolean isSdPresent()
-    {
+    public static boolean isSdPresent() {
         return android.os.Environment.getExternalStorageState().equals(
                 android.os.Environment.MEDIA_MOUNTED);
     }

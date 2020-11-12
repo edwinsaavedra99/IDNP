@@ -1,0 +1,717 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="AUTOSCROLL_TO_SOURCE" value="true" />
+    <option name="GROUP_BY_SEVERITY" value="true" />
+  </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="error" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:origin/master" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="4ad33b82-f08b-483d-8bd7-61a08c33333a" name="Default Changelist" comment="Entidades terminadas y repositorios firebase terminados y probados, repositorios sqlite semicompletos para hacer pruebas.">
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/myappdeport/model/mapper/ActivityMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/myappdeport/model/mapper/ActivityMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/myappdeport/model/mapper/RouteMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/myappdeport/model/mapper/RouteMapper.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/app">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="package-info" />
+        <option value="JUnit5 Test Class" />
+        <option value="Class" />
+        <option value="Interface" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="KotlinMultiplatform">
+    <executables />
+  </component>
+  <component name="ProjectId" id="1j7yXGp2C7ix4DjWsYkmABRKd58" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="Pixel_4_API_30" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-10-29T21:29:15.931Z" />
+    <property name="LombokPluginEnabledInProject" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="SONARLINT_PRECOMMIT_ANALYSIS" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="add_unversioned_files" value="$PROJECT_DIR$/app/build/generated/ap_generated_sources/debug/out/com/myappdeport/model/mapper/PositionMapperImpl.java&#10;C:/Users/erick/AndroidStudioProjects/IDNP/MyAppDeport/app/build/generated/ap_generated_sources/debug/out/com/myappdeport/model/mapper/SongMapperImpl.java&#10;C:/Users/erick/AndroidStudioProjects/IDNP/MyAppDeport/local.properties&#10;C:/Users/erick/AndroidStudioProjects/IDNP/MyAppDeport/app/build/generated/ap_generated_sources/debug/out/com/myappdeport/repository/room/dao/PositionRoomDao_Impl.java" />
+    <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="junit.framework.TestCase" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/test/java/com/myappdeport" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../OtherProjects/Exa2Q2" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Dependencies" />
+    <property name="project.structure.proportion" value="0.17" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="PsdUISettings">
+    <option name="LAST_EDITED_BUILD_TYPE" value="release" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.myappdeport.repository.firebase" />
+      <recent name="com.myappdeport.model.mapper" />
+    </key>
+    <key name="ExtractSuperBase.RECENT_KEYS">
+      <recent name="com.myappdeport.repository.firebase" />
+      <recent name="com.myappdeport.repository" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.myappdeport.repository" />
+      <recent name="com.myappdeport.repository.room" />
+      <recent name="com" />
+      <recent name="com.myappdeport" />
+      <recent name="" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.myappdeport.model.entity.database.relationship" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="junit.framework.TestCase" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Android App.app">
+    <configuration name="ActivityMapperTest" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
+      <module name="MyAppDeport.app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.myappdeport.model.mapper.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.myappdeport.model.mapper" />
+      <option name="MAIN_CLASS_NAME" value="com.myappdeport.model.mapper.ActivityMapperTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PositionMapperTest" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
+      <module name="MyAppDeport.app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.myappdeport.model.mapper.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.myappdeport.model.mapper" />
+      <option name="MAIN_CLASS_NAME" value="com.myappdeport.model.mapper.PositionMapperTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RouteMapperTest" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
+      <module name="MyAppDeport.app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.myappdeport.model.mapper.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.myappdeport.model.mapper" />
+      <option name="MAIN_CLASS_NAME" value="com.myappdeport.model.mapper.RouteMapperTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="com.myappdeport.model.mapper in MyAppDeport.app" type="AndroidJUnit" factoryName="Android JUnit" nameIsGenerated="true">
+      <module name="MyAppDeport.app" />
+      <useClassPathOnly />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.myappdeport.model.mapper.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.myappdeport.model.mapper" />
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <option name="PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MyAppDeport.app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="MyAppDeport.app" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="DEBUGGER_TYPE" value="Java" />
+      <Java />
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="MyAppDeport.app" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="DEBUGGER_TYPE" value="Java" />
+      <Java />
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MyAppDeport:app [check]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/app" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="check" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="ActivityMapperTest and 2 more" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="MyAppDeport.app" />
+      <option name="TEST_OBJECT" value="pattern" />
+      <patterns>
+        <pattern testClass="com.myappdeport.model.mapper.ActivityMapperTest" />
+        <pattern testClass="com.myappdeport.model.mapper.PositionMapperTest" />
+        <pattern testClass="com.myappdeport.model.mapper.RouteMapperTest" />
+      </patterns>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.MyAppDeport:app [check]" />
+        <item itemvalue="Android JUnit.ActivityMapperTest" />
+        <item itemvalue="Android JUnit.RouteMapperTest" />
+        <item itemvalue="Android JUnit.PositionMapperTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4ad33b82-f08b-483d-8bd7-61a08c33333a" name="Default Changelist" comment="" />
+      <created>1603169462851</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1603169462851</updated>
+      <workItem from="1603169466110" duration="1246000" />
+      <workItem from="1603213544426" duration="24585000" />
+      <workItem from="1603325352881" duration="1550000" />
+      <workItem from="1603477611096" duration="2542000" />
+      <workItem from="1603912589780" duration="41000" />
+      <workItem from="1603990482650" duration="153000" />
+      <workItem from="1603990679207" duration="57000" />
+      <workItem from="1603990781488" duration="27000" />
+      <workItem from="1603990848490" duration="39000" />
+      <workItem from="1603990919800" duration="420000" />
+      <workItem from="1603991372692" duration="96000" />
+      <workItem from="1603991639894" duration="111000" />
+      <workItem from="1603992831593" duration="463000" />
+      <workItem from="1603994490309" duration="2998000" />
+      <workItem from="1604014373624" duration="80000" />
+      <workItem from="1604111405831" duration="44000" />
+      <workItem from="1605130871366" duration="90000" />
+      <workItem from="1605131019323" duration="77000" />
+    </task>
+    <task id="LOCAL-00001" summary="Inicio del Fin :v">
+      <created>1603170605016</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1603170605016</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Repositorios de Firebase listos.[Chequear :v]">
+      <created>1603326874243</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1603326874243</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Repositorios probados y modificados.&#10;Faltan todos los repositorios de SQLite.&#10;Falta la implemetación de las cuentas de usuario.&#10;Faltan las entidades funcionales">
+      <created>1603439735411</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1603439735411</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Repositorios probados y modificados. [Correciones sobre las entidades de firebase]&#10;Faltan todos los repositorios de SQLite.&#10;Falta la implemetación de las cuentas de usuario.&#10;Faltan las entidades funcionales">
+      <created>1603480465345</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1603480465345</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Entidades terminadas, pero sin pruebas, falta avance de lo mapper y la especificación de los repositorios aun esta incompleta, falta especificar algunas entidades funcionales y DTO.">
+      <created>1604039653670</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1604039653670</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Entidades terminadas, pero sin pruebas, mappers completos pero sin pruebas y la especificación de los repositorios aun esta incompleta.">
+      <created>1604127256622</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1604127256622</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Entidades terminadas, pero sin pruebas, mappers completos pero sin pruebas y la especificación de los repositorios aun esta incompleta para SQLite y completa para Firestore sin relaciones de datos.">
+      <created>1604131264112</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1604131264112</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Entidades terminadas, pero sin pruebas, mappers completos pero sin pruebas y la especificación de los repositorios aun esta incompleta para SQLite y completa para Firestore sin relaciones de datos.">
+      <created>1604214716830</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1604214716830</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Entidades terminadas, pero sin pruebas, mappers completos pero sin pruebas y la especificación de los repositorios aun esta incompleta para SQLite y completa para Firestore sin relaciones de datos. [Guardado en cascada]">
+      <created>1604260652896</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1604260652896</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Entidades terminadas y repositorios firebase terminados y probados, repositorios sqlite incompleto">
+      <created>1604809599458</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1604809599459</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Entidades terminadas y repositorios firebase terminados y probados, repositorios sqlite semicompletos para hacer pruebas.">
+      <created>1604892693430</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1604892693430</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="true" />
+                </map>
+              </option>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="master" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+        <entry key="Paths">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="dir:C:/Users/erick/AndroidStudioProjects/IDNP/MyAppDeport" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="*" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Inicio del Fin :v" />
+    <MESSAGE value="Repositorios de Firebase listos.[Chequear :v]" />
+    <MESSAGE value="Repositorios probados y modificados.&#10;Faltan todos los repositorios de SQLite.&#10;Falta la implemetación de las cuentas de usuario.&#10;Faltan las entidades funcionales" />
+    <MESSAGE value="Repositorios probados y modificados. [Correciones sobre las entidades de firebase]&#10;Faltan todos los repositorios de SQLite.&#10;Falta la implemetación de las cuentas de usuario.&#10;Faltan las entidades funcionales" />
+    <MESSAGE value="Entidades terminadas, pero sin pruebas, falta avance de lo mapper y la especificación de los repositorios aun esta incompleta, falta especificar algunas entidades funcionales y DTO." />
+    <MESSAGE value="Entidades terminadas, pero sin pruebas, mappers completos pero sin pruebas y la especificación de los repositorios aun esta incompleta." />
+    <MESSAGE value="Entidades terminadas, pero sin pruebas, mappers completos pero sin pruebas y la especificación de los repositorios aun esta incompleta para SQLite y completa para Firestore sin relaciones de datos." />
+    <MESSAGE value="Entidades terminadas, pero sin pruebas, mappers completos pero sin pruebas y la especificación de los repositorios aun esta incompleta para SQLite y completa para Firestore sin relaciones de datos. [Guardado en cascada]" />
+    <MESSAGE value="Entidades terminadas y repositorios firebase terminados y probados, repositorios sqlite incompleto" />
+    <MESSAGE value="Entidades terminadas y repositorios firebase terminados y probados, repositorios sqlite semicompletos para hacer pruebas." />
+    <option name="LAST_COMMIT_MESSAGE" value="Entidades terminadas y repositorios firebase terminados y probados, repositorios sqlite semicompletos para hacer pruebas." />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="432" y="163" width="816" height="730" key="#Intentions" timestamp="1603407246745">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="432" y="163" width="816" height="730" key="#Intentions/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1603407246745" />
+    <state x="196" y="71" width="1100" height="872" key="#PSD" timestamp="1604087430945">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="290" y="170" key="#PSD/0.0.1366.728@0.0.1366.728" timestamp="1603493009170" />
+    <state x="357" y="236" key="#PSD/1680.150.1366.728/0.0.1680.1010/321.1050.1024.728@0.0.1680.1010" timestamp="1604006592909" />
+    <state x="196" y="71" width="1100" height="872" key="#PSD/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1604087430945" />
+    <state x="20" y="145" key="#Plugins" timestamp="1603991450556">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="20" y="145" key="#Plugins/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1603991450556" />
+    <state x="225" y="220" key="#com.intellij.ide.util.MemberChooser" timestamp="1604766327976">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="225" y="220" key="#com.intellij.ide.util.MemberChooser/1680.150.1366.728/0.0.1680.1010/321.1050.1024.728@0.0.1680.1010" timestamp="1604128065320" />
+    <state x="225" y="220" key="#com.intellij.ide.util.MemberChooser/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1604766327976" />
+    <state x="942" y="300" key="#com.intellij.ide.util.PackageChooserDialog" timestamp="1604016573650">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="942" y="300" key="#com.intellij.ide.util.PackageChooserDialog/1680.150.1366.728/0.0.1680.1010/321.1050.1024.728@0.0.1680.1010" timestamp="1604016573650" />
+    <state x="942" y="314" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1604196708452">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="942" y="314" key="#com.intellij.ide.util.TreeClassChooserDialog/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1604196708452" />
+    <state x="657" y="114" key="#com.intellij.openapi.keymap.impl.ui.EditKeymapsDialog" timestamp="1603773344146">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="657" y="114" key="#com.intellij.openapi.keymap.impl.ui.EditKeymapsDialog/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1603773344146" />
+    <state x="383" y="407" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1603778297027">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="383" y="407" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1603778297027" />
+    <state x="605" y="360" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1604766225366">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="605" y="360" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1604766225366" />
+    <state x="631" y="376" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.packages" timestamp="1603169777513">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="631" y="376" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.packages/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1603169777513" />
+    <state x="325" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1604727251113">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="325" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1604727251113" />
+    <state x="570" y="251" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1604037906664">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="570" y="251" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1604037906664" />
+    <state x="570" y="251" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog" timestamp="1604380276028">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="570" y="251" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1604380276028" />
+    <state x="450" y="59" key="#com.myappdeport.model.mapper_in_MyAppDeport.app" timestamp="1604016502299">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="450" y="59" key="#com.myappdeport.model.mapper_in_MyAppDeport.app/1680.150.1366.728/0.0.1680.1010/321.1050.1024.728@0.0.1680.1010" timestamp="1604016502299" />
+    <state x="502" y="313" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1604129764363">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="408" y="74" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1366.728@0.0.1366.728" timestamp="1603493136284" />
+    <state x="502" y="103" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/1680.150.1366.728/0.0.1680.1010/321.1050.1024.728@0.0.1680.1010" timestamp="1604127931963" />
+    <state x="502" y="313" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1604129764363" />
+    <state x="92" y="92" width="1496" height="826" key="AVDManager" timestamp="1603679780592">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="92" y="92" width="1496" height="826" key="AVDManager/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1603679780592" />
+    <state x="92" y="0" key="CommitChangelistDialog2" timestamp="1604127199660">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="92" y="0" key="CommitChangelistDialog2/1680.150.1366.728/0.0.1680.1010/321.1050.1024.728@0.0.1680.1010" timestamp="1604127199660" />
+    <state x="419" y="0" key="CommitChangelistDialog2/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1604039652511" />
+    <state x="92" y="92" width="1496" height="826" key="DiffContextDialog" timestamp="1604127473165">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="92" y="92" width="1496" height="826" key="DiffContextDialog/1680.150.1366.728/0.0.1680.1010/321.1050.1024.728@0.0.1680.1010" timestamp="1604127473165" />
+    <state x="92" y="92" width="1496" height="826" key="DiffContextDialog/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1603600784167" />
+    <state x="620" y="245" key="FileChooserDialogImpl" timestamp="1604809687612">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="504" y="177" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1603493004301" />
+    <state x="620" y="245" key="FileChooserDialogImpl/1680.150.1366.728/0.0.1680.1010/321.1050.1024.728@0.0.1680.1010" timestamp="1604014449861" />
+    <state x="620" y="245" key="FileChooserDialogImpl/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1604809687612" />
+    <state width="1637" height="270" key="GridCell.Tab.0.bottom" timestamp="1604893901538">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state width="1323" height="223" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1604093736122" />
+    <state width="1637" height="339" key="GridCell.Tab.0.bottom/1680.150.1366.728/0.0.1680.1010/321.1050.1024.728@0.0.1680.1010" timestamp="1604127183406" />
+    <state width="1637" height="270" key="GridCell.Tab.0.bottom/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1604893901538" />
+    <state width="1637" height="270" key="GridCell.Tab.0.center" timestamp="1604893901538">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state width="1323" height="223" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1604093736122" />
+    <state width="1637" height="339" key="GridCell.Tab.0.center/1680.150.1366.728/0.0.1680.1010/321.1050.1024.728@0.0.1680.1010" timestamp="1604127183406" />
+    <state width="1637" height="270" key="GridCell.Tab.0.center/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1604893901538" />
+    <state width="1637" height="270" key="GridCell.Tab.0.left" timestamp="1604893901537">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state width="1323" height="223" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1604093736122" />
+    <state width="1637" height="339" key="GridCell.Tab.0.left/1680.150.1366.728/0.0.1680.1010/321.1050.1024.728@0.0.1680.1010" timestamp="1604127183406" />
+    <state width="1637" height="270" key="GridCell.Tab.0.left/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1604893901537" />
+    <state width="1637" height="270" key="GridCell.Tab.0.right" timestamp="1604893901538">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state width="1323" height="223" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1604093736122" />
+    <state width="1637" height="339" key="GridCell.Tab.0.right/1680.150.1366.728/0.0.1680.1010/321.1050.1024.728@0.0.1680.1010" timestamp="1604127183406" />
+    <state width="1637" height="270" key="GridCell.Tab.0.right/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1604893901538" />
+    <state width="1637" height="481" key="GridCell.Tab.1.bottom" timestamp="1604253822793">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state width="1637" height="481" key="GridCell.Tab.1.bottom/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1604253822793" />
+    <state width="1637" height="481" key="GridCell.Tab.1.center" timestamp="1604253822793">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state width="1637" height="481" key="GridCell.Tab.1.center/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1604253822793" />
+    <state width="1637" height="481" key="GridCell.Tab.1.left" timestamp="1604253822793">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state width="1637" height="481" key="GridCell.Tab.1.left/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1604253822793" />
+    <state width="1637" height="481" key="GridCell.Tab.1.right" timestamp="1604253822793">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state width="1637" height="481" key="GridCell.Tab.1.right/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1604253822793" />
+    <state x="420" y="247" key="IDE.errors.dialog" timestamp="1604120762347">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="420" y="247" key="IDE.errors.dialog/1680.150.1366.728/0.0.1680.1010/321.1050.1024.728@0.0.1680.1010" timestamp="1604120762347" />
+    <state x="420" y="247" key="IDE.errors.dialog/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1603437658292" />
+    <state x="51" y="61" width="1473" height="845" key="MergeDialog" timestamp="1604127344370">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="51" y="61" width="1473" height="845" key="MergeDialog/1680.150.1366.728/0.0.1680.1010/321.1050.1024.728@0.0.1680.1010" timestamp="1604127344370" />
+    <state x="166" y="59" key="MergeDialog/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1603775303604" />
+    <state x="470" y="258" key="MultipleFileMergeDialog" timestamp="1604809624144">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="470" y="258" key="MultipleFileMergeDialog/1680.150.1366.728/0.0.1680.1010/321.1050.1024.728@0.0.1680.1010" timestamp="1604127344379" />
+    <state x="470" y="258" key="MultipleFileMergeDialog/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1604809624144" />
+    <state x="533" y="123" key="RollbackChangesDialog" timestamp="1604250188725">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="533" y="123" key="RollbackChangesDialog/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1604250188725" />
+    <state x="341" y="149" width="998" height="772" key="SettingsEditor" timestamp="1604196265720">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="277" y="17" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1603492968804" />
+    <state x="341" y="149" key="SettingsEditor/1680.150.1366.728/0.0.1680.1010/321.1050.1024.728@0.0.1680.1010" timestamp="1604006650384" />
+    <state x="341" y="149" width="998" height="772" key="SettingsEditor/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1604196265720" />
+    <state x="432" y="233" key="Vcs.Push.Dialog.v2" timestamp="1604892700020">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="432" y="233" key="Vcs.Push.Dialog.v2/1680.150.1366.728/0.0.1680.1010/321.1050.1024.728@0.0.1680.1010" timestamp="1604127408768" />
+    <state x="432" y="233" key="Vcs.Push.Dialog.v2/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1604892700020" />
+    <state x="1028" y="302" key="chooseDestDirectoryDialog" timestamp="1604210635216">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="1028" y="302" key="chooseDestDirectoryDialog/1680.150.1366.728/0.0.1680.1010/321.1050.1024.728@0.0.1680.1010" timestamp="1604016579554" />
+    <state x="1028" y="302" key="chooseDestDirectoryDialog/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1604210635216" />
+    <state x="619" y="349" key="cloudConfig.PluginsDialog" timestamp="1603992897349">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="619" y="349" key="cloudConfig.PluginsDialog/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1603992897349" />
+    <state x="516" y="328" key="com.intellij.ide.util.TipDialog" timestamp="1603476177344">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="516" y="328" key="com.intellij.ide.util.TipDialog/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1603476177344" />
+    <state x="647" y="414" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1604809661435">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="647" y="414" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/1680.150.1366.728/0.0.1680.1010/321.1050.1024.728@0.0.1680.1010" timestamp="1604127485076" />
+    <state x="647" y="414" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1604809661435" />
+    <state x="981" y="211" width="462" height="627" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1604210635244">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="981" y="211" width="462" height="627" key="com.intellij.testIntegration.createTest.CreateTestDialog/1680.150.1366.728/0.0.1680.1010/321.1050.1024.728@0.0.1680.1010" timestamp="1604016579648" />
+    <state x="981" y="211" key="com.intellij.testIntegration.createTest.CreateTestDialog/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1604210635244" />
+    <state x="548" y="80" width="583" height="849" key="find.popup" timestamp="1603547774769">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="548" y="80" width="583" height="849" key="find.popup/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1603547774769" />
+    <state x="620" y="309" key="git4idea.history.wholeTree.VcsStructureChooser" timestamp="1603600596497">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="620" y="309" key="git4idea.history.wholeTree.VcsStructureChooser/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1603600596497" />
+    <state x="431" y="79" key="new project wizard" timestamp="1605131096249">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="431" y="79" key="new project wizard/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1605131096249" />
+    <state x="616" y="261" key="refactoring.ChangeSignatureDialog" timestamp="1604089725260">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="616" y="261" key="refactoring.ChangeSignatureDialog/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1604089725260" />
+    <state x="417" y="225" width="827" height="940" key="run.anything.popup" timestamp="1604381662967">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="339" y="162" width="672" height="677" key="run.anything.popup/0.0.1366.728@0.0.1366.728" timestamp="1603492869221" />
+    <state x="417" y="225" width="827" height="940" key="run.anything.popup/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1604381662967" />
+    <state x="503" y="217" width="672" height="678" key="search.everywhere.popup" timestamp="1604768629343">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="503" y="217" width="672" height="678" key="search.everywhere.popup/1680.73.1366.728/0.0.1680.1010@0.0.1680.1010" timestamp="1604768629343" />
+  </component>
+</project>

@@ -10,8 +10,8 @@ import com.myappdeport.model.entity.database.EPosition;
 import com.myappdeport.model.entity.database.ERoute;
 import com.myappdeport.repository.IRouteRepository;
 
+import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import lombok.SneakyThrows;
 
@@ -36,7 +36,7 @@ public class RouteFireStoreRepository extends FireStoreRepository<ERoute> implem
     @RequiresApi(api = Build.VERSION_CODES.N)
     public Task<Optional<ERoute>> findByIdWithPositions(String documentId) {
         return this.findById(documentId).onSuccessTask(optionalERoute -> {
-            optionalERoute.ifPresent(eRoute -> eRoute.setPositions(positionRepository.findByIds(eRoute.getPositionDocumentIds()).getResult()));
+            Objects.requireNonNull(optionalERoute).ifPresent(eRoute -> eRoute.setPositions(positionRepository.findByIdERoute(eRoute.getDocumentId()).getResult()));
             return Tasks.forResult(optionalERoute);
         });
     }
@@ -44,10 +44,14 @@ public class RouteFireStoreRepository extends FireStoreRepository<ERoute> implem
     @Override
     @RequiresApi(api = Build.VERSION_CODES.N)
     public Task<ERoute> saveWithPositions(ERoute eRoute) {
-        return this.positionRepository.saveAll(eRoute.getPositions()).onSuccessTask(ePositions -> {
-            eRoute.setPositions(ePositions);
-            eRoute.setPositionDocumentIds(ePositions.stream().map(EPosition::getDocumentId).collect(Collectors.toList()));
-            return save(eRoute);
+        return save(eRoute).onSuccessTask(eRoute1 -> {
+            for (EPosition position : Objects.requireNonNull(eRoute1).getPositions()) {
+                position.setERouteDocumentId(eRoute1.getDocumentId());
+            }
+            return this.positionRepository.saveAll(eRoute1.getPositions()).onSuccessTask(ePositions -> Tasks.call(() -> {
+                eRoute1.setPositions(ePositions);
+                return eRoute1;
+            }));
         });
     }
 

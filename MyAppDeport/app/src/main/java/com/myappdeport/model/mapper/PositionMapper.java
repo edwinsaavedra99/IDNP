@@ -23,7 +23,9 @@ public interface PositionMapper extends MapperEntityDtoFunctional<EPosition, DTO
     @InheritInverseConfiguration(name = "entityToDto")
     @Mappings({
             @Mapping(target = "id", ignore = true),
-            @Mapping(target = "documentId", ignore = true)
+            @Mapping(target = "documentId", ignore = true),
+            @Mapping(target = "idERoute", ignore = true),
+            @Mapping(target = "ERouteDocumentId", ignore = true)
     })
     EPosition dtoToEntity(DTOPosition position);
 
@@ -39,6 +41,10 @@ public interface PositionMapper extends MapperEntityDtoFunctional<EPosition, DTO
 
     @Override
     @InheritInverseConfiguration(name = "entityToFunctional")
+    @Mappings({
+            @Mapping(target = "idERoute", ignore = true),
+            @Mapping(target = "ERouteDocumentId", ignore = true)
+    })
     EPosition functionalToEntity(Position position);
 
     @Override

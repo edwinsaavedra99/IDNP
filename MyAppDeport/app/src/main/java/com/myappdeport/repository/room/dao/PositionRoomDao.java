@@ -50,8 +50,8 @@ public abstract class PositionRoomDao implements IRoomDao<EPosition, Long> {
     @Query("SELECT * FROM EPosition WHERE id =:identifier")
     public abstract EPosition findById(Long identifier);
 
-    @Query("SELECT * FROM EPosition WHERE id IN (:ids)")
-    public abstract List<EPosition> findByIds(List<Long> ids);
+    @Query("SELECT * FROM EPosition WHERE idERoute =:idRoute")
+    public abstract List<EPosition> findByIdRoute(Long idRoute);
 
     @Override
     @Query("SELECT COUNT(*) FROM EPosition")

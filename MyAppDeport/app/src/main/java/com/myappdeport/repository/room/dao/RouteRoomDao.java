@@ -4,9 +4,13 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
+import com.myappdeport.model.entity.database.EActivity;
+import com.myappdeport.model.entity.database.EPosition;
 import com.myappdeport.model.entity.database.ERoute;
+import com.myappdeport.model.entity.database.relationship.ActivityAndRoute;
 import com.myappdeport.model.entity.database.relationship.RouteWithPosition;
 
 import java.util.ArrayList;
@@ -54,72 +58,57 @@ public abstract class RouteRoomDao implements IRoomDao<ERoute, Long> {
     @Query("SELECT COUNT(*) FROM ERoute")
     public abstract Integer count();
 
-    @Insert
-    protected abstract void _insertWithPositions(RouteWithPosition routeWithPosition);
-
-    @Update
-    protected abstract void _updateWithPositions(RouteWithPosition routeWithPosition);
-
+    @Transaction
     @Query("SELECT * FROM ERoute")
     protected abstract List<RouteWithPosition> _findAllWithPositions();
 
-    @Delete
-    protected abstract void _deleteWithPositions(RouteWithPosition routeWithPosition);
-
+    @Transaction
     @Query("SELECT * FROM ERoute WHERE id =:identifier")
-    protected abstract RouteWithPosition getByIdWithPositions(Long identifier);
+    protected abstract RouteWithPosition _findByIdWithPositions(Long identifier);
 
     public List<ERoute> findAllWithPositions() {
-        List<RouteWithPosition> routeWithPositionList = _findAllWithPositions();
-        List<ERoute> routes = new ArrayList<>();
-        for (RouteWithPosition routeWithPosition : routeWithPositionList) {
-            routeWithPosition.getRoute().setPositions(routeWithPosition.getPositions());
-            routes.add(routeWithPosition.getRoute());
+        List<RouteWithPosition> routeWithPositions = _findAllWithPositions();
+        List<ERoute> eRoutes = new ArrayList<>();
+        for (RouteWithPosition routeWithPosition : routeWithPositions) {
+            ERoute eRoute = routeWithPosition.getRoute();
+            eRoute.setPositions(routeWithPosition.getPositions());
+            eRoutes.add(eRoute);
         }
-        return routes;
+        return eRoutes;
     }
 
-    public ERoute findByIdWithPositions(Long id) {
-        RouteWithPosition routeWithPosition = getByIdWithPositions(id);
+    public ERoute findByIdWithPositions(Long identifier) {
+        RouteWithPosition routeWithPosition = _findByIdWithPositions(identifier);
         ERoute eRoute = routeWithPosition.getRoute();
         eRoute.setPositions(routeWithPosition.getPositions());
         return eRoute;
     }
 
-    public Long insertWithPositions(ERoute eRoute) {
-        RouteWithPosition routeWithPosition = new RouteWithPosition(eRoute, eRoute.getPositions());
-        _insertWithPositions(routeWithPosition);
-        return eRoute.getId();
-    }
+    @Insert
+    abstract void _insertAllPositions(List<EPosition> ePositions);
 
-    public List<Long> insertAllWithPositions(List<ERoute> eRoutes) {
-        List<Long> idERoutes = new ArrayList<>();
-        for (ERoute eRoute : eRoutes) {
-            idERoutes.add(insertWithPositions(eRoute));
+    @Update
+    abstract void _updateAllPositions(List<EPosition> ePositions);
+
+    @Delete
+    abstract void _deleteAllPositions(List<EPosition> ePositions);
+
+    public Long insertWithPositions(ERoute eRoute) {
+        Long id = insert(eRoute);
+        for (EPosition ePosition : eRoute.getPositions()) {
+            ePosition.setId(id);
         }
-        return idERoutes;
+        _insertAllPositions(eRoute.getPositions());
+        return id;
     }
 
     public void updateWithPositions(ERoute eRoute) {
-        RouteWithPosition routeWithPosition = new RouteWithPosition(eRoute, eRoute.getPositions());
-        _updateWithPositions(routeWithPosition);
-    }
-
-    public void updateAllWithPositions(List<ERoute> eRoutes) {
-        for (ERoute eRoute : eRoutes) {
-            updateWithPositions(eRoute);
-        }
+        update(eRoute);
+        _updateAllPositions(eRoute.getPositions());
     }
 
     public void deleteWithPositions(ERoute eRoute) {
-        RouteWithPosition routeWithPosition = new RouteWithPosition(eRoute, eRoute.getPositions());
-        _deleteWithPositions(routeWithPosition);
+        delete(eRoute);
+        _deleteAllPositions(eRoute.getPositions());
     }
-
-    public void deleteAllWithPositions(List<ERoute> eRoutes) {
-        for (ERoute eRoute : eRoutes) {
-            deleteWithPositions(eRoute);
-        }
-    }
-
 }

@@ -1,20 +1,25 @@
 package com.myappdeport.model.entity.database;
 
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.Ignore;
+import androidx.room.Index;
 
 import com.google.firebase.firestore.Exclude;
 
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-@Entity
+@Entity(foreignKeys = @ForeignKey(
+        entity = ERoute.class,
+        parentColumns = "id",
+        childColumns = "idERoute",
+        onDelete = ForeignKey.CASCADE,
+        onUpdate = ForeignKey.CASCADE
+), indices = @Index("idERoute")
+)
 public class EActivity extends EntityDatabase {
     private String startTime;
     private String endTime;
@@ -24,15 +29,21 @@ public class EActivity extends EntityDatabase {
      */
     @Ignore
     private String routeDocumentId;
+    /**
+     * Id de la ruta SQLite.
+     */
+    private Long idERoute;
     @Ignore
     private ERoute eRoute;
 
-    public EActivity(Long id, String documentId, String startTime, String endTime, Double kiloCalories, String routeDocumentId) {
+    @Ignore
+    public EActivity(Long id, String documentId, String startTime, String endTime, Double kiloCalories, String routeDocumentId, Long idERoute) {
         super(id, documentId);
         this.startTime = startTime;
         this.endTime = endTime;
         this.kiloCalories = kiloCalories;
         this.routeDocumentId = routeDocumentId;
+        this.idERoute = idERoute;
     }
 
     /**
@@ -43,8 +54,9 @@ public class EActivity extends EntityDatabase {
      * @param endTime      Es la hora de finalización.
      * @param kiloCalories Son las kilocalorias invertidas.
      */
-    public EActivity(Long id, String startTime, String endTime, Double kiloCalories) {
-        this(id, null, startTime, endTime, kiloCalories, null);
+    @Ignore
+    public EActivity(Long id, String startTime, String endTime, Double kiloCalories, Long idERoute) {
+        this(id, null, startTime, endTime, kiloCalories, null, idERoute);
     }
 
     /**
@@ -56,8 +68,53 @@ public class EActivity extends EntityDatabase {
      * @param kiloCalories    Son las kilocalorias invertidas.
      * @param routeDocumentId Es el id del documento de ruta.
      */
-    public EActivity(String documentId, String startTime, String endTime, Double kiloCalories, String routeDocumentId) {
-        this(null, documentId, startTime, endTime, kiloCalories, routeDocumentId);
+    @Ignore
+    public EActivity(String documentId, String startTime, String endTime, Double kiloCalories, String routeDocumentId, Long idERoute) {
+        this(null, documentId, startTime, endTime, kiloCalories, routeDocumentId, idERoute);
+    }
+
+    /**
+     * Firebase constructor
+     *
+     * @param idERoute        Identificador en SQLite
+     * @param startTime       Es la hora de inicio
+     * @param endTime         Es la hora de finalización.
+     * @param kiloCalories    Son las kilocalorias invertidas.
+     * @param routeDocumentId Es el id del documento de ruta.
+     * @param eRoute          Es la ruta.
+     */
+    @Ignore
+    public EActivity(String startTime, String endTime, Double kiloCalories, String routeDocumentId, Long idERoute, ERoute eRoute) {
+        this(null, null, startTime, endTime, kiloCalories, routeDocumentId, idERoute);
+    }
+
+    @Ignore
+    public EActivity(String startTime, String endTime, Double kiloCalories) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.kiloCalories = kiloCalories;
+    }
+
+    @Ignore
+    public EActivity(String startTime, String endTime, Double kiloCalories, ERoute eRoute) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.kiloCalories = kiloCalories;
+        this.eRoute = eRoute;
+    }
+
+    public EActivity() {
+    }
+
+
+    @Exclude
+    public ERoute getERoute() {
+        return this.eRoute;
+    }
+
+    @Exclude
+    public Long getIdERoute() {
+        return idERoute;
     }
 
     public String getStartTime() {
@@ -92,9 +149,8 @@ public class EActivity extends EntityDatabase {
         this.routeDocumentId = routeDocumentId;
     }
 
-    @Exclude
-    public ERoute getERoute() {
-        return this.eRoute;
+    public void setIdERoute(Long idERoute) {
+        this.idERoute = idERoute;
     }
 
     public void setERoute(ERoute eRoute) {

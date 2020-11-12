@@ -1,6 +1,7 @@
 package com.myappdeport.model.entity.database.relationship;
 
 import androidx.room.Embedded;
+import androidx.room.Ignore;
 import androidx.room.Relation;
 
 import com.myappdeport.model.entity.database.EActivity;
@@ -10,12 +11,13 @@ public class ActivityAndRoute {
     @Embedded
     private EActivity eActivity;
     @Relation(
-            parentColumn = "id",
+            parentColumn = "idERoute",
             entityColumn = "id",
             entity = ERoute.class
     )
     private ERoute eRoute;
 
+    @Ignore
     public ActivityAndRoute(EActivity eActivity, ERoute eRoute) {
         this.eActivity = eActivity;
         this.eRoute = eRoute;

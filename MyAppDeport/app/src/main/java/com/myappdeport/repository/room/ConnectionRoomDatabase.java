@@ -18,7 +18,7 @@ import com.myappdeport.repository.room.dao.SongRoomDao;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {EActivity.class, EPosition.class, ERoute.class, ESong.class}, version = 1, exportSchema = false)
+@Database(entities = {EActivity.class, EPosition.class, ERoute.class, ESong.class}, version = 2, exportSchema = false)
 public abstract class ConnectionRoomDatabase extends RoomDatabase {
     public abstract PositionRoomDao getPositionRoomDao();
 
@@ -42,6 +42,7 @@ public abstract class ConnectionRoomDatabase extends RoomDatabase {
                             /*
                              * Permite hacer pruebas desde el hilo principal.
                              */
+                            .fallbackToDestructiveMigration()
                             .allowMainThreadQueries()
                             .build();
                 }

@@ -4,12 +4,12 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
 import com.myappdeport.model.entity.database.EActivity;
 import com.myappdeport.model.entity.database.ERoute;
 import com.myappdeport.model.entity.database.relationship.ActivityAndRoute;
-import com.myappdeport.model.entity.database.relationship.RouteWithPosition;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,71 +56,56 @@ public abstract class ActivityRoomDao implements IRoomDao<EActivity, Long> {
     @Query("SELECT COUNT(*) FROM EActivity")
     public abstract Integer count();
 
-    @Insert
-    public abstract void _insertWithRoute(ActivityAndRoute activityAndRoute);
-
-    @Update
-    public abstract void _updateWithRoute(ActivityAndRoute activityAndRoute);
-
+    @Transaction
     @Query("SELECT * FROM EActivity")
     public abstract List<ActivityAndRoute> _findAllWithRoute();
 
-    @Delete
-    protected abstract void _deleteWithRoute(ActivityAndRoute activityAndRoute);
-
+    @Transaction
     @Query("SELECT * FROM EActivity WHERE id =:identifier")
-    protected abstract ActivityAndRoute getByIdWithRoute(Long identifier);
+    protected abstract ActivityAndRoute _findByIdWithRoute(Long identifier);
 
     public List<EActivity> findAllWithRoute() {
         List<ActivityAndRoute> activityAndRoutes = _findAllWithRoute();
         List<EActivity> eActivities = new ArrayList<>();
         for (ActivityAndRoute activityAndRoute : activityAndRoutes) {
-            activityAndRoute.getEActivity().setERoute(activityAndRoute.getERoute());
-            eActivities.add(activityAndRoute.getEActivity());
+            EActivity eActivity = activityAndRoute.getEActivity();
+            eActivity.setERoute(activityAndRoute.getERoute());
+            eActivities.add(eActivity);
         }
         return eActivities;
     }
 
-    public EActivity findByIdWithRoute(Long id) {
-        ActivityAndRoute activityAndRoute = getByIdWithRoute(id);
+    public EActivity findByIdWithRoute(Long identifier) {
+        ActivityAndRoute activityAndRoute = _findByIdWithRoute(identifier);
         EActivity eActivity = activityAndRoute.getEActivity();
         eActivity.setERoute(activityAndRoute.getERoute());
         return eActivity;
     }
 
-    public Long insertWithRoute(EActivity eActivity) {
-        ActivityAndRoute activityAndRoute = new ActivityAndRoute(eActivity, eActivity.getERoute());
-        _insertWithRoute(activityAndRoute);
-        return eActivity.getId();
-    }
+    @Insert
+    abstract Long _insertRoute(ERoute eRoute);
 
-    public List<Long> insertAllWithRoute(List<EActivity> eActivities) {
-        List<Long> idEActivities = new ArrayList<>();
-        for (EActivity eActivity : eActivities) {
-            idEActivities.add(insertWithRoute(eActivity));
-        }
-        return idEActivities;
+    @Update
+    abstract void _updateRoute(ERoute eRoute);
+
+    @Delete
+    abstract void _deleteRoute(ERoute eRoute);
+
+    public Long insertWithRoute(EActivity eActivity) {
+        Long id = _insertRoute(eActivity.getERoute());
+        eActivity.setIdERoute(id);
+        return insert(eActivity);
     }
 
     public void updateWithRoute(EActivity eActivity) {
-        ActivityAndRoute activityAndRoute = new ActivityAndRoute(eActivity, eActivity.getERoute());
-        _updateWithRoute(activityAndRoute);
-    }
-
-    public void updateAllWithRoute(List<EActivity> eActivities) {
-        for (EActivity eActivity : eActivities) {
-            updateWithRoute(eActivity);
-        }
+        _updateRoute(eActivity.getERoute());
+        update(eActivity);
     }
 
     public void deleteWithRoute(EActivity eActivity) {
-        ActivityAndRoute activityAndRoute = new ActivityAndRoute(eActivity, eActivity.getERoute());
-        _deleteWithRoute(activityAndRoute);
+        _deleteRoute(eActivity.getERoute());
+        delete(eActivity);
     }
 
-    public void deleteAllWithRoute(List<EActivity> eActivities) {
-        for (EActivity eActivity : eActivities) {
-            deleteWithRoute(eActivity);
-        }
-    }
+
 }
