@@ -12,13 +12,25 @@ import lombok.ToString;
 
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-@Entity(foreignKeys = @ForeignKey(
-        entity = ERoute.class,
-        parentColumns = "id",
-        childColumns = "idERoute",
-        onDelete = ForeignKey.CASCADE,
-        onUpdate = ForeignKey.CASCADE
-), indices = @Index("idERoute")
+@Entity(foreignKeys = {
+        @ForeignKey(
+                entity = ERoute.class,
+                parentColumns = "id",
+                childColumns = "idERoute",
+                onDelete = ForeignKey.CASCADE,
+                onUpdate = ForeignKey.CASCADE
+        ),
+        @ForeignKey(
+                entity = EUser.class,
+                parentColumns = "id",
+                childColumns = "idEUser",
+                onDelete = ForeignKey.CASCADE,
+                onUpdate = ForeignKey.CASCADE
+        )
+}, indices = {
+        @Index("idERoute"),
+        @Index("idEUser")
+}
 )
 public class EActivity extends EntityDatabase {
     private String startTime;
@@ -30,9 +42,18 @@ public class EActivity extends EntityDatabase {
     @Ignore
     private String routeDocumentId;
     /**
+     * Id del documento user firebase.
+     */
+    @Ignore
+    private String userDocumentId;
+    /**
      * Id de la ruta SQLite.
      */
     private Long idERoute;
+    /**
+     * Id del usuario SQLite.
+     */
+    private Long idEUser;
     @Ignore
     private ERoute eRoute;
 
@@ -155,6 +176,23 @@ public class EActivity extends EntityDatabase {
 
     public void setERoute(ERoute eRoute) {
         this.eRoute = eRoute;
+    }
+
+    public String getUserDocumentId() {
+        return this.userDocumentId;
+    }
+
+    @Exclude
+    public Long getIdEUser() {
+        return this.idEUser;
+    }
+
+    public void setUserDocumentId(String userDocumentId) {
+        this.userDocumentId = userDocumentId;
+    }
+
+    public void setIdEUser(Long idEUser) {
+        this.idEUser = idEUser;
     }
 }
 

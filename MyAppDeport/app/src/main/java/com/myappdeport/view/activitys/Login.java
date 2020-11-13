@@ -5,9 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,19 +26,13 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.FacebookAuthCredential;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.myappdeport.R;
-import com.myappdeport.model.entity.database.EUser;
+import com.myappdeport.model.entity.database.EUserEDWIN;
 import com.myappdeport.viewmodel.AuthViewModel;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.URL;
 
 import lombok.SneakyThrows;
@@ -215,7 +207,7 @@ public class Login extends AppCompatActivity {
             }
         });
     }
-    private void createNewUser(EUser authenticatedUser) {
+    private void createNewUser(EUserEDWIN authenticatedUser) {
         authViewModel.createUser(authenticatedUser);
         authViewModel.createdUserLiveData.observe(this, user -> {
             if (user.isCreated) {
@@ -227,7 +219,7 @@ public class Login extends AppCompatActivity {
     private void toastMessage(String name) {
         Toast.makeText(this, "Hi " + name + "!\n" + "Your account was successfully created.", Toast.LENGTH_LONG).show();
     }
-    private void goToMainActivity(EUser user) {
+    private void goToMainActivity(EUserEDWIN user) {
         Intent intent = new Intent(Login.this, MenuContainer.class);
         intent.putExtra(USER, user);
         startActivity(intent);

@@ -6,24 +6,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.facebook.AccessToken;
-import com.facebook.AccessTokenTracker;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.FacebookAuthProvider;
-import com.google.firebase.auth.GoogleAuthProvider;
 import com.myappdeport.R;
 import com.myappdeport.model.entity.database.EActivity;
 import com.myappdeport.model.entity.database.EPosition;
 import com.myappdeport.model.entity.database.ERoute;
-import com.myappdeport.model.entity.database.EUser;
 import com.myappdeport.repository.IActivityRepository;
 import com.myappdeport.repository.IPositionRepository;
 import com.myappdeport.repository.IRouteRepository;
@@ -34,11 +24,8 @@ import com.myappdeport.repository.room.PositionRoomRepository;
 import com.myappdeport.viewmodel.AuthViewModel;
 
 import java.util.Collections;
-import java.util.List;
 
 import lombok.SneakyThrows;
-
-import static com.myappdeport.utils.Constants.USER;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();

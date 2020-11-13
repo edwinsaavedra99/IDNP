@@ -5,9 +5,12 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.myappdeport.model.entity.database.EActivity;
 import com.myappdeport.repository.IActivityRepository;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class ActivityFireStoreRepository extends FireStoreRepository<EActivity> implements IActivityRepository<String> {
@@ -24,6 +27,11 @@ public class ActivityFireStoreRepository extends FireStoreRepository<EActivity> 
         super(EActivity.class);
         this.TAG = ActivityFireStoreRepository.class.getSimpleName();
         this.routeFireStoreRepository = RouteFireStoreRepository.getInstance();
+    }
+
+    @Override
+    public Task<List<EActivity>> getActivityByIdUser(String idUser) {
+        return this.collectionReference.whereEqualTo("userDocumentId", idUser).get().continueWithTask(task -> Tasks.forResult(Objects.requireNonNull(task.getResult()).toObjects(entityClass)));
     }
 
     @Override

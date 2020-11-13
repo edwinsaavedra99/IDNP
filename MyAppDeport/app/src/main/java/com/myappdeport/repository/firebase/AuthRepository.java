@@ -9,7 +9,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.myappdeport.model.entity.database.EUser;
+import com.myappdeport.model.entity.database.EUserEDWIN;
 
 
 import static com.myappdeport.utils.Constants.USERS;
@@ -22,8 +22,8 @@ class AuthRepository {
     private FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
     private CollectionReference usersRef = rootRef.collection(USERS);
 
-    public MutableLiveData<EUser> firebaseSignIn(AuthCredential authCredential) {
-        MutableLiveData<EUser> authenticatedUserMutableLiveData = new MutableLiveData<>();
+    public MutableLiveData<EUserEDWIN> firebaseSignIn(AuthCredential authCredential) {
+        MutableLiveData<EUserEDWIN> authenticatedUserMutableLiveData = new MutableLiveData<>();
         firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(authTask -> {
             if (authTask.isSuccessful()) {
                 boolean isNewUser = authTask.getResult().getAdditionalUserInfo().isNewUser();
@@ -32,7 +32,7 @@ class AuthRepository {
                     String uid = firebaseUser.getUid();
                     String name = firebaseUser.getDisplayName();
                     String email = firebaseUser.getEmail();
-                    EUser user = new EUser(uid, name, email);
+                    EUserEDWIN user = new EUserEDWIN(uid, name, email);
                     user.isNew = isNewUser;
                     authenticatedUserMutableLiveData.setValue(user);
                 }
@@ -43,8 +43,8 @@ class AuthRepository {
         return authenticatedUserMutableLiveData;
     }
 
-    public MutableLiveData<EUser> createUserInFirestoreIfNotExists(EUser authenticatedUser) {
-        MutableLiveData<EUser> newUserMutableLiveData = new MutableLiveData<>();
+    public MutableLiveData<EUserEDWIN> createUserInFirestoreIfNotExists(EUserEDWIN authenticatedUser) {
+        MutableLiveData<EUserEDWIN> newUserMutableLiveData = new MutableLiveData<>();
         DocumentReference uidRef = usersRef.document(authenticatedUser.uid);
         uidRef.get().addOnCompleteListener(uidTask -> {
             if (uidTask.isSuccessful()) {
