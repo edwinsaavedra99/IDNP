@@ -12,6 +12,7 @@ import com.myappdeport.model.entity.database.ERoute;
 import com.myappdeport.repository.IActivityRepository;
 import com.myappdeport.repository.room.dao.ActivityRoomDao;
 
+import java.util.List;
 import java.util.Optional;
 
 public class ActivityRoomRepository extends RoomRepository<EActivity, ActivityRoomDao> implements IActivityRepository<Long> {
@@ -30,6 +31,11 @@ public class ActivityRoomRepository extends RoomRepository<EActivity, ActivityRo
         this.routeRoomRepository = RouteRoomRepository.getInstance(context);
     }
 
+
+    @Override
+    public Task<List<EActivity>> getActivityByIdUser(Long idUser) {
+        return null;
+    }
 
     @Override
     @RequiresApi(api = Build.VERSION_CODES.N)
