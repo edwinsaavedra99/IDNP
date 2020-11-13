@@ -1,25 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.myappdeport">
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the "MyLocation" functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <!--
          The INTERNET permissions are not required to use
          Google Auth, but you must specify either coarse or fine
          location permissions for the "Login and Register" functionality.
     -->
-
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
     <application
         android:name=".service.usecase.audio.AppAudio"
         android:allowBackup="true"
@@ -45,25 +42,27 @@
         <activity android:name=".view.activitys.DeportActivity" />
         <activity android:name=".view.activitys.Login" />
         <activity android:name=".view.activitys.Register" />
-        <activity android:name=".view.activitys.MainActivity">
+        <activity android:name=".view.activitys.MainActivity" />
+        <activity android:name=".view.activitys.PruebaAnimation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_application_id"/>
 
-        <!--activity android:name="com.facebook.FacebookActivity" android:configChanges= "keyboard|keyboardHidden|screenLayout|screenSize|orientation" android:label="@string/app_name" /> <activity android:name="com.facebook.CustomTabActivity" android:exported="true"> <intent-filter> <action android:name="android.intent.action.VIEW" /> <category android:name="android.intent.category.DEFAULT" /> <category android:name="android.intent.category.BROWSABLE" /> <data android:scheme="@string/facebook_login_protocol_scheme" /> </intent-filter> </activity-->
-
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_application_id" /> <!-- activity android:name="com.facebook.FacebookActivity" android:configChanges= "keyboard|keyboardHidden|screenLayout|screenSize|orientation" android:label="@string/app_name" /> <activity android:name="com.facebook.CustomTabActivity" android:exported="true"> <intent-filter> <action android:name="android.intent.action.VIEW" /> <category android:name="android.intent.category.DEFAULT" /> <category android:name="android.intent.category.BROWSABLE" /> <data android:scheme="@string/facebook_login_protocol_scheme" /> </intent-filter> </activity -->
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <service android:name=".service.usecase.audio.AudioService"/>
+        <service android:name=".service.usecase.audio.AudioService" />
+
         <receiver android:name=".service.usecase.audio.ReciverEvents">
             <intent-filter>
-                <action android:name="click"/>
+                <action android:name="click" />
             </intent-filter>
         </receiver>
     </application>
