@@ -15,6 +15,7 @@ import com.myappdeport.repository.room.dao.ActivityRoomDao;
 import com.myappdeport.repository.room.dao.PositionRoomDao;
 import com.myappdeport.repository.room.dao.RouteRoomDao;
 import com.myappdeport.repository.room.dao.SongRoomDao;
+import com.myappdeport.repository.room.dao.UserRoomDao;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -28,6 +29,8 @@ public abstract class ConnectionRoomDatabase extends RoomDatabase {
     public abstract ActivityRoomDao getActivityRoomDao();
 
     public abstract SongRoomDao getSongRoomDao();
+
+    public abstract UserRoomDao getUserRoomDao();
 
     private static volatile ConnectionRoomDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;

@@ -1,6 +1,5 @@
 package com.myappdeport.repository.room;
 
-import android.content.Context;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
@@ -15,13 +14,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public abstract class RoomRepository<E extends EntityDatabase, R extends IRoomDao<E, Long>> implements IRepository<E, Long> {
+public abstract class RoomRepository<E extends EntityDatabase, DAO extends IRoomDao<E, Long>> implements IRepository<E, Long> {
 
     protected final String TAG = this.getClass().getSimpleName();
 
-    protected final R roomDao;
+    protected final DAO roomDao;
 
-    protected RoomRepository(R roomDao) {
+    protected RoomRepository(DAO roomDao) {
         this.roomDao = roomDao;
     }
 

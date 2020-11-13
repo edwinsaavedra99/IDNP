@@ -2,6 +2,7 @@ package com.myappdeport.model.entity.database;
 
 import androidx.room.Entity;
 import androidx.room.Ignore;
+import androidx.room.Index;
 
 import com.google.firebase.firestore.Exclude;
 
@@ -10,7 +11,7 @@ import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-@Entity
+@Entity(indices = @Index("email"))
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class EUser extends EntityDatabase {
@@ -78,5 +79,13 @@ public class EUser extends EntityDatabase {
 
     public void setIsAuthenticated(Boolean isAuthenticated) {
         this.isAuthenticated = isAuthenticated;
+    }
+
+    public List<EActivity> getEActivityList() {
+        return this.eActivityList;
+    }
+
+    public void setEActivityList(List<EActivity> eActivityList) {
+        this.eActivityList = eActivityList;
     }
 }
