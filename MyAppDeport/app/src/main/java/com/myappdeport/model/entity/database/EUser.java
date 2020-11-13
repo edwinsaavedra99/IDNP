@@ -1,6 +1,7 @@
 package com.myappdeport.model.entity.database;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 
 import com.google.firebase.firestore.Exclude;
 
@@ -16,12 +17,16 @@ public class EUser extends EntityDatabase {
     public String name;
     public String email;
     @Exclude
+    @Ignore
     public Boolean isNew;
     @Exclude
+    @Ignore
     public Boolean isCreated;
     @Exclude
+    @Ignore
     public Boolean isAuthenticated;
     @Exclude
+    @Ignore
     public List<EActivity> eActivityList;
 
     public EUser(String name, String email, Boolean isNew, Boolean isCreated, Boolean isAuthenticated) {

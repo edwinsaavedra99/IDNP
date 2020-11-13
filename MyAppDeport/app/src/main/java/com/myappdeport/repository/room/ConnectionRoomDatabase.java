@@ -10,6 +10,7 @@ import com.myappdeport.model.entity.database.EActivity;
 import com.myappdeport.model.entity.database.EPosition;
 import com.myappdeport.model.entity.database.ERoute;
 import com.myappdeport.model.entity.database.ESong;
+import com.myappdeport.model.entity.database.EUser;
 import com.myappdeport.repository.room.dao.ActivityRoomDao;
 import com.myappdeport.repository.room.dao.PositionRoomDao;
 import com.myappdeport.repository.room.dao.RouteRoomDao;
@@ -18,7 +19,7 @@ import com.myappdeport.repository.room.dao.SongRoomDao;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {EActivity.class, EPosition.class, ERoute.class, ESong.class}, version = 2, exportSchema = false)
+@Database(entities = {EActivity.class, EPosition.class, ERoute.class, ESong.class, EUser.class}, version = 2, exportSchema = false)
 public abstract class ConnectionRoomDatabase extends RoomDatabase {
     public abstract PositionRoomDao getPositionRoomDao();
 
