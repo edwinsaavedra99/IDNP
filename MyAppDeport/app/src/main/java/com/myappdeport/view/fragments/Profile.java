@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.myappdeport.R;
-import com.myappdeport.model.entity.database.EUser;
+import com.myappdeport.model.entity.database.EUserEDWIN;
 import com.myappdeport.viewmodel.AuthViewModel;
 
 /**
@@ -71,10 +71,10 @@ public class Profile extends Fragment {
         // Inflate the layout for this fragment
         ViewGroup viewGroup = (ViewGroup)inflater.inflate(R.layout.fragment_profile, container, false);
         textName = viewGroup.findViewById(R.id.timer);
-        new ViewModelProvider(this).get(AuthViewModel.class).authenticatedUserLiveData.observe(this, new Observer<EUser>() {
+        new ViewModelProvider(this).get(AuthViewModel.class).authenticatedUserLiveData.observe(this, new Observer<EUserEDWIN>() {
             @Override
-            public void onChanged(EUser eUser) {
-                textName.setText(eUser.name);
+            public void onChanged(EUserEDWIN eUserEDWIN) {
+                textName.setText(eUserEDWIN.name);
             }
         });
         return viewGroup;

@@ -4,9 +4,10 @@ import android.content.Context;
 
 import com.myappdeport.model.entity.database.ESong;
 import com.myappdeport.repository.IRepository;
+import com.myappdeport.repository.ISongRepository;
 import com.myappdeport.repository.room.dao.SongRoomDao;
 
-public class SongRoomRepository extends RoomRepository<ESong, SongRoomDao> implements IRepository<ESong, Long> {
+public class SongRoomRepository extends RoomRepository<ESong, SongRoomDao> implements IRepository<ESong, Long>, ISongRepository {
     private static SongRoomRepository INSTANCE;
 
     public synchronized static SongRoomRepository getInstance(Context context) {

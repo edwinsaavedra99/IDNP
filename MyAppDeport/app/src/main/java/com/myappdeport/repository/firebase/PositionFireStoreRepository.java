@@ -33,6 +33,6 @@ public class PositionFireStoreRepository extends FireStoreRepository<EPosition> 
 
     @Override
     public Task<List<EPosition>> findByIdERoute(String routeDocumentId) {
-        return this.collectionReference.whereEqualTo("idERoute", routeDocumentId).get().continueWithTask(task -> Tasks.forResult(Objects.requireNonNull(task.getResult()).toObjects(entityClass)));
+        return this.collectionReference.whereEqualTo("eRouteDocumentId", routeDocumentId).get().continueWithTask(task -> Tasks.forResult(Objects.requireNonNull(task.getResult()).toObjects(entityClass)));
     }
 }
