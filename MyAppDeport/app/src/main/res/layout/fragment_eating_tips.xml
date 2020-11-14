@@ -17,7 +17,7 @@
             android:layout_gravity="center"
             android:layout_margin="15dp"
             android:fontFamily="@font/ubuntu"
-            android:text="MI PERFIL"
+            android:text="@string/recomendaciones"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="14sp"

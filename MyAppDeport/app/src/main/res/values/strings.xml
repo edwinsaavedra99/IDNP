@@ -5,5 +5,8 @@
     <!-- FACEBBOK APP ID : LOGIN APP -->
     <string name="facebook_application_id" translatable="false">268347064606335</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fb268347064606335</string>
+    <string name="recomendaciones">RECOMENDACIONES</string>
+    <string name="myappdeport">MyAppDeport</string>
+    <string name="leer_mas">Leer mas</string>
 
 </resources>
