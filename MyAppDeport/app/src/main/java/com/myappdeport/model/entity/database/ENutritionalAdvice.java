@@ -27,7 +27,7 @@ public class ENutritionalAdvice extends EntityDatabase {
     /**
      * Archivo en cloud storage.
      */
-    private File image;
+    //private File image;
 
     /**
      * Firebase constructor
@@ -45,11 +45,11 @@ public class ENutritionalAdvice extends EntityDatabase {
         this.shortDescription = shortDescription;
         this.longDescription = longDescription;
         this.imageUrlCloudStorage = imageUrlCloudStorage;
-        this.image = image;
+      //  this.image = image;
     }
 
-    @Exclude
-    public File getImage() {
-        return image;
-    }
+    //@Exclude
+    //public File getImage() {
+    //    return image;
+    //}
 }

@@ -3,6 +3,8 @@ package com.myappdeport.view.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,13 +12,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.myappdeport.R;
+import com.myappdeport.model.entity.database.ENutritionalAdvice;
 import com.myappdeport.view.adapters.AdapterFood;
 import com.myappdeport.view.adapters.AdapterStatics;
 import com.myappdeport.view.killme.Food;
+import com.myappdeport.viewmodel.AuthViewModel;
+import com.myappdeport.viewmodel.firebase.EatTipsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,9 +31,10 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class EatingTips extends Fragment {
-    private List<Food> foodList;
+    private List<ENutritionalAdvice> foodList;
     private RecyclerView recyclerView;
     private AdapterFood adapterFood;
+    private EatTipsViewModel eatTipsViewModel;
     private View view;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -77,17 +85,24 @@ public class EatingTips extends Fragment {
         return view;
     }
     private void init(){
-        foodList = new ArrayList<>();
-        foodList.add( new Food("Ensalada de Palta","Esta es un rica ensalada de palta por ahora","asdasd"));
-        foodList.add( new Food("Ensalada de Papa","Esta es un rica ensalada de adsasdasdasdasd por ahora","asdasd"));
-        foodList.add( new Food("Ensalada de Mais","Esta es un rica ensalada de paltaasdasdasdasd por ahora","asdasd"));
-        foodList.add( new Food("Ensalada de Ajo","Esta es un rica ensalada de palta poasdasdasdasdasdr ahora","asdasd"));
+         eatTipsViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(EatTipsViewModel.class);
+  //      foodList = eatTipsViewModel.getAllEat();
+        //eatTipsViewModel
 
-        adapterFood = new AdapterFood(foodList,getContext());
+    //    adapterFood = new AdapterFood(foodList,getContext());
 
         recyclerView = view.findViewById(R.id.recicler_foos);
         recyclerView.setLayoutManager( new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapterFood);
+        eatTipsViewModel.getAllEat().addOnSuccessListener(new OnSuccessListener<List<ENutritionalAdvice>>() {
+            @Override
+            public void onSuccess(List<ENutritionalAdvice> eNutritionalAdvices) {
+                foodList = eNutritionalAdvices;
+                adapterFood = new AdapterFood(foodList,getContext());
+                recyclerView.setAdapter(adapterFood);
+            }
+        });
+
+      //  recyclerView.setAdapter(adapterFood);
     }
     private void chargeData(){
     }

@@ -21,5 +21,5 @@ public class NutritionalAdvice {
     /**
      * Archivo en cloud storage.
      */
-    private File image;
+    //private File image;
 }

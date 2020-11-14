@@ -10,16 +10,18 @@
     app:cardUseCompatPadding="true">
 
 
-    <LinearLayout
+    <RelativeLayout
         android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/cardTest"
            app:cardBackgroundColor="#63F57F17"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+            android:gravity="center_horizontal|center_vertical"
                 app:cardCornerRadius="20dp"
                >
 
@@ -32,14 +34,17 @@
             </androidx.cardview.widget.CardView>
 
         <LinearLayout
+            android:layout_toEndOf="@+id/cardTest"
             android:layout_width="match_parent"
+            android:gravity="center_horizontal|center_vertical"
             android:layout_marginLeft="10dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/text_item_food_title"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/ubuntu"
                 android:text="ENSALADA DE PALTA"
@@ -48,27 +53,25 @@
 
             <TextView
                 android:id="@+id/text_item_food_description_short"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="10dp"
                 android:fontFamily="@font/ubuntu"
-                android:text="Consumir 3 veces por semana solosise realiza actividad Fisica"
+                android:text="Consumir 3 veces"
                 android:textColor="#000000" />
-
-
-                <TextView
-                    android:layout_gravity="end"
-                    android:id="@+id/textView21"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:fontFamily="@font/ubuntu"
-                    android:text="@string/leer_mas"
-                    android:textAllCaps="false"
-                    android:textColor="#000000"
-                    android:textSize="12sp"/>
-
+            <TextView
+                android:layout_gravity="end"
+                android:id="@+id/textView21"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/ubuntu"
+                android:text="@string/leer_mas"
+                android:textAllCaps="false"
+                android:textColor="#000000"
+                android:textSize="12sp"/>
         </LinearLayout>
-    </LinearLayout>
+
+    </RelativeLayout>
 </androidx.cardview.widget.CardView>

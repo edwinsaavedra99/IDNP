@@ -10,6 +10,7 @@ import android.widget.Button;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.common.util.concurrent.ForwardingListeningExecutorService;
 import com.myappdeport.R;
 import com.myappdeport.model.entity.database.EActivity;
 import com.myappdeport.model.entity.database.EPosition;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private Button iniciarSesion;
     private Button registrate;
     private Button usuarioAnonimo;
+
 
     @SneakyThrows
     @RequiresApi(api = Build.VERSION_CODES.N)

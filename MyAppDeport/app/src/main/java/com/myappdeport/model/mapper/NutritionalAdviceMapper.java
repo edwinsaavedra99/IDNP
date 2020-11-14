@@ -37,7 +37,7 @@ public interface NutritionalAdviceMapper extends MapperEntityDtoFunctional<ENutr
     @Mappings({
             @Mapping(target = "id", ignore = true),
             @Mapping(target = "documentId", ignore = true),
-            @Mapping(target = "image", ignore = true)
+            //@Mapping(target = "image", ignore = true)
     })
     ENutritionalAdvice dtoToEntity(DTONutritionalAdvice dtoNutritionalAdvice);
 
@@ -86,7 +86,7 @@ public interface NutritionalAdviceMapper extends MapperEntityDtoFunctional<ENutr
     @InheritInverseConfiguration(name = "functionalToDto")
     @Mappings({
             @Mapping(target = "documentId", ignore = true),
-            @Mapping(target = "image", ignore = true)
+            //@Mapping(target = "image", ignore = true)
     })
     NutritionalAdvice dtoToFunctional(DTONutritionalAdvice dtoNutritionalAdvice);
 }

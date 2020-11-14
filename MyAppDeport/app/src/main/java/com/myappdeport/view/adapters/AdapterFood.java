@@ -10,18 +10,23 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.myappdeport.R;
+import com.myappdeport.model.entity.database.ENutritionalAdvice;
 import com.myappdeport.view.killme.Activiti;
 import com.myappdeport.view.killme.Food;
 
 import java.util.List;
 
+import lombok.val;
+
+
 public class AdapterFood extends RecyclerView.Adapter<AdapterFood.ViewHolder> {
-    private List<Food> foodList ;
+    private List<ENutritionalAdvice> foodList ;
     private LayoutInflater layoutInflater;
     private Context context;
 
-    public AdapterFood(List<Food> foodList, Context context) {
+    public AdapterFood(List<ENutritionalAdvice> foodList, Context context) {
         this.layoutInflater = LayoutInflater.from(context);
         this.foodList = foodList;
         this.context = context;
@@ -57,11 +62,18 @@ public class AdapterFood extends RecyclerView.Adapter<AdapterFood.ViewHolder> {
             imageView = itemView.findViewById(R.id.image_item_food);
 
         }
-        void bindData(final Food food) {
-            // cambiar por setiamagebitmap or URL :v
-            imageView.setImageResource(R.drawable.ensalada_peue);
+        void bindData(final ENutritionalAdvice food) {
+
+            Glide.with(itemView)  //2
+                    .load(food.getImageUrlCloudStorage()) //url de descarga
+                    .centerCrop() //propiedad de redimencion
+                    .placeholder(R.drawable.ensalada_peue) //imagen auxiliar
+                    .error(R.drawable.ensalada_peue) // si no se encuentra nada
+                    .fallback(R.drawable.ensalada_peue) //imagen auxiliar
+                    .into(imageView); //8
+            //imageView.setImageResource(R.drawable.ensalada_peue);
             title.setText(food.getTitle() );
-            description.setText(food.getDescriptio_short());
+            description.setText(food.getShortDescription());
 
         }
     }
