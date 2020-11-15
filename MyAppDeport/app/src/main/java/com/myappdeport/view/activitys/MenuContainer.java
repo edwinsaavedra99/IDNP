@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.myappdeport.R;
+import com.myappdeport.utils.Constants;
 import com.myappdeport.view.fragments.EatingTips;
 import com.myappdeport.view.fragments.MapsFragment;
 import com.myappdeport.view.fragments.MusicPlayer;
@@ -34,6 +36,8 @@ public class MenuContainer extends AppCompatActivity {
     Profile profile = new Profile();
     MapsFragment maps = new MapsFragment();
 
+    private Fragment currentFragment;
+
     BottomNavigationView bottomNavigationView;
 
     @Override
@@ -44,9 +48,11 @@ public class MenuContainer extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.menu);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        loadFragment(maps);
 
         bottomNavigationView.setSelectedItemId(R.id.item3);
+        //loadFragment(maps);
+        //currentFragment = maps;
+        //loadFragment(maps,Constants.TAG_F_MAP);
         permits();
         permitsMaps();
     }
@@ -58,29 +64,47 @@ public class MenuContainer extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.item1:
-                    loadFragment(eatingTips);
+                    //currentFragment = eatingTips;
+                    loadFragment(eatingTips,Constants.TAG_F_NUTRITION);
                     return true;
                 case R.id.item2:
-                    loadFragment(musicPlayer);
+                    //currentFragment = musicPlayer;
+                    loadFragment(musicPlayer,Constants.TAG_F_MUSIC);
                     return true;
                 case R.id.item3:
-                    loadFragment(maps);
+                    //currentFragment = maps;
+                    loadFragment(maps,Constants.TAG_F_MAP);
                     return true;
                 case R.id.item4:
-                    loadFragment(statics);
+                    //currentFragment = statics;
+                    loadFragment(statics,Constants.TAG_F_STATISTIC);
                     return true;
                 case R.id.item5:
-                    loadFragment(profile);
+                    //currentFragment = profile;
+                    loadFragment(profile,Constants.TAG_F_PROFILE);
                     return true;
             }
             return false;
         }
     };
 
-    public void loadFragment(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, fragment);
+    public void loadFragment(Fragment fragment,String tag) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+        if(fragment.isAdded()){
+            if(currentFragment != null)
+                transaction.hide(currentFragment).show(fragment);
+        }else{
+            if(currentFragment !=null)
+                transaction.hide(currentFragment).add(R.id.container,fragment, tag);
+            else
+                transaction.add(R.id.container,fragment, tag);
+        }
+        //transaction.replace(R.id.container, fragment);
+        //transaction.addToBackStack(null);
         transaction.commit();
+        currentFragment = fragment;
     }
 
     public void permits(){

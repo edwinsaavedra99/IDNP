@@ -66,6 +66,9 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
             map.getUiSettings().setMyLocationButtonEnabled(false);
             getContext();
             LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+            //map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(.getLatitude(),location.getLongitude()));
+            //CameraPosition cameraPosition =  new CameraPosition.Builder().target(latLng).zoom(16)/*.bearing(90).tilt(45)*/.build();
+            //map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
             LocationListener locationListener = new LocationListener() {
                 @SuppressLint("SetTextI18n")
                 @Override
@@ -74,9 +77,9 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
                     //map.addMarker(new MarkerOptions().position(latLng).title("Mi posicion"));
                     if(flag) {
                         latLngList.add(latLng);
-                        map.addPolyline((new PolylineOptions()).clickable(true).color(Color.LTGRAY).addAll(latLngList));
+                        map.addPolyline((new PolylineOptions()).clickable(true).color(Color.LTGRAY).width(10).addAll(latLngList));
                         DecimalFormat df = new DecimalFormat("0.00");
-                        textView.setText(""+ df.format(ParseMetrics.mtoKm(distaceAll(latLngList))));
+                        textView.setText(df.format(ParseMetrics.mtoKm(distaceAll(latLngList))) + " Km");
                     }
                     map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                     CameraPosition cameraPosition =  new CameraPosition.Builder().target(latLng).zoom(16)/*.bearing(90).tilt(45)*/.build();
