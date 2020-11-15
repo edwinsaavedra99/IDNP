@@ -10,10 +10,12 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Chronometer;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -21,13 +23,21 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.myappdeport.R;
+import com.myappdeport.service.usecase.ChronometerUseCase;
+import com.myappdeport.service.usecase.interfaces.TimerInterface;
 
 import java.util.Map;
 
-public class MapsFragment extends Fragment {
+public class MapsFragment extends Fragment implements TimerInterface.TimerInterfaceView {
 
     GoogleMap map;
+    private Chronometer chronometer;
+    private TimerInterface.TimerInterfaceUseCase mUCTimer;
+    private FloatingActionButton btnStart;
+
+
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
         /**
@@ -68,7 +78,11 @@ public class MapsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_maps, container, false);
+        ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_maps, container, false);
+        btnStart = viewGroup.findViewById(R.id.floatingActionButtonStartActivity);
+        chronometer = viewGroup.findViewById(R.id.timeChr);
+        initView();
+        return viewGroup;
     }
 
     @Override
@@ -79,5 +93,36 @@ public class MapsFragment extends Fragment {
         if (mapFragment != null) {
             mapFragment.getMapAsync(callback);
         }
+    }
+
+    @Override
+    public void initView() {
+        chronometer.setBase(SystemClock.elapsedRealtime());
+        chronometer.setFormat("00:%s");
+        //Listener en escuchador de reloj , cambia el formato a hh:mm:ss
+        chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+            public void onChronometerTick(Chronometer c) {
+                //CODIGO CANDIDATO A IR EN UTILS
+                long elapsedMillis = SystemClock.elapsedRealtime() -c.getBase();
+                if(elapsedMillis > 3600000L){
+                    c.setFormat("0%s");
+                }else{
+                    c.setFormat("00:%s");
+                }
+            }
+        });
+        mUCTimer = new ChronometerUseCase(this,chronometer);
+        btnStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mUCTimer.startChronometer();
+                btnStart.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    @Override
+    public void setViewData(boolean flag) {
+
     }
 }

@@ -120,6 +120,7 @@ public class MusicPlayer extends Fragment {
                 audioList.clear();
                 audioList.addAll(audio);
                 adapter.notifyDataSetChanged();
+                //audio.clear();
             });
         }
 
