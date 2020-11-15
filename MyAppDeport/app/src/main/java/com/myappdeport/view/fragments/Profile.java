@@ -70,13 +70,13 @@ public class Profile extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         ViewGroup viewGroup = (ViewGroup)inflater.inflate(R.layout.fragment_profile, container, false);
-        textName = viewGroup.findViewById(R.id.timer);
+        /*textName = viewGroup.findViewById(R.id.timer);
         new ViewModelProvider(this).get(AuthViewModel.class).authenticatedUserLiveData.observe(this, new Observer<EUserEDWIN>() {
             @Override
             public void onChanged(EUserEDWIN eUserEDWIN) {
                 textName.setText(eUserEDWIN.name);
             }
-        });
+        });*/
         return viewGroup;
     }
 }

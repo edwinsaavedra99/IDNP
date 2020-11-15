@@ -22,7 +22,7 @@ public class ParseMetrics {
     public static double Mill2Pie(double distance){
         return distance * 5280;
     }
-
+    public static double mtoKm(double distance){return  distance/1000; }
     public static long TimeMile2MSeg(long time){
        return  time / 1000;
     }

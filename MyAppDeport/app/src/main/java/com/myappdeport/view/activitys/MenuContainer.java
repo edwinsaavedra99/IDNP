@@ -27,6 +27,7 @@ public class MenuContainer extends AppCompatActivity {
 
     private static final String TAG = "MenuContainer";
     private static final int PERMISSION_REQUEST_CODE_EXTERNAL_STORAGE = 1;
+    private static final int PERMISSION_REQUEST_LOCATION = 2;
     EatingTips eatingTips = new EatingTips();
     MusicPlayer musicPlayer = new MusicPlayer();
     Statics statics = new Statics();
@@ -47,6 +48,7 @@ public class MenuContainer extends AppCompatActivity {
 
         bottomNavigationView.setSelectedItemId(R.id.item3);
         permits();
+        permitsMaps();
     }
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -97,16 +99,39 @@ public class MenuContainer extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
-        if(requestCode == PERMISSION_REQUEST_CODE_EXTERNAL_STORAGE){
-            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(getApplicationContext(), "External read permission", Toast.LENGTH_SHORT).show();
+    public void permitsMaps(){
+        if (Build.VERSION.SDK_INT >= 23){
+            if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){ // Permits ready
                 display();
-            }else {
-                Toast.makeText(getApplicationContext(), "External read permission has not been granted, cannot open media", Toast.LENGTH_SHORT).show();
+                Log.println(Log.INFO,TAG,"API >= 23");
+            } else{
+                if(shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)) // Message of error
+                    Toast.makeText(getApplicationContext(), "GPS required permits", Toast.LENGTH_SHORT).show();
+                requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_LOCATION); // Callback for permits
             }
         } else {
+            Log.println(Log.INFO,TAG,"API < 23");
+            display();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == PERMISSION_REQUEST_CODE_EXTERNAL_STORAGE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(getApplicationContext(), "External read permission", Toast.LENGTH_SHORT).show();
+                display();
+            } else {
+                Toast.makeText(getApplicationContext(), "External read permission has not been granted, cannot open media", Toast.LENGTH_SHORT).show();
+            }
+        } else if (requestCode == PERMISSION_REQUEST_LOCATION){
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(getApplicationContext(), "External location permission", Toast.LENGTH_SHORT).show();
+                display();
+            } else {
+                Toast.makeText(getApplicationContext(), "External location permission has not been granted, cannot use gps", Toast.LENGTH_SHORT).show();
+            }
+        }else{
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
