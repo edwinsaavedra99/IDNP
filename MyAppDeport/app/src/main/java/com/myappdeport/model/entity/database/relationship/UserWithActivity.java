@@ -1,6 +1,7 @@
 package com.myappdeport.model.entity.database.relationship;
 
 import androidx.room.Embedded;
+import androidx.room.Ignore;
 import androidx.room.Relation;
 
 import com.myappdeport.model.entity.database.EActivity;
@@ -18,6 +19,7 @@ public class UserWithActivity {
     )
     private List<EActivity> eActivityList;
 
+    @Ignore
     public UserWithActivity(EUser eUser, List<EActivity> eActivityList) {
         this.eUser = eUser;
         this.eActivityList = eActivityList;

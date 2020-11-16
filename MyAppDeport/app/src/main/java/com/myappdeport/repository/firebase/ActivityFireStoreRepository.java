@@ -6,11 +6,12 @@ import androidx.annotation.RequiresApi;
 
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.firestore.DocumentReference;
 import com.myappdeport.model.entity.database.EActivity;
 import com.myappdeport.repository.IActivityRepository;
+import com.myappdeport.viewmodel.firebase.ActivityLiveData;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 public class ActivityFireStoreRepository extends FireStoreRepository<EActivity> implements IActivityRepository<String> {
@@ -31,7 +32,7 @@ public class ActivityFireStoreRepository extends FireStoreRepository<EActivity> 
 
     @Override
     public Task<List<EActivity>> getActivityByIdUser(String idUser) {
-        return this.collectionReference.whereEqualTo("userDocumentId", idUser).get().continueWithTask(task -> Tasks.forResult(Objects.requireNonNull(task.getResult()).toObjects(entityClass)));
+        return this.collectionReference.whereEqualTo("userDocumentId", idUser).get().onSuccessTask(queryDocumentSnapshots -> Tasks.forResult(queryDocumentSnapshots.toObjects(entityClass)));
     }
 
     @Override
@@ -90,6 +91,11 @@ public class ActivityFireStoreRepository extends FireStoreRepository<EActivity> 
     @Override
     public Task<Void> deleteWithRouteAndPositions(EActivity eActivity) {
         return this.routeFireStoreRepository.deleteWithPositions(eActivity.getERoute()).onSuccessTask(voids -> delete(eActivity));
+    }
+
+    public ActivityLiveData getActivityLiveData(String documentId){
+        DocumentReference documentReference = this.collectionReference.document(documentId);
+        return new ActivityLiveData(documentReference);
     }
 
 }

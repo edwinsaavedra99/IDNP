@@ -14,8 +14,8 @@ import com.myappdeport.view.killme.Activiti;
 import java.util.List;
 
 public class AdapterStatics extends  RecyclerView.Adapter<AdapterStatics.ViewHolder> {
-    private List<Activiti> list_statics;
-    private LayoutInflater layoutInflater;
+    private final List<Activiti> list_statics;
+    private final LayoutInflater layoutInflater;
     private Context context;
 
     public AdapterStatics(List<Activiti> list_statics, Context context) {

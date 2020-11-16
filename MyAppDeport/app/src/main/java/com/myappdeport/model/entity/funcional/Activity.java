@@ -1,5 +1,6 @@
 package com.myappdeport.model.entity.funcional;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 import lombok.AllArgsConstructor;
@@ -14,6 +15,7 @@ public class Activity {
     private String documentId;
     private LocalTime startTime;
     private LocalTime endTime;
+    private LocalDate date;
     private Double kiloCalories;
     private Route route;
 }

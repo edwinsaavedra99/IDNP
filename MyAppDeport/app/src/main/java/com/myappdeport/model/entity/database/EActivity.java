@@ -36,6 +36,7 @@ public class EActivity extends EntityDatabase {
     private String startTime;
     private String endTime;
     private Double kiloCalories;
+    private String date;
     /**
      * Id del documento route firebase.
      */
@@ -58,13 +59,14 @@ public class EActivity extends EntityDatabase {
     private ERoute eRoute;
 
     @Ignore
-    public EActivity(Long id, String documentId, String startTime, String endTime, Double kiloCalories, String routeDocumentId, Long idERoute) {
+    public EActivity(Long id, String documentId, String startTime, String endTime, String date, Double kiloCalories, String routeDocumentId, Long idERoute) {
         super(id, documentId);
         this.startTime = startTime;
         this.endTime = endTime;
         this.kiloCalories = kiloCalories;
         this.routeDocumentId = routeDocumentId;
         this.idERoute = idERoute;
+        this.date = date;
     }
 
     /**
@@ -76,8 +78,8 @@ public class EActivity extends EntityDatabase {
      * @param kiloCalories Son las kilocalorias invertidas.
      */
     @Ignore
-    public EActivity(Long id, String startTime, String endTime, Double kiloCalories, Long idERoute) {
-        this(id, null, startTime, endTime, kiloCalories, null, idERoute);
+    public EActivity(Long id, String startTime, String endTime, String date, Double kiloCalories, Long idERoute) {
+        this(id, null, startTime, endTime, date, kiloCalories, null, idERoute);
     }
 
     /**
@@ -90,36 +92,23 @@ public class EActivity extends EntityDatabase {
      * @param routeDocumentId Es el id del documento de ruta.
      */
     @Ignore
-    public EActivity(String documentId, String startTime, String endTime, Double kiloCalories, String routeDocumentId, Long idERoute) {
-        this(null, documentId, startTime, endTime, kiloCalories, routeDocumentId, idERoute);
-    }
-
-    /**
-     * Firebase constructor
-     *
-     * @param idERoute        Identificador en SQLite
-     * @param startTime       Es la hora de inicio
-     * @param endTime         Es la hora de finalización.
-     * @param kiloCalories    Son las kilocalorias invertidas.
-     * @param routeDocumentId Es el id del documento de ruta.
-     * @param eRoute          Es la ruta.
-     */
-    @Ignore
-    public EActivity(String startTime, String endTime, Double kiloCalories, String routeDocumentId, Long idERoute, ERoute eRoute) {
-        this(null, null, startTime, endTime, kiloCalories, routeDocumentId, idERoute);
+    public EActivity(String documentId, String startTime, String endTime, String date, Double kiloCalories, String routeDocumentId) {
+        this(null, documentId, startTime, endTime, date, kiloCalories, routeDocumentId, null);
     }
 
     @Ignore
-    public EActivity(String startTime, String endTime, Double kiloCalories) {
+    public EActivity(String startTime, String endTime, String date, Double kiloCalories) {
         this.startTime = startTime;
         this.endTime = endTime;
+        this.date = date;
         this.kiloCalories = kiloCalories;
     }
 
     @Ignore
-    public EActivity(String startTime, String endTime, Double kiloCalories, ERoute eRoute) {
+    public EActivity(String startTime, String endTime, String date, Double kiloCalories, ERoute eRoute) {
         this.startTime = startTime;
         this.endTime = endTime;
+        this.date = date;
         this.kiloCalories = kiloCalories;
         this.eRoute = eRoute;
     }
@@ -193,6 +182,14 @@ public class EActivity extends EntityDatabase {
 
     public void setIdEUser(Long idEUser) {
         this.idEUser = idEUser;
+    }
+
+    public String getDate() {
+        return this.date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }
 

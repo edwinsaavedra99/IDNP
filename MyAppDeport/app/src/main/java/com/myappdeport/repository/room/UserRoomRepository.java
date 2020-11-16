@@ -2,13 +2,13 @@ package com.myappdeport.repository.room;
 
 import android.content.Context;
 
-import com.myappdeport.model.entity.database.EActivity;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.myappdeport.model.entity.database.EUser;
-import com.myappdeport.repository.firebase.ActivityFireStoreRepository;
-import com.myappdeport.repository.firebase.RouteFireStoreRepository;
+import com.myappdeport.repository.IUserRepository;
 import com.myappdeport.repository.room.dao.UserRoomDao;
 
-public class UserRoomRepository extends RoomRepository<EUser, UserRoomDao> {
+public class UserRoomRepository extends RoomRepository<EUser, UserRoomDao> implements IUserRepository<Long> {
     private static UserRoomRepository INSTANCE;
 
     public synchronized static UserRoomRepository getInstance(Context context) {
@@ -21,4 +21,13 @@ public class UserRoomRepository extends RoomRepository<EUser, UserRoomDao> {
         super(ConnectionRoomDatabase.getDatabase(context).getUserRoomDao());
     }
 
+    @Override
+    public Task<EUser> getByEmail(String email) {
+        return Tasks.call(() -> this.roomDao.findByEmail(email));
+    }
+
+    @Override
+    public Task<EUser> getByEmailWithActivity(String email) {
+        return Tasks.call(() -> this.roomDao.findByEmailWithActivity(email));
+    }
 }
