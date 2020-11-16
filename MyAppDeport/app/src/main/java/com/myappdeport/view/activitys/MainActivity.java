@@ -118,6 +118,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, Register.class);
         startActivity(intent);
     }
+    //Metodo granulometria
+
 
     public void openDeportActivity() {
         Intent intent = new Intent(this, DeportActivity.class);

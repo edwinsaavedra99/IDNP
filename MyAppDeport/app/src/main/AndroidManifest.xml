@@ -43,8 +43,8 @@
         <activity android:name=".view.activitys.DeportActivity" />
         <activity android:name=".view.activitys.Login" />
         <activity android:name=".view.activitys.Register" />
-        <activity android:name=".view.activitys.MainActivity" />
-        <activity android:name=".view.activitys.MenuContainer">
+        <activity android:name=".view.activitys.MenuContainer" />
+        <activity android:name=".view.activitys.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
