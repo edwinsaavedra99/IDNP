@@ -4,7 +4,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.ContentObserver;
@@ -19,7 +18,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.Handler;
@@ -52,12 +50,11 @@ import static com.myappdeport.utils.ParseMetrics.milliSecondsToTimer;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MusicPlayer#newInstance} factory method to
- * create an instance of this fragment.
  */
 public class MusicPlayer extends Fragment {
+
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
-    List<Audio> audioList = new ArrayList<Audio>();
+    List<Audio> audioList = new ArrayList<>();
     RecyclerView recyclerView;
     AdapterSong adapter;
     private String[] STAR = {"*"};
@@ -77,19 +74,12 @@ public class MusicPlayer extends Fragment {
     AudioManager audioManager;
     @SuppressLint("StaticFieldLeak")
     public static TextView textTime;
+    private ImageView ivNext;
+    private ImageView ivPrevious;
     SettingsContentObserver mSettingsContentObserver;
     public static int numOfSong;
 
-    public MusicPlayer() {
-        // Required empty public constructor
-    }
-
-    public static MusicPlayer newInstance(String param1, String param2) {
-        MusicPlayer fragment = new MusicPlayer();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
+    public MusicPlayer() { /*Required empty public constructor*/ }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -97,22 +87,14 @@ public class MusicPlayer extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_music_player, container, false);
-        textTime = viewGroup.findViewById(R.id.timer);
-        recyclerView = viewGroup.findViewById(R.id.rvSongs);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        intent = new Intent(getActivity(), AudioService.class);
+        initialComponentsUI(viewGroup);
+
         audioViewModel = new AudioViewModel();
-        ImageView ivNext = viewGroup.findViewById(R.id.next);
-        ivPause = viewGroup.findViewById(R.id.play);
-        ImageView ivPrevious = viewGroup.findViewById(R.id.previous);
-        mSeekBar = viewGroup.findViewById(R.id.seekBar2);
         audioManager = (AudioManager) Objects.requireNonNull(getActivity()).getSystemService(Context.AUDIO_SERVICE);
-        tvSongName = viewGroup.findViewById(R.id.nameSong);
-        if (checkPermissionREAD_EXTERNAL_STORAGE(getContext())) {
-            //Search Music in External Storage - use a cursor
+
+        if (checkPermissionREAD_EXTERNAL_STORAGE(getContext())) { //Search Music in External Storage - use a cursor
             cursor = getActivity().getContentResolver().query(allsongsuri, STAR, selection, null, null);
             adapter = new AdapterSong(getContext(), audioList);
             recyclerView.setAdapter(adapter);
@@ -120,28 +102,10 @@ public class MusicPlayer extends Fragment {
                 audioList.clear();
                 audioList.addAll(audio);
                 adapter.notifyDataSetChanged();
-                //audio.clear();
             });
         }
 
-        adapter.setOnSongListener(position -> {
-            // initialize Uri here
-            stopPlaying();
-            getActivity().stopService(intent);
-            mediaPlayer = AppAudio.getInstance();
-            mediaPlayer = MediaPlayer.create(getActivity(), Uri.parse(audioList.get(position).getPath()));
-            mSeekBar.setMax(mediaPlayer.getDuration() / 1000);
-            tvSongName.setText(audioList.get(position).getName());
-            textTime.post(mUpdateTime);
-            mediaPlayer.start();
-            ivPause.setImageResource(R.drawable.ic_baseline_pause_circle_filled_24);
-            intent.putExtra("song_name", audioList.get(position).getName());
-            numOfSong = audioList.get(position).getNumOfSong();
-            intent.putExtra("num_of_songs", audioList.get(position).getNumOfSong());
-            intent.putParcelableArrayListExtra("songs", (ArrayList<? extends Parcelable>) audioList);
-            getActivity().startService(intent);
-            ContextCompat.startForegroundService(getActivity(), intent);
-        });
+        adapter.setOnSongListener(this::startTouchListener);
 
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -154,59 +118,10 @@ public class MusicPlayer extends Fragment {
             }
         }, 0, 500);
 
-        ivPause.setOnClickListener(view -> {
-            if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-                mediaPlayer.pause();
-                seekPostion = mediaPlayer.getCurrentPosition();
-                updateUi(mediaPlayer.isPlaying(), 0);
-                ivPause.setImageResource(R.drawable.ic_play);
-            } else {
-                if (mediaPlayer != null) {
-                    updateUi(!mediaPlayer.isPlaying(), 0);
-                    mSeekBar.setMax(mediaPlayer.getDuration() / 1000);
-                    textTime.post(mUpdateTime);
-                    mediaPlayer.start();
-                    ivPause.setImageResource(R.drawable.ic_baseline_pause_circle_filled_24);
-                }
-            }
-        });
-        ivNext.setOnClickListener(view -> {
-            if (mediaPlayer != null) {
-                stopPlaying();
-                if (num == audioList.size() - 1) { num = 0; } else { num++; }
-                mediaPlayer = MediaPlayer.create(getActivity(), Uri.parse(audioList.get(num).getPath()));
-                tvSongName.setText(audioList.get(num).getName());
-                textTime.post(mUpdateTime);
-                mediaPlayer.start();
-                mSeekBar.setMax(mediaPlayer.getDuration() / 1000);
-                ivPause.setImageResource(R.drawable.ic_baseline_pause_circle_filled_24);
-                Intent intentNext = new Intent(getActivity(), AudioService.class);
-                intentNext.putExtra("song_name", audioList.get(num).getName());
-                intentNext.putExtra("num_of_songs", num);
-                intentNext.putParcelableArrayListExtra("songs", (ArrayList<? extends Parcelable>) audioList);
-                getActivity().startService(intentNext);
-            }
-        });
-        ivPrevious.setOnClickListener(view -> {
-            if (mediaPlayer != null) {
-                stopPlaying();
-                if (num == 0) {
-                    num = audioList.size() - 1;
-                } else {
-                    num--;
-                }
-                mediaPlayer = MediaPlayer.create(getActivity(), Uri.parse(audioList.get(num).getPath()));
-                tvSongName.setText(audioList.get(num).getName());
-                textTime.post(mUpdateTime);
-                mediaPlayer.start();
-                ivPause.setImageResource(R.drawable.ic_baseline_pause_circle_filled_24);
-                Intent intentPrev = new Intent(getActivity(), AudioService.class);
-                intentPrev.putExtra("song_name", audioList.get(num).getName());
-                intentPrev.putExtra("num_of_songs", num);
-                intentPrev.putParcelableArrayListExtra("songs", (ArrayList<? extends Parcelable>) audioList);
-                getActivity().startService(intentPrev);
-            }
-        });
+        ivPause.setOnClickListener(view -> setIvPause());
+        ivNext.setOnClickListener(view -> setIvNext());
+        ivPrevious.setOnClickListener(view -> setIvPrevious());
+
 
         mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -237,18 +152,14 @@ public class MusicPlayer extends Fragment {
         }
     }
 
-    public boolean checkPermissionREAD_EXTERNAL_STORAGE(
-            final Context context) {
+    public boolean checkPermissionREAD_EXTERNAL_STORAGE( final Context context) {
         int currentAPIVersion = Build.VERSION.SDK_INT;
         if (currentAPIVersion >= android.os.Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(context,
-                    Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context,Manifest.permission.READ_EXTERNAL_STORAGE)) {
                     showDialog("External storage", context,Manifest.permission.READ_EXTERNAL_STORAGE);
                 } else {
-                    ActivityCompat.requestPermissions((Activity) context,
-                                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                                    MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+                    ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
                 }
                 return false;
             } else {
@@ -264,10 +175,7 @@ public class MusicPlayer extends Fragment {
         alertBuilder.setCancelable(true);
         alertBuilder.setTitle("Permission necessary");
         alertBuilder.setMessage(msg + " permission is necessary");
-        alertBuilder.setPositiveButton(android.R.string.yes,
-                (dialog, which) -> ActivityCompat.requestPermissions((Activity) context,
-                        new String[]{permission},
-                        MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE));
+        alertBuilder.setPositiveButton(android.R.string.yes, (dialog, which) -> ActivityCompat.requestPermissions((Activity) context, new String[]{permission},MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE));
         AlertDialog alert = alertBuilder.create();
         alert.show();
     }
@@ -275,9 +183,7 @@ public class MusicPlayer extends Fragment {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // do your stuff
-            } else {
+            if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(getActivity(), "GET_ACCOUNTS Denied", Toast.LENGTH_SHORT).show();
             }
         } else {
@@ -289,12 +195,11 @@ public class MusicPlayer extends Fragment {
         if (bool) {
             ivPause.setImageResource(R.drawable.ic_play);
             notificationLayout.setImageViewResource(R.id.stop, R.drawable.ic_play);
-            manager.notify(1, notification);
         } else {
             ivPause.setImageResource(R.drawable.ic_baseline_pause_circle_filled_24);
             notificationLayout.setImageViewResource(R.id.stop, R.drawable.ic_baseline_pause_circle_filled_24);
-            manager.notify(1, notification);
         }
+        manager.notify(1, notification);
         if (x == 1) {
             mSeekBar.setProgress(0);
         }
@@ -318,7 +223,6 @@ public class MusicPlayer extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         Objects.requireNonNull(getActivity()).getApplicationContext().getContentResolver().unregisterContentObserver(mSettingsContentObserver);
-
     }
 
     public static Runnable mUpdateTime = new Runnable() {
@@ -339,5 +243,86 @@ public class MusicPlayer extends Fragment {
     @SuppressLint("SetTextI18n")
     public static void updatePlayer(int currentDuration){
         textTime.setText("" + milliSecondsToTimer(currentDuration));
+    }
+
+    private void initialComponentsUI(ViewGroup viewGroup){
+        textTime = viewGroup.findViewById(R.id.timer);
+        recyclerView = viewGroup.findViewById(R.id.rvSongs);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        intent = new Intent(getActivity(), AudioService.class);
+        ivNext = viewGroup.findViewById(R.id.next);
+        ivPause = viewGroup.findViewById(R.id.play);
+        ivPrevious = viewGroup.findViewById(R.id.previous);
+        mSeekBar = viewGroup.findViewById(R.id.seekBar2);
+        tvSongName = viewGroup.findViewById(R.id.nameSong);
+    }
+    private void startTouchListener(int position){
+        // initialize Uri here
+        stopPlaying();
+        Objects.requireNonNull(getActivity()).stopService(intent);
+        mediaPlayer = AppAudio.getInstance();
+        mediaPlayer = MediaPlayer.create(getActivity(), Uri.parse(audioList.get(position).getPath()));
+        mSeekBar.setMax(mediaPlayer.getDuration() / 1000);
+        tvSongName.setText(audioList.get(position).getName());
+        textTime.post(mUpdateTime);
+        mediaPlayer.start();
+        ivPause.setImageResource(R.drawable.ic_baseline_pause_circle_filled_24);
+        intent.putExtra("song_name", audioList.get(position).getName());
+        numOfSong = audioList.get(position).getNumOfSong();
+        intent.putExtra("num_of_songs", audioList.get(position).getNumOfSong());
+        intent.putParcelableArrayListExtra("songs", (ArrayList<? extends Parcelable>) audioList);
+        getActivity().startService(intent);
+        ContextCompat.startForegroundService(getActivity(), intent);
+    }
+    private void setIvPause(){
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.pause();
+            seekPostion = mediaPlayer.getCurrentPosition();
+            updateUi(mediaPlayer.isPlaying(), 0);
+            ivPause.setImageResource(R.drawable.ic_play);
+        } else {
+            if (mediaPlayer != null) {
+                updateUi(!mediaPlayer.isPlaying(), 0);
+                mSeekBar.setMax(mediaPlayer.getDuration() / 1000);
+                textTime.post(mUpdateTime);
+                mediaPlayer.start();
+                ivPause.setImageResource(R.drawable.ic_baseline_pause_circle_filled_24);
+            }
+        }
+    }
+
+    private void setIvNext(){
+        if (mediaPlayer != null) {
+            stopPlaying();
+            if (num == audioList.size() - 1) { num = 0; } else { num++; }
+            mediaPlayer = MediaPlayer.create(getActivity(), Uri.parse(audioList.get(num).getPath()));
+            tvSongName.setText(audioList.get(num).getName());
+            textTime.post(mUpdateTime);
+            mediaPlayer.start();
+            mSeekBar.setMax(mediaPlayer.getDuration() / 1000);
+            ivPause.setImageResource(R.drawable.ic_baseline_pause_circle_filled_24);
+            Intent intentNext = new Intent(getActivity(), AudioService.class);
+            intentNext.putExtra("song_name", audioList.get(num).getName());
+            intentNext.putExtra("num_of_songs", num);
+            intentNext.putParcelableArrayListExtra("songs", (ArrayList<? extends Parcelable>) audioList);
+            Objects.requireNonNull(getActivity()).startService(intentNext);
+        }
+    }
+
+    private void setIvPrevious(){
+        if (mediaPlayer != null) {
+            stopPlaying();
+            if (num == 0) { num = audioList.size() - 1; } else { num--; }
+            mediaPlayer = MediaPlayer.create(getActivity(), Uri.parse(audioList.get(num).getPath()));
+            tvSongName.setText(audioList.get(num).getName());
+            textTime.post(mUpdateTime);
+            mediaPlayer.start();
+            ivPause.setImageResource(R.drawable.ic_baseline_pause_circle_filled_24);
+            Intent intentPrev = new Intent(getActivity(), AudioService.class);
+            intentPrev.putExtra("song_name", audioList.get(num).getName());
+            intentPrev.putExtra("num_of_songs", num);
+            intentPrev.putParcelableArrayListExtra("songs", (ArrayList<? extends Parcelable>) audioList);
+            Objects.requireNonNull(getActivity()).startService(intentPrev);
+        }
     }
 }

@@ -9,15 +9,13 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
 import android.widget.RemoteViews;
-
 import androidx.core.app.NotificationCompat;
-
 import com.myappdeport.R;
 import com.myappdeport.model.entity.funcional.Audio;
 import com.myappdeport.view.activitys.MenuContainer;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static com.myappdeport.service.usecase.audio.AppAudio.CHANNEL_ID;
 import static com.myappdeport.service.usecase.audio.AppAudio.CLICKED;
@@ -39,40 +37,32 @@ public class AudioService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         String songName = intent.getStringExtra("song_name");
         num = intent.getIntExtra("num_of_songs", 0);
-        if (audios.size() == 0)
-            audios.addAll(intent.<Audio>getParcelableArrayListExtra("songs"));
+        if (audios.size() == 0) {
+            audios.addAll(Objects.requireNonNull(intent.getParcelableArrayListExtra("songs")));
+        }
 
         notificationLayout = new RemoteViews(getPackageName(), R.layout.custom_layout_notification);
         notificationLayout.setTextViewText(R.id.song_name, songName);
 
         createNotificationChannel();
         Intent notificationIntent = new Intent(this, MenuContainer.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,
-                1, notificationIntent, 0);
-
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,1, notificationIntent, 0);
         Intent previous = new Intent(this, ReciverEvents.class);
         previous.putExtra("Clicked", "Previous");
         previous.setAction(CLICKED);
-        PendingIntent pPreviousIntent = PendingIntent.getBroadcast(this, 2,
-                previous, 0);
-
+        PendingIntent pPreviousIntent = PendingIntent.getBroadcast(this, 2,previous, 0);
         Intent next = new Intent(this, ReciverEvents.class);
         next.putExtra("Clicked", "Next");
         next.setAction(CLICKED);
-        PendingIntent pNextIntent = PendingIntent.getBroadcast(this, 3,
-                next, 0);
-
+        PendingIntent pNextIntent = PendingIntent.getBroadcast(this, 3,next, 0);
         Intent pause = new Intent(this, ReciverEvents.class);
         pause.putExtra("Clicked", "Pause");
         pause.setAction(CLICKED);
-        PendingIntent pPauseIntent = PendingIntent.getBroadcast(this, 4,
-                pause, 0);
-
+        PendingIntent pPauseIntent = PendingIntent.getBroadcast(this, 4,pause, 0);
         Intent close = new Intent(this, ReciverEvents.class);
         close.putExtra("Clicked", "Close");
         close.setAction(CLICKED);
-        PendingIntent pClose = PendingIntent.getBroadcast(this, 5,
-                close, 0);
+        PendingIntent pClose = PendingIntent.getBroadcast(this, 5,close, 0);
 
         notificationLayout.setOnClickPendingIntent(R.id.close, pClose);
         notificationLayout.setOnClickPendingIntent(R.id.previous, pPreviousIntent);
@@ -92,7 +82,6 @@ public class AudioService extends Service {
                 .build();
 
         startForeground(1, notification);
-
         return START_NOT_STICKY;
     }
 
@@ -107,14 +96,8 @@ public class AudioService extends Service {
     }
 
     private void createNotificationChannel() {
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel serviceChannel = new NotificationChannel(
-                    CHANNEL_ID,
-                    "Example Service Channel",
-                    NotificationManager.IMPORTANCE_DEFAULT
-            );
-
+            NotificationChannel serviceChannel = new NotificationChannel(CHANNEL_ID,"Example Service Channel",NotificationManager.IMPORTANCE_DEFAULT);
             manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(serviceChannel);
         }

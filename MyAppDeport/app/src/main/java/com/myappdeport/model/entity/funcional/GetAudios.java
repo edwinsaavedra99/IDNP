@@ -15,13 +15,10 @@ public class GetAudios {
     private final List<Audio> dataSet = new ArrayList<>();
 
     public static GetAudios getInstance() {
-        if (getAudios == null) {
+        if (getAudios == null)
             getAudios = new GetAudios();
-        }
         return getAudios;
     }
-
-
     public MutableLiveData<List<Audio>> getAllAudioFromDevice(Cursor cursor) {
         if (isSdPresent()) {
             int i = 0;
@@ -29,19 +26,12 @@ public class GetAudios {
                 if (cursor.moveToFirst()) {
                     do {
                         Audio audio = new Audio();
-                        audio.setName(cursor
-                                .getString(cursor
-                                        .getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME)));
-                        audio.setId(cursor.getInt(cursor
-                                .getColumnIndex(MediaStore.Audio.Media._ID)));
-
-                        audio.setPath(cursor.getString(cursor
-                                .getColumnIndex(MediaStore.Audio.Media.DATA)));
-
+                        audio.setName(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME)));
+                        audio.setId(cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Media._ID)));
+                        audio.setPath(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)));
                         audio.setNumOfSong(i);
                         dataSet.add(audio);
                         i++;
-
                     } while (cursor.moveToNext());
                 }
                 cursor.close();
@@ -50,10 +40,7 @@ public class GetAudios {
         audioList.postValue(dataSet);
         return audioList;
     }
-
-
     public static boolean isSdPresent() {
-        return android.os.Environment.getExternalStorageState().equals(
-                android.os.Environment.MEDIA_MOUNTED);
+        return android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
     }
 }

@@ -9,12 +9,7 @@ public class Audio implements Parcelable {
     private int id;
     private int numOfSong;
 
-    public Audio(){
-//        aPath = "";
-//        aName = "";
-//        id = 0;
-//        numOfSong = 0;
-    }
+    public Audio(){}
     public Audio(Parcel in){
         this.path = in.readString();
         this.name = in.readString();
@@ -57,6 +52,7 @@ public class Audio implements Parcelable {
     public void setName(String name) {
         this.name = name;
     }
+
     @Override
     public int describeContents() {
         return 0;
@@ -67,6 +63,5 @@ public class Audio implements Parcelable {
         parcel.writeString(name);
         parcel.writeInt(id);
         parcel.writeInt(numOfSong);
-
     }
 }
