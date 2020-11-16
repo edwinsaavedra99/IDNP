@@ -16,8 +16,7 @@ import static com.myappdeport.utils.Constants.USERS;
 import static com.myappdeport.utils.HelperClass.logErrorMessage;
 
 @SuppressWarnings("ConstantConditions")
-public
-class AuthRepository {
+public class AuthRepository {
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
     private CollectionReference usersRef = rootRef.collection(USERS);

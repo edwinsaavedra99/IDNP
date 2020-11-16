@@ -1,5 +1,6 @@
 package com.myappdeport.view.fragments;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.myappdeport.R;
@@ -25,6 +27,7 @@ public class Profile extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
+    private  AnimationDrawable timeAnimation;
     private static final String ARG_PARAM2 = "param2";
     private AuthViewModel authViewModel;
     private TextView textName;
@@ -77,6 +80,16 @@ public class Profile extends Fragment {
                 textName.setText(eUserEDWIN.name);
             }
         });*/
+        //ImageView imageAnimation = (ImageView) viewGroup.findViewById(R.id.imageButton_imageUser);
+        //imageAnimation.setBackgroundResource(R.drawable.animation);
+        //timeAnimation = (AnimationDrawable) imageAnimation.getBackground();
+        //timeAnimation.start();
         return viewGroup;
     }
+
+
+/*    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        timeAnimation.start();
+    }*/
 }
