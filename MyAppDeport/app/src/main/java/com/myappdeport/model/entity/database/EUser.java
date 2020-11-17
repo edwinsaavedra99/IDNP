@@ -8,9 +8,9 @@ import com.google.firebase.firestore.Exclude;
 
 import java.util.List;
 
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-
 @Entity(indices = @Index("email"))
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
@@ -53,6 +53,22 @@ public class EUser extends EntityDatabase {
         return this.email;
     }
 
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public Double getHeight() {
+        return height;
+    }
+
     public Boolean getIsNew() {
         return this.isNew;
     }
@@ -75,6 +91,22 @@ public class EUser extends EntityDatabase {
 
     public void setIsNew(Boolean isNew) {
         this.isNew = isNew;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public void setHeight(Double height) {
+        this.height = height;
     }
 
     public void setIsCreated(Boolean isCreated) {
