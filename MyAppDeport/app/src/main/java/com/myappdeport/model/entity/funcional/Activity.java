@@ -1,5 +1,7 @@
 package com.myappdeport.model.entity.funcional;
 
+import androidx.room.Ignore;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -18,4 +20,8 @@ public class Activity {
     private LocalDate date;
     private Double kiloCalories;
     private Route route;
+    private String routeDocumentId;
+    private String userDocumentId;
+    private Long idERoute;
+    private Long idEUser;
 }

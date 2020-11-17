@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         IActivityRepository<String> activityRepository = ActivityFireStoreRepository.getInstance();
         EPosition ePosition = new EPosition(12.4, 524.5, 2345.0);
         ERoute eRoute = new ERoute(12.5, 123.5, Collections.singletonList(ePosition));
-        EActivity eActivity = new EActivity("12:00:00", "12:00:00", 123.5, eRoute);
+        EActivity eActivity = new EActivity("12:00:00", "12:00:00", "12/05/13", 123.5, eRoute);
         routeRepository.saveWithPositions(eRoute).addOnSuccessListener(eRoute1 -> {
             Log.e(TAG, eRoute1.toString());
         });

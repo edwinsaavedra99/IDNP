@@ -6,10 +6,11 @@ import androidx.annotation.RequiresApi;
 
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.myappdeport.model.entity.database.EActivity;
 import com.myappdeport.repository.IActivityRepository;
-import com.myappdeport.viewmodel.firebase.ActivityLiveData;
+import com.myappdeport.viewmodel.firebase.ActivityListLiveData;
 
 import java.util.List;
 import java.util.Optional;
@@ -93,9 +94,8 @@ public class ActivityFireStoreRepository extends FireStoreRepository<EActivity> 
         return this.routeFireStoreRepository.deleteWithPositions(eActivity.getERoute()).onSuccessTask(voids -> delete(eActivity));
     }
 
-    public ActivityLiveData getActivityLiveData(String documentId){
-        DocumentReference documentReference = this.collectionReference.document(documentId);
-        return new ActivityLiveData(documentReference);
+    public ActivityListLiveData getActivityListLiveData() {
+        CollectionReference collectionReference = this.collectionReference;
+        return new ActivityListLiveData(collectionReference);
     }
-
 }

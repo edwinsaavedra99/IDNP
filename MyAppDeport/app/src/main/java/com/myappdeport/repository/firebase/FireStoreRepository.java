@@ -157,4 +157,8 @@ public abstract class FireStoreRepository<E extends EntityDatabase> implements I
     public Task<Integer> count() {
         return this.collectionReference.get().continueWithTask(task -> Tasks.forResult(Objects.requireNonNull(task.getResult()).getDocuments().size()));
     }
+
+    public CollectionReference getCollectionReference() {
+        return this.collectionReference;
+    }
 }

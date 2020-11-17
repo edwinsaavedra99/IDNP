@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class DTOActivity {
     private String startTime;
     private String endTime;
-    private Double kiloCalories;
+    private String kiloCalories;
     private String date;
     /**
      * Id del documento route firebase.

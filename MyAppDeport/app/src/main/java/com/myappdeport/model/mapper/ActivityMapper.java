@@ -82,7 +82,9 @@ public interface ActivityMapper extends MapperEntityDtoFunctional<EActivity, DTO
             @Mapping(target = "startTime", source = "activity.startTime", dateFormat = "HH:mm:ss", defaultValue = "00:00:00"),
             @Mapping(target = "endTime", source = "activity.endTime", dateFormat = "HH:mm:ss", defaultValue = "00:00:00"),
             @Mapping(target = "kiloCalories", source = "activity.kiloCalories", defaultValue = "0.0"),
-            @Mapping(target = "dtoRoute", source = "activity.route")
+            @Mapping(target = "dtoRoute", source = "activity.route"),
+            @Mapping(target = "idERoute", source = "activity.idERoute"),
+            @Mapping(target = "date", source = "activity.date", dateFormat = "dd/MM/yyyy", defaultValue = "01/01/0001")
     })
     DTOActivity functionalToDto(Activity activity);
 
