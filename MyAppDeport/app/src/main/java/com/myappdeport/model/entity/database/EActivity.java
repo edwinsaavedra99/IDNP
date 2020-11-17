@@ -37,6 +37,8 @@ public class EActivity extends EntityDatabase {
     private String endTime;
     private Double kiloCalories;
     private String date;
+    private String title;
+    private String description;
     /**
      * Id del documento route firebase.
      */
@@ -190,6 +192,22 @@ public class EActivity extends EntityDatabase {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
 

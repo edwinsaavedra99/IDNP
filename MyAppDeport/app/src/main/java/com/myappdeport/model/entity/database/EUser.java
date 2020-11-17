@@ -15,8 +15,12 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class EUser extends EntityDatabase {
-    public String name;
-    public String email;
+    private String name;
+    private String email;
+    private String birthday;
+    private String weight;
+    private Integer age;
+    private Double height;
     @Exclude
     @Ignore
     public Boolean isNew;
