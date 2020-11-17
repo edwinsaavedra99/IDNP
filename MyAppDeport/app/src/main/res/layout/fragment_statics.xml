@@ -23,6 +23,58 @@
             android:textSize="14sp"
             android:textStyle="normal" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/layout_statics_image"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:orientation="horizontal"></LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/buttonDistance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_background_translucid"
+                    android:fontFamily="@font/ubuntu"
+                    android:text="Distancias"
+                    android:textColor="#000000"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/buttonActivity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_background_translucid"
+                    android:fontFamily="@font/ubuntu"
+                    android:text="Actividad"
+                    android:textColor="#000000"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/buttonVelocity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_background_translucid"
+                    android:fontFamily="@font/ubuntu"
+                    android:text="Velocidad"
+                    android:textColor="#000000"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -173,13 +225,13 @@
                 <Button
                     android:id="@+id/button"
                     android:layout_width="wrap_content"
-                    android:layout_height="25dp"
+                    android:layout_height="30dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/button_background_gray"
                     android:fontFamily="@font/ubuntu"
                     android:text="Buscar"
                     android:textColor="#FFFFFF"
-                    android:textSize="10sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
         </LinearLayout>
