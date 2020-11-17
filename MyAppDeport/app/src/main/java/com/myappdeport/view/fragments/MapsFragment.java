@@ -55,6 +55,7 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
     private LatLng previoL;
     private List<LatLng> latLngList = new ArrayList<>();
     private boolean flag = false;
+    private boolean flagDistance = false;
         @Override
         public void onMapReady(GoogleMap googleMap) {
             if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
@@ -76,10 +77,13 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
                     LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
                     //map.addMarker(new MarkerOptions().position(latLng).title("Mi posicion"));
                     if(flag) {
-                        latLngList.add(latLng);
-                        map.addPolyline((new PolylineOptions()).clickable(true).color(Color.LTGRAY).width(10).addAll(latLngList));
-                        DecimalFormat df = new DecimalFormat("0.00");
-                        textView.setText(df.format(ParseMetrics.mtoKm(distaceAll(latLngList))) + " Km");
+                        if(flagDistance || distanceLtnLong(latLngList.get(latLngList.size()-1),latLng)>15 ) {
+                            latLngList.add(latLng);
+                            flagDistance = false;
+                            map.addPolyline((new PolylineOptions()).color(Color.argb(255,186,74,0)).width(10).addAll(latLngList));
+                            DecimalFormat df = new DecimalFormat("0.00");
+                            textView.setText(df.format(ParseMetrics.mtoKm(distaceAll(latLngList))) + " Km");
+                        }
                     }
                     map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                     CameraPosition cameraPosition =  new CameraPosition.Builder().target(latLng).zoom(16)/*.bearing(90).tilt(45)*/.build();
@@ -144,6 +148,7 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
                 mUCTimer.startChronometer();
                 btnStart.setVisibility(View.GONE);
                 flag = true;
+                flagDistance = true;
             }
         });
     }
@@ -151,6 +156,15 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
     @Override
     public void setViewData(boolean flag) {
 
+    }
+    private double distanceLtnLong(LatLng latLng1, LatLng latLng2){
+        Location locationA = new Location("A");
+        locationA.setLatitude(latLng1.latitude);
+        locationA.setLongitude(latLng1.longitude);
+        Location locationB = new Location("B");
+        locationB.setLatitude(latLng2.latitude);
+        locationB.setLongitude(latLng2.longitude);
+        return locationA.distanceTo(locationB);
     }
     private double distaceAll(List<LatLng> latLngList){
         double sum = 0;
