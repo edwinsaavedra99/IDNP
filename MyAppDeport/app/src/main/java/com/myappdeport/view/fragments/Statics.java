@@ -1,7 +1,14 @@
 package com.myappdeport.view.fragments;
 
+import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,8 +19,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.google.android.material.datepicker.MaterialStyledDatePickerDialog;
+import com.google.android.material.theme.MaterialComponentsViewInflater;
 import com.myappdeport.R;
 import com.myappdeport.model.entity.dto.DTOActivity;
 import com.myappdeport.model.mapper.ActivityMapper;
@@ -29,6 +40,7 @@ import com.myappdeport.viewmodel.firebase.EatTipsViewModel;
 import org.mapstruct.factory.Mappers;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
@@ -53,6 +65,8 @@ public class Statics extends Fragment {
     private List<DTOActivity> activitiList;
     private RecyclerView recyclerView;
     private AdapterStatics adapterStatics;
+    private DatePickerDialog.OnDateSetListener dateSetListener;
+    private TextView editTextDate;
     View view;
 
 
@@ -102,6 +116,7 @@ public class Statics extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_statics, container, false);
+
         init();
         return view;
 
@@ -109,6 +124,7 @@ public class Statics extends Fragment {
 
     private void init(){
         //Grafico de estadisticas
+        editTextDate = view.findViewById(R.id.editTextDate);
         linearLayout = view.findViewById(R.id.layout_statics_image);
         btn_velocity = view.findViewById(R.id.buttonVelocity);
         btn_distances = view.findViewById(R.id.buttonDistance);
@@ -126,6 +142,29 @@ public class Statics extends Fragment {
         }catch (Exception e){
 
         }
+        editTextDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                int year =  calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog dialog = new DatePickerDialog(
+                        getActivity(), android.R.style.Theme_DeviceDefault_Dialog_MinWidth,dateSetListener,year,month,day);
+                //Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+        dateSetListener = new DatePickerDialog.OnDateSetListener(){
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month = month + 1;
+                String date = dayOfMonth+"/"+month+"/"+year;
+                editTextDate.setText(date);
+            }
+        };
+
+
         //botones para cargar graficas
         btn_velocity.setOnClickListener(new View.OnClickListener() {
             @Override

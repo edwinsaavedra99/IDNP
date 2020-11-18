@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             });
         });
     */
-        IRouteRepository<String> routeRepository = RouteFireStoreRepository.getInstance();
+        /*IRouteRepository<String> routeRepository = RouteFireStoreRepository.getInstance();
         IActivityRepository<String> activityRepository = ActivityFireStoreRepository.getInstance();
         EPosition ePosition = new EPosition(12.4, 524.5, 2345.0);
         ERoute eRoute = new ERoute(12.5, 123.5, Collections.singletonList(ePosition));
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
             Log.e(TAG, position.toString());
         }).addOnFailureListener(e -> {
             Log.e(TAG, e.getMessage(), e.getCause());
-        });
+        });*/
 
     }
 

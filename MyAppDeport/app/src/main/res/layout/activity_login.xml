@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="64dp"
         android:fontFamily="@font/ubuntu"
         android:text="Correo Electrónico"
@@ -111,7 +111,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="64dp"
         android:background="@drawable/button_rounded"
         android:fontFamily="@font/ubuntu"
@@ -128,7 +128,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="18dp"
         android:layout_marginEnd="64dp"
         android:orientation="horizontal"
         android:weightSum="3"
@@ -164,7 +164,7 @@
                 android:id="@+id/textView7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Iniciar Sesión con"
+                android:text="@string/iniciar_sesi_n_con"
                 android:gravity="center"
                 android:textColor="#808080"
                 android:textSize="11sp"/>
@@ -194,10 +194,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
+        android:layout_marginBottom="64dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="64dp"
         android:orientation="horizontal"
         android:weightSum="2"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -223,7 +225,7 @@
                 android:text="Google"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
-                android:textSize="18sp" />
+                android:textSize="13sp" />
 
         </LinearLayout>
 
@@ -247,7 +249,12 @@
                 android:text="Facebook"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
-                android:textSize="18sp" />
+                android:textSize="13sp" />
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/login_button_facebook_gone"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>
 

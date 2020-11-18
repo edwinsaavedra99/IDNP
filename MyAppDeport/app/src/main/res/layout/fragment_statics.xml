@@ -156,7 +156,7 @@
                             android:textColor="#040404"
                             android:textStyle="bold" />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/editTextDate"
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
@@ -187,7 +187,7 @@
                             android:textColor="#000000"
                             android:textStyle="bold" />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/editTextDate2"
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"

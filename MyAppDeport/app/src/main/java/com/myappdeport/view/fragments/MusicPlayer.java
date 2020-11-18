@@ -99,12 +99,12 @@ public class MusicPlayer extends Fragment implements SearchView.OnQueryTextListe
         if (checkPermissionREAD_EXTERNAL_STORAGE(getContext())) { //Search Music in External Storage - use a cursor
             cursor = getActivity().getContentResolver().query(allsongsuri, STAR, selection, null, null);
             adapter = new AdapterSong(getContext(), audioList);
-            recyclerView.setAdapter(adapter);
             audioViewModel.getAudios(cursor).observe(getActivity(), audio -> {
                 audioList.clear();
                 audioList.addAll(audio);
                 adapter.notifyDataSetChanged();
             });
+            recyclerView.setAdapter(adapter);
         }
 
         adapter.setOnSongListener(this::startTouchListener);
@@ -228,10 +228,10 @@ public class MusicPlayer extends Fragment implements SearchView.OnQueryTextListe
                 myList.add(audio1);
             }
         }
-        AdapterSong toAdapter = new AdapterSong(getActivity(),myList);
-        recyclerView.setAdapter(toAdapter);
-        toAdapter.notifyDataSetChanged();
-        toAdapter.setOnSongListener(this::startTouchListener);
+        adapter = new AdapterSong(getActivity(),myList);
+        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+        adapter.setOnSongListener(this::startTouchListener);
         return false;
     }
 
