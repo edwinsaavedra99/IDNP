@@ -3,6 +3,7 @@ package com.myappdeport.view.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,13 +15,22 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.myappdeport.R;
+import com.myappdeport.model.entity.dto.DTOActivity;
+import com.myappdeport.model.mapper.ActivityMapper;
+import com.myappdeport.view.adapters.ActivityAdapter;
+import com.myappdeport.view.adapters.AdapterFood;
 import com.myappdeport.view.adapters.AdapterStatics;
 import com.myappdeport.view.canvas.BarrasView;
 import com.myappdeport.view.canvas.StadisticView;
 import com.myappdeport.view.killme.Activiti;
+import com.myappdeport.viewmodel.firebase.ActivityListViewModel;
+import com.myappdeport.viewmodel.firebase.EatTipsViewModel;
+
+import org.mapstruct.factory.Mappers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,9 +48,9 @@ public class Statics extends Fragment {
     private Button btn_distances;
     private Button btn_actividades;
 
-
+    private ActivityAdapter activityAdapter;
     //lista de actividades fisicas
-    private List<Activiti> activitiList;
+    private List<DTOActivity> activitiList;
     private RecyclerView recyclerView;
     private AdapterStatics adapterStatics;
     View view;
@@ -54,6 +64,7 @@ public class Statics extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private ActivityListViewModel activityListViewModel;
 
     public Statics() {
         // Required empty public constructor
@@ -150,16 +161,39 @@ public class Statics extends Fragment {
         });
 
         //obtencion de data de base de datoss de las actividades
-        activitiList = new ArrayList<Activiti>();
+        /*activitiList = new ArrayList<Activiti>();
         activitiList.add( new Activiti("ACTIVIDAD 1","ESTA ES UA DESCRIPCION","12","MON","1.03km"));
         activitiList.add( new Activiti("ACTIVIDAD 2","ESTA ES UA DESCRIPCION aaaaaa","13","WEN","10.03km"));
-        activitiList.add( new Activiti("ACTIVIDAD 3","ESTA ES UA DESCRIPCION bbbbbb","14","FRI","0.03km"));
+        activitiList.add( new Activiti("ACTIVIDAD 3","ESTA ES UA DESCRIPCION bbbbbb","14","FRI","0.03km"));*/
 
-        adapterStatics = new AdapterStatics(activitiList,getContext());
-        // carga de data en UI
-        recyclerView = view.findViewById(R.id.recicler_estatics);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(this.adapterStatics);
+        activityListViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(ActivityListViewModel.class);
+        activityListViewModel.getActivityListLiveData().observe(getViewLifecycleOwner(), data ->{
+
+            List<DTOActivity> dtoActivities = new ArrayList<>();
+            ActivityMapper activityMapper = Mappers.getMapper(ActivityMapper.class);
+            for(int i=0 ; i<data.size();i++){
+                dtoActivities.add(activityMapper.entityToDto(data.get(i)));
+            }
+            //adapterStatics = new AdapterStatics(data,getContext());
+            activityAdapter = new ActivityAdapter(dtoActivities,getActivity());
+                    // carga de data en UI
+            recyclerView = view.findViewById(R.id.recicler_estatics);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            recyclerView.setAdapter(this.adapterStatics);
+        });
+
+
+/*                EatTipsViewModel eatTipsViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(EatTipsViewModel.class);
+        recyclerView = view.findViewById(R.id.recicler_foos);
+        recyclerView.setLayoutManager( new LinearLayoutManager(getContext()));
+        eatTipsViewModel.findAll();
+        eatTipsViewModel.listLiveData.observe(getViewLifecycleOwner(), data->{
+            foodList = data;
+            adapterFood = new AdapterFood(foodList,getContext());
+            recyclerView.setAdapter(adapterFood);
+        });*/
+
+
 
     }
     //wait me

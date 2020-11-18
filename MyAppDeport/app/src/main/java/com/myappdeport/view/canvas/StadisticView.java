@@ -81,7 +81,7 @@ public class StadisticView extends View {
      */
     @SuppressLint("CanvasSize")
     protected void onDraw(Canvas canvas) {
-        int margen_inferior = 200;
+        int margen_inferior = 400;
         int altoMax =  metrics.heightPixels;
         int anchoMax = metrics.widthPixels;
         int margen_y = 10;

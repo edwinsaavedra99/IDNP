@@ -32,7 +32,8 @@
                 android:id="@+id/layout_statics_image"
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
-                android:orientation="horizontal"></LinearLayout>
+                android:orientation="horizontal">
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

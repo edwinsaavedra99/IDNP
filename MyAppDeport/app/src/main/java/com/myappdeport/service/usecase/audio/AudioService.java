@@ -36,6 +36,7 @@ public class AudioService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         String songName = intent.getStringExtra("song_name");
+        System.out.println("hereee: "+songName);
         num = intent.getIntExtra("num_of_songs", 0);
         if (audios.size() == 0) {
             audios.addAll(Objects.requireNonNull(intent.getParcelableArrayListExtra("songs")));

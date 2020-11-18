@@ -27,6 +27,8 @@ public class GetAudios {
                     do {
                         Audio audio = new Audio();
                         audio.setName(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME)));
+                        audio.setArtist(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)));
+                        audio.setAlbum(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)));
                         audio.setId(cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Media._ID)));
                         audio.setPath(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)));
                         audio.setNumOfSong(i);

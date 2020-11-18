@@ -3,6 +3,7 @@ package com.myappdeport.view.adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +46,8 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return this.dtoActivities.size();
+        Log.println(Log.INFO,ActivityAdapter.class.getName(),"here"+ this.dtoActivities.size());
+        return       this.dtoActivities.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
