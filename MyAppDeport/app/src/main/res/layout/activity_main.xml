@@ -9,29 +9,32 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="151dp"
-        android:layout_height="154dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="128dp"
+        android:layout_marginStart="129dp"
+        android:layout_marginEnd="129dp"
         android:layout_marginTop="66dp"
         app:srcCompat="@drawable/ic_runer"
         app:tint="#FFF" />
 
     <TextView
         android:id="@+id/textView10"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="70dp"
+        android:layout_marginEnd="70dp"
         android:layout_marginTop="204dp"
         android:fontFamily="@font/ubuntu_bold"
         android:text="MyAppDeport"
         android:textColor="#FFF"
-        android:textSize="40sp" />
+        android:textAlignment="center"
+        android:textSize="32sp"/>
 
     <Button
         android:id="@+id/login"

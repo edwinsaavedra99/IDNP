@@ -58,7 +58,7 @@
                         tools:src="@drawable/borde" />
 
                     <TextView
-                        android:id="@+id/textView23"
+                        android:id="@+id/time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -81,7 +81,7 @@
                         android:text="Duracion" />
 
                     <TextView
-                        android:id="@+id/textView26"
+                        android:id="@+id/distance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
@@ -93,7 +93,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/textView27"
+                        android:id="@+id/unit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -142,17 +142,6 @@
                         android:layout_marginBottom="28dp"
                         android:text="(Kcal)" />
 
-                    <ImageView
-                        android:id="@+id/imageView9"
-                        android:layout_width="43dp"
-                        android:layout_height="46dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginStart="23dp"
-                        android:layout_marginTop="12dp"
-                        android:src="@drawable/borde" />
-
-
                 </RelativeLayout>
 
 
@@ -172,7 +161,7 @@
                 android:layout_height="match_parent">
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/floatingActionButton"
+                    android:id="@+id/floatingPlayButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -180,6 +169,32 @@
                     android:layout_gravity="top|end"
                     android:clickable="true"
                     app:srcCompat="@drawable/play"
+                    android:focusable="true"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:contentDescription="TODO" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/floatingMetaButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_gravity="bottom|start"
+                    android:clickable="true"
+                    app:srcCompat="@drawable/finish_flag"
+                    android:focusable="true"
+                    android:backgroundTint="@color/white"
+                    android:contentDescription="TODO" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/floatingPauseButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_gravity="bottom|end"
+                    android:clickable="true"
+                    app:srcCompat="@drawable/pause"
                     android:focusable="true"
                     android:backgroundTint="@color/colorPrimary"
                     android:contentDescription="TODO" />

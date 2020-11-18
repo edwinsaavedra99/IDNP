@@ -13,7 +13,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="6dp"
         android:background="@drawable/ic_close"
-        app:srcCompat="@drawable/ic_close"
+        android:backgroundTint="@color/black"
         android:id="@+id/close"
         style="@style/TextAppearance.Compat.Notification.Title" />
 
@@ -36,6 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/song_name"
         android:gravity="center"
+        android:layout_marginTop="10dp"
         style="@style/TextAppearance.Compat.Notification.Title" >
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -43,29 +44,29 @@
             android:gravity="center">
             <ImageButton
                 android:id="@+id/previous"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginRight="20dp"
-                app:srcCompat="@drawable/ic_previous"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/ic_previous"
                 style="@style/TextAppearance.Compat.Notification.Title" />
 
 
             <ImageButton
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_toEndOf="@id/previous"
-                app:srcCompat="@drawable/ic_baseline_pause_circle_filled_24"
+                android:background="@drawable/ic_baseline_pause_circle_filled_24"
                 android:id="@+id/stop"
-                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"
                 style="@style/TextAppearance.Compat.Notification.Title" />
 
 
 
             <ImageButton
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_toEndOf="@id/stop"
-                app:srcCompat="@drawable/ic_next"
+                android:background="@drawable/ic_next"
                 android:id="@+id/next"
                 style="@style/TextAppearance.Compat.Notification.Title" />
 
