@@ -190,7 +190,7 @@
                     android:fontFamily="@font/ubuntu"
                     android:text="Peso (Kg)"
                     android:textColor="#BE4F10"
-                    android:textSize="18sp" />
+                    android:textSize="15sp" />
 
                 <EditText
                     android:id="@+id/editPeso"
@@ -221,7 +221,7 @@
                 android:fontFamily="@font/ubuntu"
                 android:text="Estatura (cm)"
                 android:textColor="#BE4F10"
-                android:textSize="18sp" />
+                android:textSize="15sp" />
 
             <EditText
                 android:id="@+id/editEstatura"

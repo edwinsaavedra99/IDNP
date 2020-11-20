@@ -28,6 +28,7 @@
                     android:orientation="horizontal">
 
                     <SearchView
+                        android:id="@+id/searchMusic"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:iconifiedByDefault="false"
@@ -62,7 +63,6 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Movimiento Naranja"
                         android:textAlignment="center"
                         android:textSize="16sp" />
 
@@ -133,14 +133,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvSongs"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="20dp" />
+                     />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

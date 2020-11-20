@@ -35,6 +35,7 @@ public class MenuContainer extends AppCompatActivity {
     Statics statics = new Statics();
     Profile profile = new Profile();
     MapsFragment maps = new MapsFragment();
+    MapsFragment maps2 = new MapsFragment();
 
     private Fragment currentFragment;
 
@@ -73,7 +74,7 @@ public class MenuContainer extends AppCompatActivity {
                     return true;
                 case R.id.item3:
                     //currentFragment = maps;
-                    loadFragment(maps,Constants.TAG_F_MAP);
+                    loadFragment(maps2,Constants.TAG_F_MAP);
                     return true;
                 case R.id.item4:
                     //currentFragment = statics;

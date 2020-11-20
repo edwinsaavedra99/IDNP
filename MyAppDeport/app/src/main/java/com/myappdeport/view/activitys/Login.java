@@ -9,6 +9,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 import com.facebook.AccessToken;
@@ -51,48 +53,13 @@ public class Login extends AppCompatActivity {
     private GoogleSignInClient googleSignInClient;
     //private String TAG = "Login";
     private CallbackManager callbackManager;
-
-    private Bitmap loadedImage;
-    private ImageView test;
-    //private static final String TAG_FB = "FacebookAuthenticate";
-    private String imageHttpAddress = "https://i.pinimg.com/originals/7f/13/d5/7f13d54ef13b4505575c67f5fe9a4483.png";
     @SneakyThrows
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login_temporal);
+        setContentView(R.layout.activity_login);
         initialComponents();
-        //test = findViewById(R.id.testImage);
-        test =(ImageView)findViewById(R.id.testImage);
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    proceso(); //Realizar aquí tu proceso!
-
-                } catch (Exception e) {
-                    Log.e("Error", "Exception: " + e.getMessage());
-                }
-            }
-        });
-
-    }
-    private void proceso(){
-        Drawable drawable = LoadImageFromWebOperations("https://i.pinimg.com/originals/7f/13/d5/7f13d54ef13b4505575c67f5fe9a4483.png");
-        test.setImageDrawable(drawable);
-    }
-
-    private Drawable LoadImageFromWebOperations(String url)
-    {
-        try{
-            InputStream is = (InputStream) new URL(url).getContent();
-            Drawable d = Drawable.createFromStream(is, "src name");
-            return d;
-        }catch (Exception e) {
-            System.out.println("Exc="+e);
-            return null;
-        }
     }
     private void initialComponents(){
         initSignInButton();
@@ -101,8 +68,10 @@ public class Login extends AppCompatActivity {
     }
 
     private void initSignInButton() {
-        SignInButton googleSignInButton = findViewById(R.id.sign_button);
-        LoginButton loginButton = findViewById(R.id.login_button_facebook);
+        Button googleSignInButton = findViewById(R.id.sign_button);
+        Button facebook = findViewById(R.id.login_button_facebook);
+        LoginButton loginButton = findViewById(R.id.login_button_facebook_gone);
+        facebook.setOnClickListener(v -> loginButton.performClick());
         googleSignInButton.setOnClickListener(v -> signIn());
         //auth = FirebaseAuth.getInstance();
         callbackManager = CallbackManager.Factory.create();
@@ -110,6 +79,8 @@ public class Login extends AppCompatActivity {
         signInFb(loginButton);
         
     }
+
+
 
     private void handleFacebookToken(AccessToken token){
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
@@ -222,6 +193,7 @@ public class Login extends AppCompatActivity {
     private void goToMainActivity(EUserEDWIN user) {
         Intent intent = new Intent(Login.this, MenuContainer.class);
         intent.putExtra(USER, user);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
     }

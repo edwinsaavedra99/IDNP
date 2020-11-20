@@ -28,6 +28,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,7 +52,7 @@ import static com.myappdeport.utils.ParseMetrics.milliSecondsToTimer;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MusicPlayer extends Fragment {
+public class MusicPlayer extends Fragment implements SearchView.OnQueryTextListener {
 
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
     List<Audio> audioList = new ArrayList<>();
@@ -78,6 +79,7 @@ public class MusicPlayer extends Fragment {
     private ImageView ivPrevious;
     SettingsContentObserver mSettingsContentObserver;
     public static int numOfSong;
+    private SearchView searchMusic;
 
     public MusicPlayer() { /*Required empty public constructor*/ }
 
@@ -90,19 +92,19 @@ public class MusicPlayer extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_music_player, container, false);
         initialComponentsUI(viewGroup);
-
+        initialListener();
         audioViewModel = new AudioViewModel();
         audioManager = (AudioManager) Objects.requireNonNull(getActivity()).getSystemService(Context.AUDIO_SERVICE);
 
         if (checkPermissionREAD_EXTERNAL_STORAGE(getContext())) { //Search Music in External Storage - use a cursor
             cursor = getActivity().getContentResolver().query(allsongsuri, STAR, selection, null, null);
             adapter = new AdapterSong(getContext(), audioList);
-            recyclerView.setAdapter(adapter);
             audioViewModel.getAudios(cursor).observe(getActivity(), audio -> {
                 audioList.clear();
                 audioList.addAll(audio);
                 adapter.notifyDataSetChanged();
             });
+            recyclerView.setAdapter(adapter);
         }
 
         adapter.setOnSongListener(this::startTouchListener);
@@ -204,6 +206,40 @@ public class MusicPlayer extends Fragment {
             mSeekBar.setProgress(0);
         }
     }
+
+    private void initialListener(){
+        searchMusic.setOnQueryTextListener(this);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        //adapter.getFilter().filter(newText.toLowerCase());
+        //adapter.notifyDataSetChanged();
+
+        List<Audio> myList= new ArrayList<>();
+        for(Object audio : audioList){
+            Audio audio1 = (Audio) audio;
+            if(searchInData(audio1,newText)){
+                myList.add(audio1);
+            }
+        }
+        adapter = new AdapterSong(getActivity(),myList);
+        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+        adapter.setOnSongListener(this::startTouchListener);
+        return false;
+    }
+
+    private boolean searchInData(Audio audio, String newText) {
+        return audio.getName().toLowerCase().contains(newText.toLowerCase().trim())||
+                audio.getArtist().toLowerCase().contains(newText.toLowerCase().trim()) ||
+                audio.getAlbum().contains(newText.toLowerCase().trim());
+    }
     public static class SettingsContentObserver extends ContentObserver {
         public SettingsContentObserver(Handler handler) {
             super(handler);
@@ -255,6 +291,7 @@ public class MusicPlayer extends Fragment {
         ivPrevious = viewGroup.findViewById(R.id.previous);
         mSeekBar = viewGroup.findViewById(R.id.seekBar2);
         tvSongName = viewGroup.findViewById(R.id.nameSong);
+        searchMusic = viewGroup.findViewById(R.id.searchMusic);
     }
     private void startTouchListener(int position){
         // initialize Uri here
