@@ -10,31 +10,27 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.myappdeport.model.entity.database.EActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
-@Data
-@EqualsAndHashCode(callSuper = true)
-public class ActivityListLiveData extends LiveData<List<EActivity>> implements EventListener<QuerySnapshot> {
-    private static final String TAG = ActivityListLiveData.class.getSimpleName();
-    private final CollectionReference collectionReference;
+public class ActivityListUserLiveData extends LiveData<List<EActivity>> implements EventListener<QuerySnapshot> {
+    private static final String TAG = ActivityListUserLiveData.class.getSimpleName();
+    private final Query query;
     private ListenerRegistration listenerRegistration = () -> {
     };
     private List<EActivity> eActivities = new ArrayList<>();
 
-    public ActivityListLiveData(CollectionReference collectionReference) {
-        this.collectionReference = collectionReference;
+    public ActivityListUserLiveData(Query query) {
+        this.query = query;
     }
 
     @Override
     protected void onActive() {
-        this.listenerRegistration = collectionReference.addSnapshotListener(this);
+        this.listenerRegistration = query.addSnapshotListener(this);
         super.onActive();
     }
 

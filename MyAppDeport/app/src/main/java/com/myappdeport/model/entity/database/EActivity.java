@@ -7,11 +7,6 @@ import androidx.room.Index;
 
 import com.google.firebase.firestore.Exclude;
 
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
 @Entity(foreignKeys = {
         @ForeignKey(
                 entity = ERoute.class,
@@ -208,6 +203,94 @@ public class EActivity extends EntityDatabase {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean equals(final Object o) {
+        if (o == this) return true;
+        if (!(o instanceof EActivity)) return false;
+        final EActivity other = (EActivity) o;
+        if (!other.canEqual((Object) this)) return false;
+        if (!super.equals(o)) return false;
+        final Object this$startTime = this.getStartTime();
+        final Object other$startTime = other.getStartTime();
+        if (this$startTime == null ? other$startTime != null : !this$startTime.equals(other$startTime))
+            return false;
+        final Object this$endTime = this.getEndTime();
+        final Object other$endTime = other.getEndTime();
+        if (this$endTime == null ? other$endTime != null : !this$endTime.equals(other$endTime))
+            return false;
+        final Object this$kiloCalories = this.getKiloCalories();
+        final Object other$kiloCalories = other.getKiloCalories();
+        if (this$kiloCalories == null ? other$kiloCalories != null : !this$kiloCalories.equals(other$kiloCalories))
+            return false;
+        final Object this$date = this.getDate();
+        final Object other$date = other.getDate();
+        if (this$date == null ? other$date != null : !this$date.equals(other$date)) return false;
+        final Object this$title = this.getTitle();
+        final Object other$title = other.getTitle();
+        if (this$title == null ? other$title != null : !this$title.equals(other$title))
+            return false;
+        final Object this$description = this.getDescription();
+        final Object other$description = other.getDescription();
+        if (this$description == null ? other$description != null : !this$description.equals(other$description))
+            return false;
+        final Object this$routeDocumentId = this.getRouteDocumentId();
+        final Object other$routeDocumentId = other.getRouteDocumentId();
+        if (this$routeDocumentId == null ? other$routeDocumentId != null : !this$routeDocumentId.equals(other$routeDocumentId))
+            return false;
+        final Object this$userDocumentId = this.getUserDocumentId();
+        final Object other$userDocumentId = other.getUserDocumentId();
+        if (this$userDocumentId == null ? other$userDocumentId != null : !this$userDocumentId.equals(other$userDocumentId))
+            return false;
+        final Object this$idERoute = this.getIdERoute();
+        final Object other$idERoute = other.getIdERoute();
+        if (this$idERoute == null ? other$idERoute != null : !this$idERoute.equals(other$idERoute))
+            return false;
+        final Object this$idEUser = this.getIdEUser();
+        final Object other$idEUser = other.getIdEUser();
+        if (this$idEUser == null ? other$idEUser != null : !this$idEUser.equals(other$idEUser))
+            return false;
+        final Object this$eRoute = this.getERoute();
+        final Object other$eRoute = other.getERoute();
+        if (this$eRoute == null ? other$eRoute != null : !this$eRoute.equals(other$eRoute))
+            return false;
+        return true;
+    }
+
+    protected boolean canEqual(final Object other) {
+        return other instanceof EActivity;
+    }
+
+    public int hashCode() {
+        final int PRIME = 59;
+        int result = super.hashCode();
+        final Object $startTime = this.getStartTime();
+        result = result * PRIME + ($startTime == null ? 43 : $startTime.hashCode());
+        final Object $endTime = this.getEndTime();
+        result = result * PRIME + ($endTime == null ? 43 : $endTime.hashCode());
+        final Object $kiloCalories = this.getKiloCalories();
+        result = result * PRIME + ($kiloCalories == null ? 43 : $kiloCalories.hashCode());
+        final Object $date = this.getDate();
+        result = result * PRIME + ($date == null ? 43 : $date.hashCode());
+        final Object $title = this.getTitle();
+        result = result * PRIME + ($title == null ? 43 : $title.hashCode());
+        final Object $description = this.getDescription();
+        result = result * PRIME + ($description == null ? 43 : $description.hashCode());
+        final Object $routeDocumentId = this.getRouteDocumentId();
+        result = result * PRIME + ($routeDocumentId == null ? 43 : $routeDocumentId.hashCode());
+        final Object $userDocumentId = this.getUserDocumentId();
+        result = result * PRIME + ($userDocumentId == null ? 43 : $userDocumentId.hashCode());
+        final Object $idERoute = this.getIdERoute();
+        result = result * PRIME + ($idERoute == null ? 43 : $idERoute.hashCode());
+        final Object $idEUser = this.getIdEUser();
+        result = result * PRIME + ($idEUser == null ? 43 : $idEUser.hashCode());
+        final Object $eRoute = this.getERoute();
+        result = result * PRIME + ($eRoute == null ? 43 : $eRoute.hashCode());
+        return result;
+    }
+
+    public String toString() {
+        return "EActivity(super=" + super.toString() + ", startTime=" + this.getStartTime() + ", endTime=" + this.getEndTime() + ", kiloCalories=" + this.getKiloCalories() + ", date=" + this.getDate() + ", title=" + this.getTitle() + ", description=" + this.getDescription() + ", routeDocumentId=" + this.getRouteDocumentId() + ", userDocumentId=" + this.getUserDocumentId() + ", idERoute=" + this.getIdERoute() + ", idEUser=" + this.getIdEUser() + ", eRoute=" + this.getERoute() + ")";
     }
 }
 

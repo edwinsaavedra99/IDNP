@@ -5,6 +5,8 @@ import com.google.android.gms.tasks.Tasks;
 import com.myappdeport.model.entity.database.EUser;
 import com.myappdeport.repository.IUserRepository;
 
+import java.util.Objects;
+
 public class UserFireStoreRepository extends FireStoreRepository<EUser> implements IUserRepository<String> {
     private static UserFireStoreRepository INSTANCE;
     private final ActivityFireStoreRepository activityFireStoreRepository;
@@ -29,7 +31,7 @@ public class UserFireStoreRepository extends FireStoreRepository<EUser> implemen
     @Override
     public Task<EUser> getByEmailWithActivity(String email) {
         return getByEmail(email).continueWithTask(task -> this.activityFireStoreRepository.getActivityByIdUser(email).onSuccessTask(eActivities -> {
-            task.getResult().setEActivityList(eActivities);
+            Objects.requireNonNull(task.getResult()).setEActivityList(eActivities);
             return task;
         }));
     }

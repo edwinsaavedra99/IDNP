@@ -8,9 +8,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.Query;
 import com.myappdeport.model.entity.database.EActivity;
 import com.myappdeport.repository.IActivityRepository;
 import com.myappdeport.viewmodel.firebase.ActivityListLiveData;
+import com.myappdeport.viewmodel.firebase.ActivityListUserLiveData;
 
 import java.util.List;
 import java.util.Optional;
@@ -97,5 +99,10 @@ public class ActivityFireStoreRepository extends FireStoreRepository<EActivity> 
     public ActivityListLiveData getActivityListLiveData() {
         CollectionReference collectionReference = this.collectionReference;
         return new ActivityListLiveData(collectionReference);
+    }
+
+    public ActivityListUserLiveData getActivityListLiveDataByIdUser(String userDocumentId) {
+        Query query = this.collectionReference.whereEqualTo("userDocumentId", userDocumentId);
+        return new ActivityListUserLiveData(query);
     }
 }

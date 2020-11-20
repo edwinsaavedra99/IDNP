@@ -1,16 +1,24 @@
 package com.myappdeport.viewmodel.firebase;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.myappdeport.model.entity.database.EActivity;
 import com.myappdeport.repository.firebase.ActivityFireStoreRepository;
 
-public class ActivityListViewModel extends ViewModel {
-    private ActivityListLiveData activityListLiveData;
-    private final ActivityFireStoreRepository repository = ActivityFireStoreRepository.getInstance();
+import java.util.List;
 
-    private ActivityListLiveData getActivityListLiveData() {
-        if (this.activityListLiveData.getValue() != null)
-            this.activityListLiveData = this.repository.getActivityListLiveData();
-        return this.activityListLiveData;
+public class ActivityListViewModel extends ViewModel {
+    private final ActivityFireStoreRepository repository = ActivityFireStoreRepository.getInstance();
+    ActivityListLiveData liveData = null;
+
+    public LiveData<List<EActivity>> getActivityListLiveData() {
+        this.liveData = this.repository.getActivityListLiveData();
+        return this.liveData;
+    }
+
+    public LiveData<List<EActivity>> getActivityList() {
+        return this.liveData;
     }
 }
