@@ -28,6 +28,10 @@ public class Util {
     public static int[] color23 = {65, 105, 225};
     public static int[] color24 = {255, 255, 0};
     public static int[] color25 = {154, 205, 50};
+    public static int[] color26 = {14, 175, 16};
+    public static int[] color27 = {222, 222, 222};
+
+
     public static int[][] collections = new int[25][];
 
     public static int[][] getCollections(){
