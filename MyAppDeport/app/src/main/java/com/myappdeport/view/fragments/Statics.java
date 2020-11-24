@@ -31,6 +31,7 @@ import com.myappdeport.model.mapper.ActivityMapper;
 import com.myappdeport.view.adapters.ActivityAdapter;
 import com.myappdeport.view.adapters.AdapterFood;
 import com.myappdeport.view.adapters.AdapterStatics;
+import com.myappdeport.view.canvas.ActivitiView;
 import com.myappdeport.view.canvas.BarrasView;
 import com.myappdeport.view.canvas.StadisticView;
 import com.myappdeport.view.killme.Activiti;
@@ -55,7 +56,7 @@ public class Statics extends Fragment {
     public LinearLayout linearLayout;
     private StadisticView stadisticView;
     private BarrasView barrasView;
-    //private ActivitiesView;
+    private ActivitiView activitiView ;
     private Button btn_velocity;
     private Button btn_distances;
     private Button btn_actividades;
@@ -65,8 +66,11 @@ public class Statics extends Fragment {
     private List<DTOActivity> activitiList;
     private RecyclerView recyclerView;
     private AdapterStatics adapterStatics;
+    //filtro de actividades fisicas
     private DatePickerDialog.OnDateSetListener dateSetListener;
     private TextView editTextDate;
+    private TextView editTextDate2;
+    private int editText;
     View view;
 
 
@@ -123,28 +127,34 @@ public class Statics extends Fragment {
     }
 
     private void init(){
-        //Grafico de estadisticas
+        // filtro de datos
         editTextDate = view.findViewById(R.id.editTextDate);
+        editTextDate2 = view.findViewById(R.id.editTextDate2);
+        //Grafico de estadisticas
         linearLayout = view.findViewById(R.id.layout_statics_image);
         btn_velocity = view.findViewById(R.id.buttonVelocity);
         btn_distances = view.findViewById(R.id.buttonDistance);
         btn_actividades = view.findViewById(R.id.buttonActivity);
 
-            //llenar grafico prueba
+        //llenar grafico prueba
         DisplayMetrics metrics = new DisplayMetrics();
         try{
             getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
             stadisticView = new StadisticView(getContext(), metrics,getDataKilometros());
             barrasView = new BarrasView(getContext(), metrics,getDataTiempo());
+            activitiView = new ActivitiView(getContext(),metrics,getDataActividad(), "Marzo",0);
             linearLayout.addView(stadisticView);
             btn_velocity.setTextColor(getResources().getColor(R.color.colorPrimary));
 
         }catch (Exception e){
-
+            System.out.println(e.getMessage()+"\n"+e.getLocalizedMessage());
         }
+        //DEFINICION DE BOTONES
+
         editTextDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                editText = 1;
                 Calendar calendar = Calendar.getInstance();
                 int year =  calendar.get(Calendar.YEAR);
                 int month = calendar.get(Calendar.MONTH);
@@ -155,14 +165,33 @@ public class Statics extends Fragment {
                 dialog.show();
             }
         });
+
+        editTextDate2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editText = 2;
+                Calendar calendar = Calendar.getInstance();
+                int year =  calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog dialog = new DatePickerDialog(
+                        getActivity(), android.R.style.Theme_DeviceDefault_Dialog_MinWidth,dateSetListener,year,month,day);
+                //Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+
         dateSetListener = new DatePickerDialog.OnDateSetListener(){
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month = month + 1;
                 String date = dayOfMonth+"/"+month+"/"+year;
-                editTextDate.setText(date);
+
+                if (editText == 1 ) editTextDate.setText(date);
+                else{ editTextDate2.setText(date);  }
             }
         };
+
 
 
         //botones para cargar graficas
@@ -174,18 +203,18 @@ public class Statics extends Fragment {
                 btn_actividades.setTextColor(getResources().getColor(R.color.black));
                 btn_distances.setTextColor(getResources().getColor(R.color.black));
                 //end  change color
+                linearLayout.removeViewAt(0);
                 linearLayout.addView(stadisticView);
-
-
-
             }
         });
+
         btn_distances.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 btn_velocity.setTextColor(getResources().getColor(R.color.black));
                 btn_actividades.setTextColor(getResources().getColor(R.color.black));
                 btn_distances.setTextColor(getResources().getColor(R.color.colorPrimary));
+                linearLayout.removeViewAt(0);
                 linearLayout.addView(barrasView);
             }
         });
@@ -195,16 +224,32 @@ public class Statics extends Fragment {
                 btn_velocity.setTextColor(getResources().getColor(R.color.black));
                 btn_actividades.setTextColor(getResources().getColor(R.color.colorPrimary));
                 btn_distances.setTextColor(getResources().getColor(R.color.black));
-                linearLayout.addView(stadisticView);
+                linearLayout.removeViewAt(0);
+                linearLayout.addView(activitiView);
             }
         });
 
-        //obtencion de data de base de datoss de las actividades
-        /*activitiList = new ArrayList<Activiti>();
-        activitiList.add( new Activiti("ACTIVIDAD 1","ESTA ES UA DESCRIPCION","12","MON","1.03km"));
-        activitiList.add( new Activiti("ACTIVIDAD 2","ESTA ES UA DESCRIPCION aaaaaa","13","WEN","10.03km"));
-        activitiList.add( new Activiti("ACTIVIDAD 3","ESTA ES UA DESCRIPCION bbbbbb","14","FRI","0.03km"));*/
-/*                EatTipsViewModel eatTipsViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(EatTipsViewModel.class);
+
+
+        activityListViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(ActivityListViewModel.class);
+        activityListViewModel.getActivityListLiveData().observe(getViewLifecycleOwner(), data ->{
+
+
+            List<DTOActivity> dtoActivities = new ArrayList<>();
+            ActivityMapper activityMapper = Mappers.getMapper(ActivityMapper.class);
+            for(int i=0 ; i<data.size();i++){
+                dtoActivities.add(activityMapper.entityToDto(data.get(i)));
+            }
+            //adapterStatics = new AdapterStatics(data,getContext());
+            activityAdapter = new ActivityAdapter(dtoActivities,getActivity());
+           // carga de data en UI
+            recyclerView = view.findViewById(R.id.recicler_estatics);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            recyclerView.setAdapter(this.adapterStatics);
+        });
+
+
+/*      EatTipsViewModel eatTipsViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(EatTipsViewModel.class);
         recyclerView = view.findViewById(R.id.recicler_foos);
         recyclerView.setLayoutManager( new LinearLayoutManager(getContext()));
         eatTipsViewModel.findAll();
@@ -217,29 +262,13 @@ public class Statics extends Fragment {
 
 
     }
-    //wait me
-    public void chargeVelocidad(View view){
-        //change color - don't touch
-        btn_velocity.setTextColor(getResources().getColor(R.color.colorPrimary));
-        btn_actividades.setTextColor(getResources().getColor(R.color.black));
-        btn_distances.setTextColor(getResources().getColor(R.color.black));
-        //end  change color
-    }
-    public void chargeDistancias(View view){
-        //change color - don't touch
-        btn_velocity.setTextColor(getResources().getColor(R.color.black));
-        btn_actividades.setTextColor(getResources().getColor(R.color.black));
-        btn_distances.setTextColor(getResources().getColor(R.color.colorPrimary));
-        //end  change color
-
-    }
-    public void chargeActividades(View view){
-        //change color - don't touch
-        btn_velocity.setTextColor(getResources().getColor(R.color.black));
-        btn_actividades.setTextColor(getResources().getColor(R.color.colorPrimary));
-        btn_distances.setTextColor(getResources().getColor(R.color.black));
-        //end  change color
-
+    private ArrayList<Integer> getDataActividad(){
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        arrayList.add(0); arrayList.add(1);  arrayList.add(0);  arrayList.add(1); arrayList.add(1); arrayList.add(1); arrayList.add(1);
+        arrayList.add(1); arrayList.add(0); arrayList.add(1);  arrayList.add(0);  arrayList.add(1); arrayList.add(1); arrayList.add(1);
+        arrayList.add(1); arrayList.add(0); arrayList.add(1);  arrayList.add(0);  arrayList.add(1); arrayList.add(1); arrayList.add(1);
+        arrayList.add(0); arrayList.add(1);  arrayList.add(0);  arrayList.add(1); arrayList.add(1); arrayList.add(1); arrayList.add(1);
+        return  arrayList;
     }
     private ArrayList<Double> getDataKilometros(){//simula data
         //comprobar coneccion a intennet para llamar del Pool las ultimas 10 instancias

@@ -71,7 +71,7 @@ public class BarrasView extends View {
         pencilText.setAntiAlias(true);
         pencilText.setARGB(250, Util.color4[0], Util.color4[1], Util.color4[2]);
         pencilText.setStrokeWidth(1);
-        pencilText.setTextSize(20);
+        pencilText.setTextSize(15);
         pencilText.setStyle(Paint.Style.FILL);
         pencilText.setPathEffect(dashPathEffect);
     }//End Method
@@ -82,7 +82,8 @@ public class BarrasView extends View {
      */
     @SuppressLint("CanvasSize")
     protected void onDraw(Canvas canvas) {
-        int margen_inferior = 200;
+        //int margen_inferior = Math.round(120*metrics.heightPixels/854f);
+        int margen_inferior = 680;
         int altoMax = metrics.heightPixels;
         int anchoMax = metrics.widthPixels;
         int margen_y = 10;
@@ -91,10 +92,12 @@ public class BarrasView extends View {
         int ancho_disponible = anchoMax - margen_x * 2;
         int cantidad_lineas = 10;
         int distancia_lineas = (alto_disponible - margen_inferior) / cantidad_lineas-50;
+        //int distancia_lineas = getHeight() / cantidad_lineas-50;
+
         double max_value_data = getMaxValue(data);
         double intervalo = max_value_data / (cantidad_lineas - 1);
         canvas.rotate(-90,10, alto_disponible/2 );
-        canvas.drawText("Tiempo", (float) (alto_disponible/(3.5)), alto_disponible/2 +35, pencilText);
+        canvas.drawText("Tiempo", 0,  0, pencilText);
         canvas.rotate(90,10, alto_disponible/2 );
         for (int i = 0; i < cantidad_lineas; i++) {
             int x = 80;
