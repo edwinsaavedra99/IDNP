@@ -2,15 +2,11 @@ package com.myappdeport.model.entity.database;
 
 import androidx.room.Entity;
 import androidx.room.Ignore;
-
 import com.google.firebase.firestore.Exclude;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.util.List;
-
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)

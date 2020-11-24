@@ -1,20 +1,12 @@
 package com.myappdeport.repository.firebase;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.myappdeport.model.entity.database.EPosition;
-import com.myappdeport.model.entity.database.ERoute;
-import com.myappdeport.model.entity.funcional.Position;
 import com.myappdeport.repository.IPositionRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 public class PositionFireStoreRepository extends FireStoreRepository<EPosition> implements IPositionRepository<String> {
 

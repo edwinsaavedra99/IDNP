@@ -9,7 +9,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.myappdeport.model.entity.database.EUserEDWIN;
+import com.myappdeport.model.entity.kill.EUserEDWIN;
 
 
 import static com.myappdeport.utils.Constants.USERS;

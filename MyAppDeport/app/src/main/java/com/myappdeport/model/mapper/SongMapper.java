@@ -2,17 +2,13 @@ package com.myappdeport.model.mapper;
 
 import com.myappdeport.model.entity.database.ESong;
 import com.myappdeport.model.entity.dto.DTOSong;
-import com.myappdeport.model.entity.funcional.Song;
-
+import com.myappdeport.model.entity.functional.Song;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
 
-import java.io.File;
-
-@Mapper(imports = {File.class})
-public interface SongMapper extends MapperEntityDtoFunctional<ESong, DTOSong, Song> {
+@Mapper
+public interface SongMapper extends GenericMapper<ESong, DTOSong, Song> {
     /**
      * Transforma de una entidad a un dto.
      *
@@ -20,12 +16,6 @@ public interface SongMapper extends MapperEntityDtoFunctional<ESong, DTOSong, So
      * @return Es el dto generado por la entidad.
      */
     @Override
-    @Mappings({
-            @Mapping(target = "author", source = "eSong.author"),
-            @Mapping(target = "duration", source = "eSong.duration", dateFormat = "hh:mm:ss", defaultValue = "00:00:00"),
-            @Mapping(target = "name", source = "eSong.name"),
-            @Mapping(target = "songRoute", source = "eSong.songRoute")
-    })
     DTOSong entityToDto(ESong eSong);
 
     /**
@@ -36,10 +26,6 @@ public interface SongMapper extends MapperEntityDtoFunctional<ESong, DTOSong, So
      */
     @Override
     @InheritInverseConfiguration(name = "entityToDto")
-    @Mappings({
-            @Mapping(target = "id", ignore = true),
-            @Mapping(target = "documentId", ignore = true)
-    })
     ESong dtoToEntity(DTOSong dtoSong);
 
     /**
@@ -49,14 +35,7 @@ public interface SongMapper extends MapperEntityDtoFunctional<ESong, DTOSong, So
      * @return Es la entidad generada por el functional.
      */
     @Override
-    @Mappings({
-            @Mapping(target = "id", source = "song.id"),
-            @Mapping(target = "documentId", ignore = true),
-            @Mapping(target = "author", source = "song.author"),
-            @Mapping(target = "duration", source = "song.duration", dateFormat = "hh:mm:ss", defaultValue = "00:00:00"),
-            @Mapping(target = "name", source = "song.name"),
-            @Mapping(target = "songRoute", source = "song.songRoute")
-    })
+    @Mapping(target = "duration", source = "song.duration", dateFormat = "hh:mm:ss", defaultValue = "00:00:00")
     ESong functionalToEntity(Song song);
 
     /**
@@ -67,9 +46,6 @@ public interface SongMapper extends MapperEntityDtoFunctional<ESong, DTOSong, So
      */
     @Override
     @InheritInverseConfiguration(name = "functionalToEntity")
-    @Mappings({
-            @Mapping(target = "songFile", expression = "java(new File(eSong.getSongRoute()))")
-    })
     Song entityToFunctional(ESong eSong);
 
     /**
@@ -79,12 +55,7 @@ public interface SongMapper extends MapperEntityDtoFunctional<ESong, DTOSong, So
      * @return Es el dto generado por el functional.
      */
     @Override
-    @Mappings({
-            @Mapping(target = "author", source = "song.author"),
-            @Mapping(target = "duration", source = "song.duration", dateFormat = "hh:mm:ss", defaultValue = "00:00:00"),
-            @Mapping(target = "name", source = "song.name"),
-            @Mapping(target = "songRoute", source = "song.songRoute")
-    })
+    @Mapping(target = "duration", source = "song.duration", dateFormat = "HH:mm:ss", defaultValue = "00:00:00")
     DTOSong functionalToDto(Song song);
 
     /**
@@ -95,9 +66,5 @@ public interface SongMapper extends MapperEntityDtoFunctional<ESong, DTOSong, So
      */
     @Override
     @InheritInverseConfiguration(name = "functionalToDto")
-    @Mappings({
-            @Mapping(target = "id", ignore = true),
-            @Mapping(target = "songFile", expression = "java(new File( dtoSong.getSongRoute() ))")
-    })
     Song dtoToFunctional(DTOSong dtoSong);
 }

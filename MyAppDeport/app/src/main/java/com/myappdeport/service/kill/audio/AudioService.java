@@ -1,4 +1,4 @@
-package com.myappdeport.service.usecase.audio;
+package com.myappdeport.service.kill.audio;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -11,14 +11,14 @@ import android.os.IBinder;
 import android.widget.RemoteViews;
 import androidx.core.app.NotificationCompat;
 import com.myappdeport.R;
-import com.myappdeport.model.entity.funcional.Audio;
+import com.myappdeport.model.entity.kill.Audio;
 import com.myappdeport.view.activitys.MenuContainer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static com.myappdeport.service.usecase.audio.AppAudio.CHANNEL_ID;
-import static com.myappdeport.service.usecase.audio.AppAudio.CLICKED;
+import static com.myappdeport.service.kill.audio.AppAudio.CHANNEL_ID;
+import static com.myappdeport.service.kill.audio.AppAudio.CLICKED;
 
 public class AudioService extends Service {
 

@@ -1,51 +1,34 @@
 package com.myappdeport.view.activitys;
 
+import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.Toast;
-import com.facebook.AccessToken;
-import com.facebook.AccessTokenTracker;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
+import com.facebook.*;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.myappdeport.R;
-import com.myappdeport.model.entity.database.EUserEDWIN;
+import com.myappdeport.model.entity.kill.EUserEDWIN;
 import com.myappdeport.viewmodel.AuthViewModel;
-
-import java.io.InputStream;
-import java.net.URL;
-
 import lombok.SneakyThrows;
 
-import static android.os.FileUtils.copy;
 import static com.myappdeport.utils.Constants.RC_SIGN_IN;
 import static com.myappdeport.utils.Constants.USER;
 import static com.myappdeport.utils.HelperClass.logErrorMessage;
 
-//import com.facebook.FacebookSdk;
-//import com.facebook.appevents.AppEventsLogger;
 
 public class Login extends AppCompatActivity {
     private static final int IO_BUFFER_SIZE = 10;

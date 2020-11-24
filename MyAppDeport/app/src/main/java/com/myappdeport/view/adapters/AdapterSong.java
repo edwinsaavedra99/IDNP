@@ -1,8 +1,6 @@
 package com.myappdeport.view.adapters;
 
 import android.content.Context;
-import android.net.Uri;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.myappdeport.R;
-import com.myappdeport.model.entity.funcional.Audio;
+import com.myappdeport.model.entity.kill.Audio;
 
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class AdapterSong extends RecyclerView.Adapter<AdapterSong.MyViewHolder> implements Filterable {
 

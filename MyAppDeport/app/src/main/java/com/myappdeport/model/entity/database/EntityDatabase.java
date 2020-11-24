@@ -2,19 +2,19 @@ package com.myappdeport.model.entity.database;
 
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
-
 import com.google.firebase.firestore.Exclude;
-
-import java.util.Objects;
-
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * Son el formato que tendran todas las entidades.
  */
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 public abstract class EntityDatabase {
     /**
      * Es el identificador en la base de datos SQLite.
@@ -47,36 +47,5 @@ public abstract class EntityDatabase {
 
     public void setDocumentId(String documentId) {
         this.documentId = documentId;
-    }
-
-    public boolean equals(final Object o) {
-        if (o == this) return true;
-        if (!(o instanceof EntityDatabase)) return false;
-        final EntityDatabase other = (EntityDatabase) o;
-        if (!other.canEqual((Object) this)) return false;
-        final Object this$id = this.getId();
-        final Object other$id = other.getId();
-        if (!Objects.equals(this$id, other$id)) return false;
-        final Object this$documentId = this.getDocumentId();
-        final Object other$documentId = other.getDocumentId();
-        return Objects.equals(this$documentId, other$documentId);
-    }
-
-    protected boolean canEqual(final Object other) {
-        return other instanceof EntityDatabase;
-    }
-
-    public int hashCode() {
-        final int PRIME = 59;
-        int result = 1;
-        final Object $id = this.getId();
-        result = result * PRIME + ($id == null ? 43 : $id.hashCode());
-        final Object $documentId = this.getDocumentId();
-        result = result * PRIME + ($documentId == null ? 43 : $documentId.hashCode());
-        return result;
-    }
-
-    public String toString() {
-        return "EntityDatabase(id=" + this.getId() + ", documentId=" + this.getDocumentId() + ")";
     }
 }

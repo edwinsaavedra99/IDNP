@@ -1,10 +1,7 @@
-package com.myappdeport.model.entity.funcional;
+package com.myappdeport.model.entity.kill;
 
-import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
-import lombok.Getter;
-import lombok.Setter;
 
 
 public class Audio implements Parcelable {

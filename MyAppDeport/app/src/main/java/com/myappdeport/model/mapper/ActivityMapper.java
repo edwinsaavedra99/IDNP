@@ -2,15 +2,13 @@ package com.myappdeport.model.mapper;
 
 import com.myappdeport.model.entity.database.EActivity;
 import com.myappdeport.model.entity.dto.DTOActivity;
-import com.myappdeport.model.entity.funcional.Activity;
-
+import com.myappdeport.model.entity.functional.Activity;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
 
 @Mapper(uses = RouteMapper.class)
-public interface ActivityMapper extends MapperEntityDtoFunctional<EActivity, DTOActivity, Activity> {
+public interface ActivityMapper extends GenericMapper<EActivity, DTOActivity, Activity> {
     /**
      * Transforma de una entidad a un dto.
      *
@@ -18,12 +16,10 @@ public interface ActivityMapper extends MapperEntityDtoFunctional<EActivity, DTO
      * @return Es el dto generado por la entidad.
      */
     @Override
-    @Mappings({
-            @Mapping(target = "startTime", source = "eActivity.startTime", defaultValue = "00:00:00"),
-            @Mapping(target = "endTime", source = "eActivity.endTime", defaultValue = "00:00:00"),
-            @Mapping(target = "kiloCalories", source = "eActivity.kiloCalories", defaultValue = "0.0"),
-            @Mapping(target = "dtoRoute", source = "eActivity.ERoute")
-    })
+    @Mapping(target = "startTime", source = "eActivity.startTime", defaultValue = "00:00:00")
+    @Mapping(target = "endTime", source = "eActivity.endTime", defaultValue = "00:00:00")
+    @Mapping(target = "kiloCalories", source = "eActivity.kiloCalories", defaultValue = "0.0")
+    @Mapping(target = "dtoRoute", source = "eActivity.ERoute")
     DTOActivity entityToDto(EActivity eActivity);
 
     /**
@@ -34,12 +30,6 @@ public interface ActivityMapper extends MapperEntityDtoFunctional<EActivity, DTO
      */
     @Override
     @InheritInverseConfiguration(name = "entityToDto")
-    @Mappings({
-            @Mapping(target = "id", ignore = true),
-            @Mapping(target = "documentId", ignore = true),
-            @Mapping(target = "routeDocumentId", ignore = true),
-            @Mapping(target = "idERoute", ignore = true)
-    })
     EActivity dtoToEntity(DTOActivity dtoActivity);
 
     /**
@@ -49,16 +39,11 @@ public interface ActivityMapper extends MapperEntityDtoFunctional<EActivity, DTO
      * @return Es la entidad generada por el functional.
      */
     @Override
-    @Mappings({
-            @Mapping(target = "id", source = "activity.id"),
-            @Mapping(target = "documentId", source = "activity.documentId"),
-            @Mapping(target = "startTime", source = "activity.startTime", dateFormat = "HH:mm:ss"),
-            @Mapping(target = "endTime", source = "activity.endTime", dateFormat = "HH:mm:ss"),
-            @Mapping(target = "kiloCalories", source = "activity.kiloCalories"),
-            @Mapping(target = "routeDocumentId", source = "activity.route.documentId"),
-            @Mapping(target = "ERoute", source = "activity.route"),
-            @Mapping(target = "idERoute", source = "activity.route.id")
-    })
+    @Mapping(target = "startTime", source = "activity.startTime", dateFormat = "HH:mm:ss")
+    @Mapping(target = "endTime", source = "activity.endTime", dateFormat = "HH:mm:ss")
+    @Mapping(target = "kiloCalories", source = "activity.kiloCalories", defaultValue = "0.0")
+    @Mapping(target = "date", source = "activity.date", dateFormat = "dd/MM/yyyy", defaultValue = "01/01/0001")
+    @Mapping(target = "ERoute", source = "activity.route")
     EActivity functionalToEntity(Activity activity);
 
     /**
@@ -78,14 +63,11 @@ public interface ActivityMapper extends MapperEntityDtoFunctional<EActivity, DTO
      * @return Es el dto generado por el functional.
      */
     @Override
-    @Mappings({
-            @Mapping(target = "startTime", source = "activity.startTime", dateFormat = "HH:mm:ss", defaultValue = "00:00:00"),
-            @Mapping(target = "endTime", source = "activity.endTime", dateFormat = "HH:mm:ss", defaultValue = "00:00:00"),
-            @Mapping(target = "kiloCalories", source = "activity.kiloCalories", defaultValue = "0.0"),
-            @Mapping(target = "dtoRoute", source = "activity.route"),
-            @Mapping(target = "idERoute", source = "activity.idERoute"),
-            @Mapping(target = "date", source = "activity.date", dateFormat = "dd/MM/yyyy", defaultValue = "01/01/0001")
-    })
+    @Mapping(target = "startTime", source = "activity.startTime", dateFormat = "HH:mm:ss", defaultValue = "00:00:00")
+    @Mapping(target = "endTime", source = "activity.endTime", dateFormat = "HH:mm:ss", defaultValue = "00:00:00")
+    @Mapping(target = "kiloCalories", source = "activity.kiloCalories", defaultValue = "0.0")
+    @Mapping(target = "date", source = "activity.date", dateFormat = "dd/MM/yyyy", defaultValue = "01/01/0001")
+    @Mapping(target = "dtoRoute", source = "activity.route")
     DTOActivity functionalToDto(Activity activity);
 
     /**
@@ -96,9 +78,5 @@ public interface ActivityMapper extends MapperEntityDtoFunctional<EActivity, DTO
      */
     @Override
     @InheritInverseConfiguration(name = "functionalToDto")
-    @Mappings({
-            @Mapping(target = "id", ignore = true),
-            @Mapping(target = "documentId", ignore = true)
-    })
     Activity dtoToFunctional(DTOActivity dtoActivity);
 }

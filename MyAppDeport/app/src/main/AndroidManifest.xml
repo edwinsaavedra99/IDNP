@@ -19,7 +19,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
-        android:name=".service.usecase.audio.AppAudio"
+        android:name=".service.kill.audio.AppAudio"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -59,9 +59,9 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <service android:name=".service.usecase.audio.AudioService" />
+        <service android:name=".service.kill.audio.AudioService" />
 
-        <receiver android:name=".service.usecase.audio.ReciverEvents">
+        <receiver android:name=".service.kill.audio.ReciverEvents">
             <intent-filter>
                 <action android:name="click" />
             </intent-filter>

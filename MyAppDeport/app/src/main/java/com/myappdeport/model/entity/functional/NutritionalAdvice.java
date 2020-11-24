@@ -1,18 +1,15 @@
-package com.myappdeport.model.entity.dto;
+package com.myappdeport.model.entity.functional;
 
 import lombok.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class DTONutritionalAdvice extends DTOEntity {
+@EqualsAndHashCode(callSuper = true)
+public class NutritionalAdvice extends Entity {
     private String title;
     private String shortDescription;
     private String longDescription;
-    /**
-     * Archivo en cloud storage.
-     */
     private String imageUrlCloudStorage;
 }

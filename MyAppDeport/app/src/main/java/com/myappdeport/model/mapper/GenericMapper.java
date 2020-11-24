@@ -1,13 +1,17 @@
 package com.myappdeport.model.mapper;
 
-public interface MapperEntityDtoFunctional<Entity, DTO, Functional> {
+import com.myappdeport.model.entity.database.EntityDatabase;
+import com.myappdeport.model.entity.dto.DTOEntity;
+import com.myappdeport.model.entity.functional.Entity;
+
+public interface GenericMapper<E extends EntityDatabase, D extends DTOEntity, F extends Entity> {
     /**
      * Transforma de una entidad a un dto.
      *
      * @param entity Es la entidad a ser transformada.
      * @return Es el dto generado por la entidad.
      */
-    DTO entityToDto(Entity entity);
+    D entityToDto(E entity);
 
     /**
      * Transforma de una dto a una entidad.
@@ -15,7 +19,7 @@ public interface MapperEntityDtoFunctional<Entity, DTO, Functional> {
      * @param dto Es el dto a ser transformada.
      * @return Es la entidad generada por el dto.
      */
-    Entity dtoToEntity(DTO dto);
+    E dtoToEntity(D dto);
 
     /**
      * Transforma de un functional a una entidad.
@@ -23,7 +27,7 @@ public interface MapperEntityDtoFunctional<Entity, DTO, Functional> {
      * @param functional Es el functional a ser transformada.
      * @return Es la entidad generada por el functional.
      */
-    Entity functionalToEntity(Functional functional);
+    E functionalToEntity(F functional);
 
     /**
      * Transforma de una entidad a un functional.
@@ -31,7 +35,7 @@ public interface MapperEntityDtoFunctional<Entity, DTO, Functional> {
      * @param entity Es la entidad a ser transformada.
      * @return Es el functional generada por la entidad.
      */
-    Functional entityToFunctional(Entity entity);
+    F entityToFunctional(E entity);
 
     /**
      * Transforma de un functional a un dto.
@@ -39,7 +43,7 @@ public interface MapperEntityDtoFunctional<Entity, DTO, Functional> {
      * @param functional Es el functional a ser transformada.
      * @return Es el dto generado por el functional.
      */
-    DTO functionalToDto(Functional functional);
+    D functionalToDto(F functional);
 
     /**
      * Transforma de un dto a un functional.
@@ -47,5 +51,5 @@ public interface MapperEntityDtoFunctional<Entity, DTO, Functional> {
      * @param dto Es el dto a ser transformada.
      * @return Es el functional generado por el dto.
      */
-    Functional dtoToFunctional(DTO dto);
+    F dtoToFunctional(D dto);
 }

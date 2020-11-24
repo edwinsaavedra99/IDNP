@@ -204,24 +204,6 @@ public class Statics extends Fragment {
         activitiList.add( new Activiti("ACTIVIDAD 1","ESTA ES UA DESCRIPCION","12","MON","1.03km"));
         activitiList.add( new Activiti("ACTIVIDAD 2","ESTA ES UA DESCRIPCION aaaaaa","13","WEN","10.03km"));
         activitiList.add( new Activiti("ACTIVIDAD 3","ESTA ES UA DESCRIPCION bbbbbb","14","FRI","0.03km"));*/
-
-        activityListViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(ActivityListViewModel.class);
-        activityListViewModel.getActivityListLiveData().observe(getViewLifecycleOwner(), data ->{
-
-            List<DTOActivity> dtoActivities = new ArrayList<>();
-            ActivityMapper activityMapper = Mappers.getMapper(ActivityMapper.class);
-            for(int i=0 ; i<data.size();i++){
-                dtoActivities.add(activityMapper.entityToDto(data.get(i)));
-            }
-            //adapterStatics = new AdapterStatics(data,getContext());
-            activityAdapter = new ActivityAdapter(dtoActivities,getActivity());
-                    // carga de data en UI
-            recyclerView = view.findViewById(R.id.recicler_estatics);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            recyclerView.setAdapter(this.adapterStatics);
-        });
-
-
 /*                EatTipsViewModel eatTipsViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(EatTipsViewModel.class);
         recyclerView = view.findViewById(R.id.recicler_foos);
         recyclerView.setLayoutManager( new LinearLayoutManager(getContext()));

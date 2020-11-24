@@ -1,4 +1,4 @@
-package com.myappdeport.model.entity.funcional;
+package com.myappdeport.model.entity.kill;
 
 import android.database.Cursor;
 import android.provider.MediaStore;
