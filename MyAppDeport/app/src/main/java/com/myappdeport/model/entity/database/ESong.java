@@ -39,6 +39,14 @@ public class ESong extends EntityDatabase {
         return this.songRoute;
     }
 
+    public String getAlbum() {
+        return album;
+    }
+
+    public String getArtist() {
+        return artist;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -51,14 +59,6 @@ public class ESong extends EntityDatabase {
         this.songRoute = songRoute;
     }
 
-    public String getAlbum() {
-        return this.album;
-    }
-
-    public String getArtist() {
-        return this.artist;
-    }
-
     public void setAlbum(String album) {
         this.album = album;
     }
@@ -66,4 +66,6 @@ public class ESong extends EntityDatabase {
     public void setArtist(String artist) {
         this.artist = artist;
     }
+
+
 }

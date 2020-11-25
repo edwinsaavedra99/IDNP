@@ -33,9 +33,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.myappdeport.R;
-import com.myappdeport.model.entity.funcional.Audio;
-import com.myappdeport.service.usecase.audio.AppAudio;
-import com.myappdeport.service.usecase.audio.AudioService;
+import com.myappdeport.model.entity.kill.Audio;
+import com.myappdeport.service.kill.audio.AppAudio;
+import com.myappdeport.service.kill.audio.AudioService;
 import com.myappdeport.view.adapters.AdapterSong;
 import com.myappdeport.viewmodel.AudioViewModel;
 import java.util.ArrayList;
@@ -43,10 +43,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
-import static com.myappdeport.service.usecase.audio.AudioService.manager;
-import static com.myappdeport.service.usecase.audio.AudioService.notification;
-import static com.myappdeport.service.usecase.audio.AudioService.notificationLayout;
-import static com.myappdeport.service.usecase.audio.AudioService.num;
+import static com.myappdeport.service.kill.audio.AudioService.manager;
+import static com.myappdeport.service.kill.audio.AudioService.notification;
+import static com.myappdeport.service.kill.audio.AudioService.notificationLayout;
+import static com.myappdeport.service.kill.audio.AudioService.num;
 import static com.myappdeport.utils.ParseMetrics.milliSecondsToTimer;
 
 /**
