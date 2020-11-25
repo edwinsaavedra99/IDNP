@@ -37,6 +37,7 @@ public interface SongMapper extends GenericMapper<ESong, DTOSong, Song> {
      */
     @Override
     @Mapping(target = "duration", source = "song.duration", dateFormat = "hh:mm:ss", defaultValue = "00:00:00")
+    @Mapping(target = "songRoute", ignore = true)
     ESong functionalToEntity(Song song);
 
     /**
@@ -69,6 +70,5 @@ public interface SongMapper extends GenericMapper<ESong, DTOSong, Song> {
      */
     @Override
     @InheritInverseConfiguration(name = "functionalToDto")
-    @Mapping(target = "songRoute", ignore = true)
     Song dtoToFunctional(DTOSong dtoSong);
 }
