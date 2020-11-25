@@ -9,11 +9,14 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -37,9 +40,11 @@ public class MenuContainer extends AppCompatActivity {
     MapsFragment maps = new MapsFragment();
     MapsFragment maps2 = new MapsFragment();
 
+
     private Fragment currentFragment;
 
     BottomNavigationView bottomNavigationView;
+    ImageButton configuration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +56,24 @@ public class MenuContainer extends AppCompatActivity {
 
 
         bottomNavigationView.setSelectedItemId(R.id.item3);
+
+        configuration = findViewById(R.id.conf);
+        configuration.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    openConfiguration();
+                }
+        });
         //loadFragment(maps);
         //currentFragment = maps;
         //loadFragment(maps,Constants.TAG_F_MAP);
         permits();
         permitsMaps();
+    }
+
+    private void openConfiguration() {
+        Intent intent = new Intent(this, Configuration.class);
+        startActivity(intent);
     }
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
