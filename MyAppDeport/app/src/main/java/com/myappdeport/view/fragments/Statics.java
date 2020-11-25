@@ -56,7 +56,7 @@ public class Statics extends Fragment {
     public LinearLayout linearLayout;
     private StadisticView stadisticView;
     private BarrasView barrasView;
-    private ActivitiView activitiView ;
+    private ActivitiView activitiView;
     private Button btn_velocity;
     private Button btn_distances;
     private Button btn_actividades;
@@ -126,7 +126,7 @@ public class Statics extends Fragment {
 
     }
 
-    private void init(){
+    private void init() {
         // filtro de datos
         editTextDate = view.findViewById(R.id.editTextDate);
         editTextDate2 = view.findViewById(R.id.editTextDate2);
@@ -138,16 +138,16 @@ public class Statics extends Fragment {
 
         //llenar grafico prueba
         DisplayMetrics metrics = new DisplayMetrics();
-        try{
+        try {
             getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-            stadisticView = new StadisticView(getContext(), metrics,getDataKilometros());
-            barrasView = new BarrasView(getContext(), metrics,getDataTiempo());
-            activitiView = new ActivitiView(getContext(),metrics,getDataActividad(), "Marzo",0);
+            stadisticView = new StadisticView(getContext(), metrics, getDataKilometros());
+            barrasView = new BarrasView(getContext(), metrics, getDataTiempo());
+            activitiView = new ActivitiView(getContext(), metrics, getDataActividad(), "Marzo", 0);
             linearLayout.addView(stadisticView);
             btn_velocity.setTextColor(getResources().getColor(R.color.colorPrimary));
 
-        }catch (Exception e){
-            System.out.println(e.getMessage()+"\n"+e.getLocalizedMessage());
+        } catch (Exception e) {
+            System.out.println(e.getMessage() + "\n" + e.getLocalizedMessage());
         }
         //DEFINICION DE BOTONES
 
@@ -156,11 +156,11 @@ public class Statics extends Fragment {
             public void onClick(View v) {
                 editText = 1;
                 Calendar calendar = Calendar.getInstance();
-                int year =  calendar.get(Calendar.YEAR);
+                int year = calendar.get(Calendar.YEAR);
                 int month = calendar.get(Calendar.MONTH);
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
                 DatePickerDialog dialog = new DatePickerDialog(
-                        getActivity(), android.R.style.Theme_DeviceDefault_Dialog_MinWidth,dateSetListener,year,month,day);
+                        getActivity(), android.R.style.Theme_DeviceDefault_Dialog_MinWidth, dateSetListener, year, month, day);
                 //Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }
@@ -171,27 +171,28 @@ public class Statics extends Fragment {
             public void onClick(View v) {
                 editText = 2;
                 Calendar calendar = Calendar.getInstance();
-                int year =  calendar.get(Calendar.YEAR);
+                int year = calendar.get(Calendar.YEAR);
                 int month = calendar.get(Calendar.MONTH);
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
                 DatePickerDialog dialog = new DatePickerDialog(
-                        getActivity(), android.R.style.Theme_DeviceDefault_Dialog_MinWidth,dateSetListener,year,month,day);
+                        getActivity(), android.R.style.Theme_DeviceDefault_Dialog_MinWidth, dateSetListener, year, month, day);
                 //Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }
         });
 
-        dateSetListener = new DatePickerDialog.OnDateSetListener(){
+        dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month = month + 1;
-                String date = dayOfMonth+"/"+month+"/"+year;
+                String date = dayOfMonth + "/" + month + "/" + year;
 
-                if (editText == 1 ) editTextDate.setText(date);
-                else{ editTextDate2.setText(date);  }
+                if (editText == 1) editTextDate.setText(date);
+                else {
+                    editTextDate2.setText(date);
+                }
             }
         };
-
 
 
         //botones para cargar graficas
@@ -230,19 +231,12 @@ public class Statics extends Fragment {
         });
 
 
-
         activityListViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(ActivityListViewModel.class);
-        activityListViewModel.getActivityListLiveData().observe(getViewLifecycleOwner(), data ->{
+        activityListViewModel.getActivityListLiveData().observe(getViewLifecycleOwner(), data -> {
 
-
-            List<DTOActivity> dtoActivities = new ArrayList<>();
-            ActivityMapper activityMapper = Mappers.getMapper(ActivityMapper.class);
-            for(int i=0 ; i<data.size();i++){
-                dtoActivities.add(activityMapper.entityToDto(data.get(i)));
-            }
             //adapterStatics = new AdapterStatics(data,getContext());
-            activityAdapter = new ActivityAdapter(dtoActivities,getActivity());
-           // carga de data en UI
+            activityAdapter = new ActivityAdapter(this.getContext(), data);
+            // carga de data en UI
             recyclerView = view.findViewById(R.id.recicler_estatics);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             recyclerView.setAdapter(this.adapterStatics);
@@ -260,17 +254,42 @@ public class Statics extends Fragment {
         });*/
 
 
+    }
 
-    }
-    private ArrayList<Integer> getDataActividad(){
+    private ArrayList<Integer> getDataActividad() {
         ArrayList<Integer> arrayList = new ArrayList<>();
-        arrayList.add(0); arrayList.add(1);  arrayList.add(0);  arrayList.add(1); arrayList.add(1); arrayList.add(1); arrayList.add(1);
-        arrayList.add(1); arrayList.add(0); arrayList.add(1);  arrayList.add(0);  arrayList.add(1); arrayList.add(1); arrayList.add(1);
-        arrayList.add(1); arrayList.add(0); arrayList.add(1);  arrayList.add(0);  arrayList.add(1); arrayList.add(1); arrayList.add(1);
-        arrayList.add(0); arrayList.add(1);  arrayList.add(0);  arrayList.add(1); arrayList.add(1); arrayList.add(1); arrayList.add(1);
-        return  arrayList;
+        arrayList.add(0);
+        arrayList.add(1);
+        arrayList.add(0);
+        arrayList.add(1);
+        arrayList.add(1);
+        arrayList.add(1);
+        arrayList.add(1);
+        arrayList.add(1);
+        arrayList.add(0);
+        arrayList.add(1);
+        arrayList.add(0);
+        arrayList.add(1);
+        arrayList.add(1);
+        arrayList.add(1);
+        arrayList.add(1);
+        arrayList.add(0);
+        arrayList.add(1);
+        arrayList.add(0);
+        arrayList.add(1);
+        arrayList.add(1);
+        arrayList.add(1);
+        arrayList.add(0);
+        arrayList.add(1);
+        arrayList.add(0);
+        arrayList.add(1);
+        arrayList.add(1);
+        arrayList.add(1);
+        arrayList.add(1);
+        return arrayList;
     }
-    private ArrayList<Double> getDataKilometros(){//simula data
+
+    private ArrayList<Double> getDataKilometros() {//simula data
         //comprobar coneccion a intennet para llamar del Pool las ultimas 10 instancias
 
 
@@ -285,7 +304,8 @@ public class Statics extends Fragment {
         doubleArrayList.add(14d);
         return doubleArrayList;
     }
-    private ArrayList<Double> getDataTiempo(){//simulando ritmo de 4 min por kilometros
+
+    private ArrayList<Double> getDataTiempo() {//simulando ritmo de 4 min por kilometros
         //comprobar coneccion a intennet para llamar del Pool las ultimas 10 instancias
 
         ArrayList<Double> doubleArrayList = new ArrayList<>();
@@ -301,4 +321,4 @@ public class Statics extends Fragment {
     }
 
 
-    }
+}
