@@ -1,15 +1,13 @@
 package com.myappdeport.model.entity.dto;
 
-import androidx.room.Ignore;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DTOActivity {
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class DTOActivity extends DTOEntity {
     private String startTime;
     private String endTime;
     private String kiloCalories;

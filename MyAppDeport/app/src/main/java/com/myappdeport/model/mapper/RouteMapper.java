@@ -1,25 +1,14 @@
 package com.myappdeport.model.mapper;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import com.myappdeport.model.entity.database.ERoute;
 import com.myappdeport.model.entity.dto.DTORoute;
-import com.myappdeport.model.entity.funcional.Position;
-import com.myappdeport.model.entity.funcional.Route;
-
+import com.myappdeport.model.entity.functional.Route;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
-import org.mapstruct.Named;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Mapper(uses = PositionMapper.class)
-public interface RouteMapper extends MapperEntityDtoFunctional<ERoute, DTORoute, Route> {
+public interface RouteMapper extends GenericMapper<ERoute, DTORoute, Route> {
     /**
      * Transforma de una entidad a un dto.
      *
@@ -27,11 +16,9 @@ public interface RouteMapper extends MapperEntityDtoFunctional<ERoute, DTORoute,
      * @return Es el dto generado por la entidad.
      */
     @Override
-    @Mappings({
-            @Mapping(target = "rhythm", source = "eRoute.rhythm"),
-            @Mapping(target = "totalDistance", source = "eRoute.totalDistance"),
-            @Mapping(target = "dtoPositionList", source = "eRoute.positions")
-    })
+    @Mapping(target = "rhythm", source = "eRoute.rhythm", defaultValue = "0.0")
+    @Mapping(target = "totalDistance", source = "eRoute.totalDistance", defaultValue = "0.0")
+    @Mapping(target = "dtoPositionList", source = "eRoute.positions")
     DTORoute entityToDto(ERoute eRoute);
 
     /**
@@ -42,10 +29,6 @@ public interface RouteMapper extends MapperEntityDtoFunctional<ERoute, DTORoute,
      */
     @Override
     @InheritInverseConfiguration(name = "entityToDto")
-    @Mappings({
-            @Mapping(target = "id", ignore = true),
-            @Mapping(target = "documentId", ignore = true)
-    })
     ERoute dtoToEntity(DTORoute dtoRoute);
 
     /**
@@ -55,13 +38,7 @@ public interface RouteMapper extends MapperEntityDtoFunctional<ERoute, DTORoute,
      * @return Es la entidad generada por el functional.
      */
     @Override
-    @Mappings({
-            @Mapping(target = "id", source = "route.id"),
-            @Mapping(target = "documentId", source = "route.documentId"),
-            @Mapping(target = "rhythm", source = "route.rhythm", defaultValue = "0.0"),
-            @Mapping(target = "totalDistance", source = "route.totalDistance", defaultValue = "0.0"),
-            @Mapping(target = "positions", source = "route.positionList")
-    })
+    @Mapping(target = "positions", source = "route.positionList")
     ERoute functionalToEntity(Route route);
 
     /**
@@ -81,11 +58,9 @@ public interface RouteMapper extends MapperEntityDtoFunctional<ERoute, DTORoute,
      * @return Es el dto generado por el functional.
      */
     @Override
-    @Mappings({
-            @Mapping(target = "totalDistance", source = "route.totalDistance", defaultValue = "0.0"),
-            @Mapping(target = "rhythm", source = "route.rhythm", defaultValue = "0.0"),
-            @Mapping(target = "dtoPositionList", source = "route.positionList")
-    })
+    @Mapping(target = "totalDistance", source = "route.totalDistance", defaultValue = "0.0")
+    @Mapping(target = "rhythm", source = "route.rhythm", defaultValue = "0.0")
+    @Mapping(target = "dtoPositionList", source = "route.positionList")
     DTORoute functionalToDto(Route route);
 
 
@@ -97,9 +72,5 @@ public interface RouteMapper extends MapperEntityDtoFunctional<ERoute, DTORoute,
      */
     @Override
     @InheritInverseConfiguration(name = "functionalToDto")
-    @Mappings({
-            @Mapping(target = "id", ignore = true),
-            @Mapping(target = "documentId", ignore = true)
-    })
     Route dtoToFunctional(DTORoute dtoRoute);
 }

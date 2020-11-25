@@ -1,14 +1,16 @@
 package com.myappdeport.repository;
 
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.FirebaseUser;
 import com.myappdeport.model.entity.database.EUser;
 import com.myappdeport.model.mapper.UserMapper;
-
 import org.mapstruct.factory.Mappers;
 
-public interface IAuthRepository {
+/**
+ * Es el servicio de autenticación.
+ *
+ * @param <C> Criterio de inicio de sesión.
+ */
+public interface IAuthRepository<C> {
 
     UserMapper MAPPER = Mappers.getMapper(UserMapper.class);
 
@@ -18,7 +20,7 @@ public interface IAuthRepository {
      * @param authCredential Credenciales para ingreso de sesión.
      * @return
      */
-    Task<EUser> signIn(AuthCredential authCredential);
+    Task<EUser> signIn(C authCredential);
 
     /**
      * Registrar un usuario

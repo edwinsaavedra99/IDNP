@@ -1,4 +1,4 @@
-package com.myappdeport.service.usecase.audio;
+package com.myappdeport.service.kill.audio;
 
 import android.app.Application;
 import android.media.MediaPlayer;

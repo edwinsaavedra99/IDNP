@@ -2,15 +2,12 @@ package com.myappdeport.model.mapper;
 
 import com.myappdeport.model.entity.database.ENutritionalAdvice;
 import com.myappdeport.model.entity.dto.DTONutritionalAdvice;
-import com.myappdeport.model.entity.funcional.NutritionalAdvice;
-
+import com.myappdeport.model.entity.functional.NutritionalAdvice;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
 
 @Mapper
-public interface NutritionalAdviceMapper extends MapperEntityDtoFunctional<ENutritionalAdvice, DTONutritionalAdvice, NutritionalAdvice> {
+public interface NutritionalAdviceMapper extends GenericMapper<ENutritionalAdvice, DTONutritionalAdvice, NutritionalAdvice> {
     /**
      * Transforma de una entidad a un dto.
      *
@@ -18,12 +15,6 @@ public interface NutritionalAdviceMapper extends MapperEntityDtoFunctional<ENutr
      * @return Es el dto generado por la entidad.
      */
     @Override
-    @Mappings({
-            @Mapping(target = "title", source = "eNutritionalAdvice.title"),
-            @Mapping(target = "shortDescription", source = "eNutritionalAdvice.shortDescription"),
-            @Mapping(target = "longDescription", source = "eNutritionalAdvice.longDescription"),
-            @Mapping(target = "imageUrlCloudStorage", source = "eNutritionalAdvice.imageUrlCloudStorage")
-    })
     DTONutritionalAdvice entityToDto(ENutritionalAdvice eNutritionalAdvice);
 
     /**
@@ -34,11 +25,6 @@ public interface NutritionalAdviceMapper extends MapperEntityDtoFunctional<ENutr
      */
     @Override
     @InheritInverseConfiguration(name = "entityToDto")
-    @Mappings({
-            @Mapping(target = "id", ignore = true),
-            @Mapping(target = "documentId", ignore = true),
-            //@Mapping(target = "image", ignore = true)
-    })
     ENutritionalAdvice dtoToEntity(DTONutritionalAdvice dtoNutritionalAdvice);
 
     /**
@@ -48,13 +34,6 @@ public interface NutritionalAdviceMapper extends MapperEntityDtoFunctional<ENutr
      * @return Es la entidad generada por el functional.
      */
     @Override
-    @Mappings({
-            @Mapping(target = "id", ignore = true),
-            @Mapping(target = "title", source = "nutritionalAdvice.title"),
-            @Mapping(target = "shortDescription", source = "nutritionalAdvice.shortDescription"),
-            @Mapping(target = "longDescription", source = "nutritionalAdvice.longDescription"),
-            @Mapping(target = "imageUrlCloudStorage", source = "nutritionalAdvice.imageUrlCloudStorage")
-    })
     ENutritionalAdvice functionalToEntity(NutritionalAdvice nutritionalAdvice);
 
     /**
@@ -84,9 +63,5 @@ public interface NutritionalAdviceMapper extends MapperEntityDtoFunctional<ENutr
      */
     @Override
     @InheritInverseConfiguration(name = "functionalToDto")
-    @Mappings({
-            @Mapping(target = "documentId", ignore = true),
-            //@Mapping(target = "image", ignore = true)
-    })
     NutritionalAdvice dtoToFunctional(DTONutritionalAdvice dtoNutritionalAdvice);
 }

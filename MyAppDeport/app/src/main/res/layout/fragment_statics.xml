@@ -244,7 +244,7 @@
             android:background="#625B5B"
             android:textSize="1sp" />
 
-        <androidx.recyclerview.widget.RecyclerView
+        <ListView
             android:id="@+id/recicler_estatics"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

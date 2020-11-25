@@ -4,8 +4,8 @@ import android.database.Cursor;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import com.myappdeport.model.entity.funcional.Audio;
-import com.myappdeport.model.entity.funcional.GetAudios;
+import com.myappdeport.model.entity.kill.Audio;
+import com.myappdeport.model.entity.kill.GetAudios;
 import java.util.List;
 
 public class AudioViewModel extends ViewModel {

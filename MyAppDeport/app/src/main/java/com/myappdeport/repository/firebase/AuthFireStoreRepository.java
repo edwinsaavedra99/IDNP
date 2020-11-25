@@ -11,12 +11,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.myappdeport.model.entity.database.EUser;
 import com.myappdeport.repository.IAuthRepository;
 
-public class AuthFireStoreRepository implements IAuthRepository {
+public class AuthFireStoreRepository implements IAuthRepository<AuthCredential> {
     private static AuthFireStoreRepository INSTANCE;
     private final UserFireStoreRepository userFireStoreRepository;
     private final FirebaseAuth firebaseAuth;
 
-    public synchronized static AuthFireStoreRepository getInstance() {
+    public static synchronized AuthFireStoreRepository getInstance() {
         if (INSTANCE == null)
             INSTANCE = new AuthFireStoreRepository();
         return INSTANCE;

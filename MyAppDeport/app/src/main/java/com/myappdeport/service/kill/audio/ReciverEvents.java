@@ -1,4 +1,4 @@
-package com.myappdeport.service.usecase.audio;
+package com.myappdeport.service.kill.audio;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
@@ -13,9 +13,9 @@ import com.myappdeport.R;
 
 import java.util.ArrayList;
 
-import static com.myappdeport.service.usecase.audio.AudioService.audios;
-import static com.myappdeport.service.usecase.audio.AudioService.notificationLayout;
-import static com.myappdeport.service.usecase.audio.AudioService.num;
+import static com.myappdeport.service.kill.audio.AudioService.audios;
+import static com.myappdeport.service.kill.audio.AudioService.notificationLayout;
+import static com.myappdeport.service.kill.audio.AudioService.num;
 //import static com.myappdeport.view.fragments.MusicPlayer.Duration;
 import static com.myappdeport.view.fragments.MusicPlayer.mediaPlayer;
 import static com.myappdeport.view.fragments.MusicPlayer.updateUi;

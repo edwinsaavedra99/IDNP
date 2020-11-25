@@ -3,14 +3,12 @@ package com.myappdeport.model.entity.database;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.Index;
-
 import com.google.firebase.firestore.Exclude;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.util.List;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 @Entity(indices = @Index("email"))
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
@@ -18,21 +16,21 @@ public class EUser extends EntityDatabase {
     private String name;
     private String email;
     private String birthday;
-    private String weight;
+    private Double weight;
     private Integer age;
     private Double height;
     @Exclude
     @Ignore
-    public Boolean isNew;
+    private Boolean isNew;
     @Exclude
     @Ignore
-    public Boolean isCreated;
+    private Boolean isCreated;
     @Exclude
     @Ignore
-    public Boolean isAuthenticated;
+    private Boolean isAuthenticated;
     @Exclude
     @Ignore
-    public List<EActivity> eActivityList;
+    private List<EActivity> eActivityList;
 
     public EUser(String name, String email, Boolean isNew, Boolean isCreated, Boolean isAuthenticated) {
         this.name = name;
@@ -54,19 +52,19 @@ public class EUser extends EntityDatabase {
     }
 
     public String getBirthday() {
-        return birthday;
+        return this.birthday;
     }
 
-    public String getWeight() {
-        return weight;
+    public Double getWeight() {
+        return this.weight;
     }
 
     public Integer getAge() {
-        return age;
+        return this.age;
     }
 
     public Double getHeight() {
-        return height;
+        return this.height;
     }
 
     public Boolean getIsNew() {
@@ -81,6 +79,10 @@ public class EUser extends EntityDatabase {
         return this.isAuthenticated;
     }
 
+    public List<EActivity> getEActivityList() {
+        return this.eActivityList;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -89,15 +91,11 @@ public class EUser extends EntityDatabase {
         this.email = email;
     }
 
-    public void setIsNew(Boolean isNew) {
-        this.isNew = isNew;
-    }
-
     public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 
-    public void setWeight(String weight) {
+    public void setWeight(Double weight) {
         this.weight = weight;
     }
 
@@ -109,16 +107,16 @@ public class EUser extends EntityDatabase {
         this.height = height;
     }
 
+    public void setIsNew(Boolean isNew) {
+        this.isNew = isNew;
+    }
+
     public void setIsCreated(Boolean isCreated) {
         this.isCreated = isCreated;
     }
 
     public void setIsAuthenticated(Boolean isAuthenticated) {
         this.isAuthenticated = isAuthenticated;
-    }
-
-    public List<EActivity> getEActivityList() {
-        return this.eActivityList;
     }
 
     public void setEActivityList(List<EActivity> eActivityList) {

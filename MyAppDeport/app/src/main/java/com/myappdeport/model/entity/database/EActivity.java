@@ -6,12 +6,10 @@ import androidx.room.Ignore;
 import androidx.room.Index;
 
 import com.google.firebase.firestore.Exclude;
-
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
 @Entity(foreignKeys = {
         @ForeignKey(
                 entity = ERoute.class,
@@ -32,6 +30,9 @@ import lombok.ToString;
         @Index("idEUser")
 }
 )
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class EActivity extends EntityDatabase {
     private String startTime;
     private String endTime;
@@ -60,59 +61,75 @@ public class EActivity extends EntityDatabase {
     @Ignore
     private ERoute eRoute;
 
+    /**
+     * All arguments constructors.
+     *
+     * @param id              Identificador en SQLite.
+     * @param documentId      Identificador en Firebase.
+     * @param startTime       Es el tiempo de inicio.
+     * @param endTime         Es el tiempo de fin.
+     * @param kiloCalories    Son las kilocalorias.
+     * @param date            Es la fecha de la actividad.
+     * @param title           Es el titulo de la actividad.
+     * @param description     Es la descripción de la actividad.
+     * @param routeDocumentId Es el id de la ruta en firebase.
+     * @param userDocumentId  Es el id del usuario en firebase.
+     * @param idERoute        Es el id de la ruta en SQLite.
+     * @param idEUser         Es el id del usuario en SQLite.
+     * @param eRoute          Es la ruta asociada.
+     */
     @Ignore
-    public EActivity(Long id, String documentId, String startTime, String endTime, String date, Double kiloCalories, String routeDocumentId, Long idERoute) {
+    public EActivity(Long id, String documentId, String startTime, String endTime, Double kiloCalories, String date, String title, String description, String routeDocumentId, String userDocumentId, Long idERoute, Long idEUser, ERoute eRoute) {
         super(id, documentId);
         this.startTime = startTime;
         this.endTime = endTime;
         this.kiloCalories = kiloCalories;
+        this.date = date;
+        this.title = title;
+        this.description = description;
         this.routeDocumentId = routeDocumentId;
+        this.userDocumentId = userDocumentId;
         this.idERoute = idERoute;
-        this.date = date;
-    }
-
-    /**
-     * SQLite constructor
-     *
-     * @param id           Identificador en SQLite
-     * @param startTime    Es la hora de inicio
-     * @param endTime      Es la hora de finalización.
-     * @param kiloCalories Son las kilocalorias invertidas.
-     */
-    @Ignore
-    public EActivity(Long id, String startTime, String endTime, String date, Double kiloCalories, Long idERoute) {
-        this(id, null, startTime, endTime, date, kiloCalories, null, idERoute);
-    }
-
-    /**
-     * Firebase constructor
-     *
-     * @param documentId      Identificador en SQLite
-     * @param startTime       Es la hora de inicio
-     * @param endTime         Es la hora de finalización.
-     * @param kiloCalories    Son las kilocalorias invertidas.
-     * @param routeDocumentId Es el id del documento de ruta.
-     */
-    @Ignore
-    public EActivity(String documentId, String startTime, String endTime, String date, Double kiloCalories, String routeDocumentId) {
-        this(null, documentId, startTime, endTime, date, kiloCalories, routeDocumentId, null);
-    }
-
-    @Ignore
-    public EActivity(String startTime, String endTime, String date, Double kiloCalories) {
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.date = date;
-        this.kiloCalories = kiloCalories;
-    }
-
-    @Ignore
-    public EActivity(String startTime, String endTime, String date, Double kiloCalories, ERoute eRoute) {
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.date = date;
-        this.kiloCalories = kiloCalories;
+        this.idEUser = idEUser;
         this.eRoute = eRoute;
+    }
+
+    /**
+     * SQLite constructor.
+     *
+     * @param id           Identificador en SQLite.
+     * @param startTime    Es el tiempo de inicio.
+     * @param endTime      Es el tiempo de fin.
+     * @param kiloCalories Son las kilocalorias.
+     * @param date         Es la fecha de la actividad.
+     * @param title        Es el titulo de la actividad.
+     * @param description  Es la descripción de la actividad.
+     * @param idERoute     Es el id de la ruta en SQLite.
+     * @param idEUser      Es el id del usuario en SQLite.
+     * @param eRoute       Es la ruta asociada.
+     */
+    @Ignore
+    public EActivity(Long id, String startTime, String endTime, Double kiloCalories, String date, String title, String description, Long idERoute, Long idEUser, ERoute eRoute) {
+        this(id, null, startTime, endTime, kiloCalories, date, title, description, null, null, idERoute, idEUser, eRoute);
+    }
+
+    /**
+     * Firebase constructor.
+     *
+     * @param documentId      Identificador en Firebase.
+     * @param startTime       Es el tiempo de inicio.
+     * @param endTime         Es el tiempo de fin.
+     * @param kiloCalories    Son las kilocalorias.
+     * @param date            Es la fecha de la actividad.
+     * @param title           Es el titulo de la actividad.
+     * @param description     Es la descripción de la actividad.
+     * @param routeDocumentId Es el id de la ruta en firebase.
+     * @param userDocumentId  Es el id del usuario en firebase.
+     * @param eRoute          Es la ruta asociada.
+     */
+    @Ignore
+    public EActivity(String documentId, String startTime, String endTime, Double kiloCalories, String date, String title, String description, String routeDocumentId, String userDocumentId, ERoute eRoute) {
+        this(null, documentId, startTime, endTime, kiloCalories, date, title, description, routeDocumentId, userDocumentId, null, null, eRoute);
     }
 
     public EActivity() {
@@ -209,5 +226,6 @@ public class EActivity extends EntityDatabase {
     public void setDescription(String description) {
         this.description = description;
     }
+
 }
 

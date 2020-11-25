@@ -20,7 +20,7 @@ public class RouteFireStoreRepository extends FireStoreRepository<ERoute> implem
     private static RouteFireStoreRepository INSTANCE;
     private final PositionFireStoreRepository positionRepository;
 
-    public synchronized static RouteFireStoreRepository getInstance() {
+    public static synchronized RouteFireStoreRepository getInstance() {
         if (INSTANCE == null)
             INSTANCE = new RouteFireStoreRepository();
         return INSTANCE;

@@ -2,11 +2,9 @@ package com.myappdeport.model.entity.database;
 
 import androidx.room.Entity;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
+@Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,33 +12,22 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class ESong extends EntityDatabase {
     private String name;
-    private String author;
+    private String album;
+    private String artist;
     private String duration;
     private String songRoute;
 
-    /**
-     * SQLite constructor
-     *
-     * @param id        Es el identificador en SQLite.
-     * @param name      Es el nombre de la canción.
-     * @param author    Es el author de la canción.
-     * @param duration  Es la duración del la canción.
-     * @param songRoute Es la ruta de la canción.
-     */
-    public ESong(Long id, String name, String author, String duration, String songRoute) {
+    public ESong(Long id, String name, String album, String artist, String duration, String songRoute) {
         super(id, null);
         this.name = name;
-        this.author = author;
+        this.album = album;
+        this.artist = artist;
         this.duration = duration;
         this.songRoute = songRoute;
     }
 
     public String getName() {
         return this.name;
-    }
-
-    public String getAuthor() {
-        return this.author;
     }
 
     public String getDuration() {
@@ -53,10 +40,6 @@ public class ESong extends EntityDatabase {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
     }
 
     public void setDuration(String duration) {

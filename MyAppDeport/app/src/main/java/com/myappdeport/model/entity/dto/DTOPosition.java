@@ -1,14 +1,16 @@
 package com.myappdeport.model.entity.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DTOPosition {
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class DTOPosition extends DTOEntity {
     private String latitude;
     private String longitude;
     private String distance;
+    private String idERoute;
+    private String eRouteDocumentId;
 }
