@@ -58,7 +58,7 @@ public interface SongMapper extends GenericMapper<ESong, DTOSong, Song> {
     @Override
     @Mapping(target = "author", ignore = true)
     @Mapping(target = "duration", source = "song.duration", dateFormat = "HH:mm:ss", defaultValue = "00:00:00")
-    @Mapping(target = "songRoute", source = "song.songRoute", expression = "java(song.getSongRoute().getPath())")
+    @Mapping(target = "songRoute", ignore = true)
     DTOSong functionalToDto(Song song);
 
     /**
