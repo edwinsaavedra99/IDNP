@@ -15,6 +15,7 @@ public interface SongMapper extends GenericMapper<ESong, DTOSong, Song> {
      * @param eSong Es la entidad a ser transformada.
      * @return Es el dto generado por la entidad.
      */
+    @Mapping(target = "author", ignore = true)
     @Override
     DTOSong entityToDto(ESong eSong);
 
@@ -55,7 +56,9 @@ public interface SongMapper extends GenericMapper<ESong, DTOSong, Song> {
      * @return Es el dto generado por el functional.
      */
     @Override
+    @Mapping(target = "author", ignore = true)
     @Mapping(target = "duration", source = "song.duration", dateFormat = "HH:mm:ss", defaultValue = "00:00:00")
+    @Mapping(target = "songRoute", source = "song.songRoute", expression = "java(song.getSongRoute().getPath())")
     DTOSong functionalToDto(Song song);
 
     /**
@@ -66,5 +69,6 @@ public interface SongMapper extends GenericMapper<ESong, DTOSong, Song> {
      */
     @Override
     @InheritInverseConfiguration(name = "functionalToDto")
+    @Mapping(target = "songRoute", ignore = true)
     Song dtoToFunctional(DTOSong dtoSong);
 }
