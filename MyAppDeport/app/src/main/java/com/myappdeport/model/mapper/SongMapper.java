@@ -48,6 +48,7 @@ public interface SongMapper extends GenericMapper<ESong, DTOSong, Song> {
      */
     @Override
     @InheritInverseConfiguration(name = "functionalToEntity")
+    @Mapping(target = "songRoute", ignore = true)
     Song entityToFunctional(ESong eSong);
 
     /**
@@ -70,5 +71,6 @@ public interface SongMapper extends GenericMapper<ESong, DTOSong, Song> {
      */
     @Override
     @InheritInverseConfiguration(name = "functionalToDto")
+    @Mapping(target = "songRoute", ignore = true)
     Song dtoToFunctional(DTOSong dtoSong);
 }
