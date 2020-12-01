@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,6 +37,11 @@ public class Login extends AppCompatActivity {
     private GoogleSignInClient googleSignInClient;
     //private String TAG = "Login";
     private CallbackManager callbackManager;
+    private EditText email;
+    private EditText password;
+    private Button buttonLogin;
+
+
     @SneakyThrows
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
@@ -45,6 +51,9 @@ public class Login extends AppCompatActivity {
         initialComponents();
     }
     private void initialComponents(){
+        email = findViewById(R.id.email);
+        password = findViewById(R.id.password);
+        buttonLogin = findViewById(R.id.button);
         initSignInButton();
         initAuthViewModel();
         initGoogleSignInClient();
@@ -180,4 +189,18 @@ public class Login extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    private boolean checkCredentials(String email, String password){
+        if(!email.contains("@")||email.length()<6){
+            Toast.makeText(this,"Email invalid",Toast.LENGTH_SHORT).show();
+            return  false;
+        }else if (password.length()<6){
+            Toast.makeText(this,"Password invalid",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+
+
 }

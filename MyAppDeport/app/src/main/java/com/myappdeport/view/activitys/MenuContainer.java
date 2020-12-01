@@ -21,12 +21,15 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.myappdeport.R;
+import com.myappdeport.model.entity.kill.EUserEDWIN;
 import com.myappdeport.utils.Constants;
 import com.myappdeport.view.fragments.EatingTips;
 import com.myappdeport.view.fragments.MapsFragment;
 import com.myappdeport.view.fragments.MusicPlayer;
 import com.myappdeport.view.fragments.Profile;
 import com.myappdeport.view.fragments.Statics;
+
+import static com.myappdeport.utils.Constants.USER;
 
 public class MenuContainer extends AppCompatActivity {
 
@@ -36,13 +39,13 @@ public class MenuContainer extends AppCompatActivity {
     EatingTips eatingTips = new EatingTips();
     MusicPlayer musicPlayer = new MusicPlayer();
     Statics statics = new Statics();
-    Profile profile = new Profile();
+    Profile profile;
     MapsFragment maps = new MapsFragment();
     MapsFragment maps2 = new MapsFragment();
 
 
     private Fragment currentFragment;
-
+    private Bundle args;
     BottomNavigationView bottomNavigationView;
     ImageButton configuration;
 
@@ -50,7 +53,14 @@ public class MenuContainer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_container);
+        Intent recibir = getIntent();
+        EUserEDWIN datos = (EUserEDWIN) recibir.getSerializableExtra(USER);
 
+        // Creamos un nuevo Bundle
+        args = new Bundle();
+        args.putSerializable(USER,datos);
+        profile = new Profile();
+        profile.setArguments(args);
         bottomNavigationView = findViewById(R.id.menu);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
