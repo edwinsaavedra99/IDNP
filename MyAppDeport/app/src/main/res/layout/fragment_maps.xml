@@ -126,7 +126,7 @@
             android:layout_gravity="center|top"
             android:alpha="1"
             android:contentDescription="TODO"
-            android:src="@drawable/circle" />
+            />
 
         <LinearLayout
             android:id="@+id/data_container"

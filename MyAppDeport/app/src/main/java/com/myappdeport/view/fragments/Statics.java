@@ -234,12 +234,12 @@ public class Statics extends Fragment {
         activityListViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(ActivityListViewModel.class);
         activityListViewModel.getActivityListLiveData().observe(getViewLifecycleOwner(), data -> {
 
-            //adapterStatics = new AdapterStatics(data,getContext());
+            adapterStatics = new AdapterStatics(data,getContext());
             activityAdapter = new ActivityAdapter(this.getContext(), data);
             // carga de data en UI
             recyclerView = view.findViewById(R.id.recicler_estatics);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            recyclerView.setAdapter(this.adapterStatics);
+            recyclerView.setAdapter(this.activityAdapter);
         });
 
 
@@ -271,15 +271,15 @@ public class Statics extends Fragment {
         arrayList.add(0);
         arrayList.add(1);
         arrayList.add(1);
-        arrayList.add(1);
-        arrayList.add(1);
+        arrayList.add(0);
+        arrayList.add(0);
+        arrayList.add(0);
+        arrayList.add(0);
         arrayList.add(0);
         arrayList.add(1);
-        arrayList.add(0);
         arrayList.add(1);
         arrayList.add(1);
         arrayList.add(1);
-        arrayList.add(0);
         arrayList.add(1);
         arrayList.add(0);
         arrayList.add(1);

@@ -50,13 +50,28 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <ImageButton
-                    android:id="@+id/imageButton_imageUser"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/button_circle"
-                    app:srcCompat="@drawable/ic_add_a_photo_100" />
+                <ImageView
+                    android:id="@+id/image_user_profile_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_gravity="bottom"
+                    android:layout_marginTop="5dp"
+                    app:srcCompat="@drawable/ic_pencil_edit_36" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="0"
+                    app:cardBackgroundColor="#00F57F17"
+                    app:cardCornerRadius="90dp"
+                >
+                <ImageView
+                        android:id="@+id/imageView4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:srcCompat="@drawable/ensalada_peue" />
+                </androidx.cardview.widget.CardView>
 
                 <LinearLayout
                     android:id="@+id/linerLayout_datos_personales"
@@ -111,6 +126,7 @@
                     </LinearLayout>
 
                 </LinearLayout>
+
             </LinearLayout>
 
             <TextView
@@ -185,14 +201,6 @@
                             app:autoSizeTextType="uniform" />
                     </LinearLayout>
 
-                    <ImageView
-                        android:id="@+id/image_user_birthday_edit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-
-                        app:srcCompat="@drawable/ic_pencil_edit_24" />
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -235,14 +243,6 @@
                             android:text="170 cm"
                             android:textSize="14sp" />
                     </LinearLayout>
-
-                    <ImageView
-                        android:id="@+id/image_user_height_edit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-
-                        app:srcCompat="@drawable/ic_pencil_edit_24" />
 
                 </LinearLayout>
 
@@ -287,14 +287,6 @@
                             android:textSize="14sp" />
                     </LinearLayout>
 
-                    <ImageView
-                        android:id="@+id/image_user_age_edit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-
-                        app:srcCompat="@drawable/ic_pencil_edit_24" />
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -337,13 +329,6 @@
                             android:text="63 kg"
                             android:textSize="14sp" />
                     </LinearLayout>
-
-                    <ImageView
-                        android:id="@+id/image_user_weight_edit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        app:srcCompat="@drawable/ic_pencil_edit_24" />
 
                 </LinearLayout>
             </LinearLayout>

@@ -1,5 +1,6 @@
 package com.myappdeport.view.fragments;
 
+import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 
@@ -8,9 +9,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.myappdeport.R;
+import com.myappdeport.view.Dialogs.DialogProfile;
 import com.myappdeport.viewmodel.AuthViewModel;
 
 /**
@@ -27,6 +30,11 @@ public class Profile extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private AuthViewModel authViewModel;
     private TextView textName;
+    // atributos del fragment
+    private ImageView editProfile;
+    View view;
+    Context context;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -68,7 +76,8 @@ public class Profile extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        ViewGroup viewGroup = (ViewGroup)inflater.inflate(R.layout.fragment_profile, container, false);
+        view = inflater.inflate(R.layout.fragment_profile, container, false);
+        init();
         /*textName = viewGroup.findViewById(R.id.timer);
         new ViewModelProvider(this).get(AuthViewModel.class).authenticatedUserLiveData.observe(this, new Observer<EUserEDWIN>() {
             @Override
@@ -80,9 +89,19 @@ public class Profile extends Fragment {
         //imageAnimation.setBackgroundResource(R.drawable.animation);
         //timeAnimation = (AnimationDrawable) imageAnimation.getBackground();
         //timeAnimation.start();
-        return viewGroup;
-    }
 
+        return view;
+    }
+     private void init(){
+        context = getContext();
+        editProfile = view.findViewById(R.id.image_user_profile_edit);
+        editProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DialogProfile(context,null);
+            }
+        });
+     }
 
 /*    public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
