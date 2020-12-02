@@ -13,8 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.myappdeport.R;
-import com.myappdeport.view.Dialogs.DialogProfile;
+import com.myappdeport.model.entity.kill.EUserEDWIN;
 import com.myappdeport.viewmodel.AuthViewModel;
+
+import static com.myappdeport.utils.Constants.USER;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,6 +40,8 @@ public class Profile extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private EUserEDWIN datos;
+    private TextView text_usuario_nombres;
 
     public Profile() {
         // Required empty public constructor
@@ -76,8 +80,10 @@ public class Profile extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_profile, container, false);
-        init();
+        ViewGroup viewGroup = (ViewGroup)inflater.inflate(R.layout.fragment_profile, container, false);
+        datos = (EUserEDWIN) getArguments().getSerializable(USER);
+        text_usuario_nombres = viewGroup.findViewById(R.id.text_usuario_nombres);
+        text_usuario_nombres.setText(datos.name);
         /*textName = viewGroup.findViewById(R.id.timer);
         new ViewModelProvider(this).get(AuthViewModel.class).authenticatedUserLiveData.observe(this, new Observer<EUserEDWIN>() {
             @Override
