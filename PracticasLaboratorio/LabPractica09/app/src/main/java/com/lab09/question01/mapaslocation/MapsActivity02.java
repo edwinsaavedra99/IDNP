@@ -54,6 +54,11 @@ public class MapsActivity02 extends FragmentActivity implements OnMapReadyCallba
             if (gps.canGetLocation()) {
                 latitude = gps.getLatitude();
                 longitude = gps.getLongitude();
+                LatLng latLng = new LatLng(latitude, longitude);
+                float zoomLevel = 16.0f; //This goes up to 21
+                mMap.getMaxZoomLevel();
+                //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
+                //mMap.animateCamera(CameraUpdateFactory.zoomTo(mMap.getCameraPosition().zoom - 0.5f));
                 Toast.makeText(getApplicationContext(), "This is your Location : \nLatitude: " + latitude + "\nLongitude: " + longitude, Toast.LENGTH_SHORT).show();
             }
             else {
@@ -86,7 +91,9 @@ public class MapsActivity02 extends FragmentActivity implements OnMapReadyCallba
     public static void changeMarker(double latitude, double longitude){
         sydney = new LatLng(latitude,longitude);
         mMap.addMarker(new MarkerOptions().position(sydney).title(""+count));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        float zoomLevel = 16.0f;
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, zoomLevel));
         count++;
 
     }
