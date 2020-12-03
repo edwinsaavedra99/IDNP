@@ -55,6 +55,7 @@ public class Register extends AppCompatActivity {
         authViewModel.createdUserEmailLiveData.observe(this, user -> {
             if (user.isCreated) {
                 toastMessage(user.name);
+
             }
             goLoginActivity();
         });

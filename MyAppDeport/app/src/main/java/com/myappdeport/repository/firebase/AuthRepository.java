@@ -108,8 +108,11 @@ public class AuthRepository {
                             FirebaseUser user = firebaseAuth.getCurrentUser();
                             if(user!=null){
                                 EUserEDWIN userg = new EUserEDWIN("", "", "");
+                                userg.uid = user.getUid();
+                                userg.email = user.getEmail();
                                 userg.isCreated = true;
                                 newUserMutableLiveData.setValue(userg);
+                                createUserInFirestoreIfNotExists(userg);
                             }else{
                                 EUserEDWIN userg = new EUserEDWIN("", "", "");
                                 userg.isError = true;
