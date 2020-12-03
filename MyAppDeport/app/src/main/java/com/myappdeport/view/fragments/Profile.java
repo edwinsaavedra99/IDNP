@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.myappdeport.R;
 import com.myappdeport.model.entity.kill.EUserEDWIN;
+import com.myappdeport.view.Dialogs.DialogProfile;
 import com.myappdeport.viewmodel.AuthViewModel;
 
 import static com.myappdeport.utils.Constants.USER;

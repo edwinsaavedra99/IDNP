@@ -3,6 +3,7 @@ package com.myappdeport.view.activitys;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.myappdeport.R;
@@ -57,7 +59,24 @@ public class Login extends AppCompatActivity {
         initSignInButton();
         initAuthViewModel();
         initGoogleSignInClient();
+        initLoginEmail();
     }
+
+
+    private void initLoginEmail(){
+        buttonLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email_string = String.valueOf(email.getText());
+                String pass_string = String.valueOf(password.getText());
+                if (checkCredentials(email_string,pass_string)){
+                    AuthCredential credential = EmailAuthProvider.getCredential(email_string, pass_string);
+                    signInWithAuthCredential(credential);
+                }
+            }
+        });
+    }
+
 
     private void initSignInButton() {
         Button googleSignInButton = findViewById(R.id.sign_button);
@@ -65,14 +84,10 @@ public class Login extends AppCompatActivity {
         LoginButton loginButton = findViewById(R.id.login_button_facebook_gone);
         facebook.setOnClickListener(v -> loginButton.performClick());
         googleSignInButton.setOnClickListener(v -> signIn());
-        //auth = FirebaseAuth.getInstance();
         callbackManager = CallbackManager.Factory.create();
         loginButton.setReadPermissions("email","public_profile");
         signInFb(loginButton);
-        
     }
-
-
 
     private void handleFacebookToken(AccessToken token){
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
@@ -94,7 +109,7 @@ public class Login extends AppCompatActivity {
 
     @Override
     protected  void onStart(){
-        GoogleSignInAccount googleSignInAccount =  GoogleSignIn.getLastSignedInAccount(this);
+        /*GoogleSignInAccount googleSignInAccount =  GoogleSignIn.getLastSignedInAccount(this);
         if (googleSignInAccount != null) {
             getGoogleAuthCredential(googleSignInAccount);
         }
@@ -105,7 +120,7 @@ public class Login extends AppCompatActivity {
                     handleFacebookToken(oldAccessToken);
                 }
             }
-        };
+        };*/
         super.onStart();
         //FacebookAuthProvider
         //FacebookAuthCredential.
@@ -136,7 +151,7 @@ public class Login extends AppCompatActivity {
         try{
             callbackManager.onActivityResult(requestCode, resultCode, data);
         }catch (Exception e){
-            Toast.makeText(this, "Hi, you don't have Internet.", Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, "Hi, you don't have Internet.", Toast.LENGTH_LONG).show();
             System.out.println(e);
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -149,7 +164,7 @@ public class Login extends AppCompatActivity {
                 }
             } catch (ApiException e) {
                 logErrorMessage(e.getMessage());
-                Toast.makeText(this, "Hi, you don't have Internet.", Toast.LENGTH_LONG).show();
+              //  Toast.makeText(this, "Hi, you don't have Internet.", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -164,8 +179,11 @@ public class Login extends AppCompatActivity {
         authViewModel.signIn(googleAuthCredential);
         authViewModel.authenticatedUserLiveData.observe(this, authenticatedUser -> {
             if (authenticatedUser.isNew) {
+                System.out.println("Si entra***********");
                 createNewUser(authenticatedUser);
-            } else {
+            } else if(authenticatedUser.isError) {
+                Toast.makeText(this,"Error en Credenciales",Toast.LENGTH_SHORT).show();
+            }else{
                 goToMainActivity(authenticatedUser);
             }
         });
@@ -183,6 +201,7 @@ public class Login extends AppCompatActivity {
         Toast.makeText(this, "Hi " + name + "!\n" + "Your account was successfully created.", Toast.LENGTH_LONG).show();
     }
     private void goToMainActivity(EUserEDWIN user) {
+        Toast.makeText(this, "Welcome !.", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(Login.this, MenuContainer.class);
         intent.putExtra(USER, user);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

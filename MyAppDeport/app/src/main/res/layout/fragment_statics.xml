@@ -160,6 +160,7 @@
                             android:id="@+id/editTextDate"
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
+                            android:padding="2dp"
                             android:layout_marginTop="5dp"
                             android:layout_weight="0"
                             android:background="@drawable/date_background_black"
@@ -188,6 +189,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:padding="2dp"
                             android:id="@+id/editTextDate2"
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"

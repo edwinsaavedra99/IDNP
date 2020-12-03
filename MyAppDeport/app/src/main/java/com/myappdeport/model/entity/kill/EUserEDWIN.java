@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class EUserEDWIN implements Serializable {
     public String uid;
     public String name;
+
     @SuppressWarnings("WeakerAccess")
     public String email;
     @Exclude
@@ -16,6 +17,10 @@ public class EUserEDWIN implements Serializable {
     public boolean isNew;
     @Exclude
     public boolean isCreated;
+    @Exclude
+    public boolean isError;
+    @Exclude
+    public String password;
 
     public EUserEDWIN() {
     }

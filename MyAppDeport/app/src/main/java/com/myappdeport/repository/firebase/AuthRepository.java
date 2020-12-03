@@ -1,8 +1,15 @@
 package com.myappdeport.repository.firebase;
 
+import android.util.Log;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -12,11 +19,29 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.myappdeport.model.entity.kill.EUserEDWIN;
 
 
+import java.util.concurrent.Executor;
+
+import static com.myappdeport.utils.Constants.TAG;
 import static com.myappdeport.utils.Constants.USERS;
 import static com.myappdeport.utils.HelperClass.logErrorMessage;
 
 @SuppressWarnings("ConstantConditions")
 public class AuthRepository {
+
+    private static AuthRepository INSTANCE;
+
+
+    public synchronized static AuthRepository getInstance() {
+        if (INSTANCE == null)
+            INSTANCE = new AuthRepository();
+        return INSTANCE;
+    }
+
+    private AuthRepository() {
+        super();
+    }
+
+
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
     private CollectionReference usersRef = rootRef.collection(USERS);
@@ -27,6 +52,7 @@ public class AuthRepository {
             if (authTask.isSuccessful()) {
                 boolean isNewUser = authTask.getResult().getAdditionalUserInfo().isNewUser();
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                System.out.println("Si entrav1***********");
                 if (firebaseUser != null) {
                     String uid = firebaseUser.getUid();
                     String name = firebaseUser.getDisplayName();
@@ -36,6 +62,10 @@ public class AuthRepository {
                     authenticatedUserMutableLiveData.setValue(user);
                 }
             } else {
+                System.out.println("Error en Credenciales");
+                EUserEDWIN user = new EUserEDWIN("", "", "");
+                user.isError = true;
+                authenticatedUserMutableLiveData.setValue(user);
                 logErrorMessage(authTask.getException().getMessage());
             }
         });
@@ -53,7 +83,6 @@ public class AuthRepository {
                         if (userCreationTask.isSuccessful()) {
                             authenticatedUser.isCreated = true;
                             newUserMutableLiveData.setValue(authenticatedUser);
-                            //IEST IN LOCALSLQIETE
                         } else {
                             logErrorMessage(userCreationTask.getException().getMessage());
                         }
@@ -61,11 +90,40 @@ public class AuthRepository {
                 } else {
                     newUserMutableLiveData.setValue(authenticatedUser);
                 }
-                //
             } else {
                 logErrorMessage(uidTask.getException().getMessage());
             }
         });
         return newUserMutableLiveData;
     }
+
+
+    public MutableLiveData<EUserEDWIN> createUserWithEmailAndPassword(EUserEDWIN authenticatedUser) {
+        MutableLiveData<EUserEDWIN> newUserMutableLiveData = new MutableLiveData<>();
+        firebaseAuth.createUserWithEmailAndPassword(authenticatedUser.email, authenticatedUser.password)
+                .addOnCompleteListener(authTask -> {
+                    if (authTask.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "createUserWithEmail:success");
+                            FirebaseUser user = firebaseAuth.getCurrentUser();
+                            if(user!=null){
+                                EUserEDWIN userg = new EUserEDWIN("", "", "");
+                                userg.isCreated = true;
+                                newUserMutableLiveData.setValue(userg);
+                            }else{
+                                EUserEDWIN userg = new EUserEDWIN("", "", "");
+                                userg.isError = true;
+                                newUserMutableLiveData.setValue(userg);
+                            }
+                    } else {
+                            // If sign in fails, display a message to the user.
+                            EUserEDWIN userg = new EUserEDWIN("", "", "");
+                            userg.isError = true;
+                            newUserMutableLiveData.setValue(userg);
+                            Log.w(TAG, "createUserWithEmail:failure", authTask.getException());
+                    }
+                });
+        return newUserMutableLiveData;
+    }
+
 }

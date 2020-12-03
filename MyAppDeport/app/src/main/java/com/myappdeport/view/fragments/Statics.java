@@ -160,7 +160,7 @@ public class Statics extends Fragment {
                 int month = calendar.get(Calendar.MONTH);
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
                 DatePickerDialog dialog = new DatePickerDialog(
-                        getActivity(), android.R.style.Theme_DeviceDefault_Dialog_MinWidth, dateSetListener, year, month, day);
+                        getActivity(), R.style.DialogThemeCalendar, dateSetListener, year, month, day);
                 //Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }
@@ -175,7 +175,7 @@ public class Statics extends Fragment {
                 int month = calendar.get(Calendar.MONTH);
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
                 DatePickerDialog dialog = new DatePickerDialog(
-                        getActivity(), android.R.style.Theme_DeviceDefault_Dialog_MinWidth, dateSetListener, year, month, day);
+                        getActivity(), R.style.DialogThemeCalendar, dateSetListener, year, month, day);
                 //Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }
@@ -234,12 +234,12 @@ public class Statics extends Fragment {
         activityListViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(ActivityListViewModel.class);
         activityListViewModel.getActivityListLiveData().observe(getViewLifecycleOwner(), data -> {
 
-            adapterStatics = new AdapterStatics(data,getContext());
+/*            adapterStatics = new AdapterStatics(data,getContext());
             activityAdapter = new ActivityAdapter(this.getContext(), data);
             // carga de data en UI
             recyclerView = view.findViewById(R.id.recicler_estatics);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            recyclerView.setAdapter(this.activityAdapter);
+            recyclerView.setAdapter(this.activityAdapter);*/
         });
 
 

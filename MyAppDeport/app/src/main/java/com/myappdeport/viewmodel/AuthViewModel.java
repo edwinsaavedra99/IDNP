@@ -13,10 +13,11 @@ public class AuthViewModel extends AndroidViewModel {
     private final AuthRepository authRepository;
     public LiveData<EUserEDWIN> authenticatedUserLiveData;
     public LiveData<EUserEDWIN> createdUserLiveData;
+    public LiveData<EUserEDWIN>  createdUserEmailLiveData;
 
     public AuthViewModel(Application application) {
         super(application);
-        authRepository = new AuthRepository();
+        authRepository = AuthRepository.getInstance();
     }
 
     public void signIn(AuthCredential uiAuthCredential) {
@@ -25,5 +26,9 @@ public class AuthViewModel extends AndroidViewModel {
 
     public void createUser(EUserEDWIN authenticatedUser) {
         createdUserLiveData = authRepository.createUserInFirestoreIfNotExists(authenticatedUser);
+    }
+
+    public void createUserEmail(EUserEDWIN eUserEDWIN){
+        createdUserEmailLiveData = authRepository.createUserWithEmailAndPassword(eUserEDWIN);
     }
 }
