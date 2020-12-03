@@ -14,7 +14,10 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.lab09.question01.mapaslocation.lbs.LocationTrack;
+
+import java.util.ArrayList;
 
 public class MapsActivity02 extends FragmentActivity implements OnMapReadyCallback {
 
@@ -88,9 +91,14 @@ public class MapsActivity02 extends FragmentActivity implements OnMapReadyCallba
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 *       */
     }
+    private static ArrayList<LatLng> posiciones = new ArrayList<>();
+
     public static void changeMarker(double latitude, double longitude){
         sydney = new LatLng(latitude,longitude);
-        mMap.addMarker(new MarkerOptions().position(sydney).title(""+count));
+        posiciones.add(sydney);
+        //mMap.clear();
+        //mMap.addMarker(new MarkerOptions().position(sydney).title(""+count));
+        mMap.addPolyline(new PolylineOptions().addAll(posiciones));
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         float zoomLevel = 16.0f;
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, zoomLevel));

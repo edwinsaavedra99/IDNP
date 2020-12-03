@@ -29,11 +29,15 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
+
+import java.util.ArrayList;
 
 public class LocationServices extends Service {
 
     public static boolean isMyServiceRunning = false;
     public static GoogleMap mMap ;
+    private static ArrayList<LatLng> posiciones = new ArrayList<>();
 
     private Location mCurrentLocation;
     private LocationCallback locationCallback =  new LocationCallback(){
@@ -46,13 +50,19 @@ public class LocationServices extends Service {
                 Log.e("Location(Long)==", "" + mCurrentLocation.getLongitude());
             }
             if(mMap !=null){
-                mMap.clear();
-                MarkerOptions options = new MarkerOptions();
-                options.position(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()));
-                BitmapDescriptor icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE);
-                options.icon(icon);
-                Marker marker = mMap.addMarker(options);
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 17));
+                LatLng sydney = new LatLng(mCurrentLocation.getLatitude(),mCurrentLocation.getLongitude());
+                posiciones.add(sydney);
+                mMap.addPolyline(new PolylineOptions().addAll(posiciones));
+                //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+                float zoomLevel = 16.0f;
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, zoomLevel));
+                //mMap.clear();
+                //MarkerOptions options = new MarkerOptions();
+                //options.position(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()));
+                //BitmapDescriptor icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE);
+                //options.icon(icon);
+                //Marker marker = mMap.addMarker(options);
+                //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 17));
 
             }
 
