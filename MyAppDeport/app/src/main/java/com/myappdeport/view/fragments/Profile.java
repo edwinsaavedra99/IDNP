@@ -82,9 +82,10 @@ public class Profile extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         ViewGroup viewGroup = (ViewGroup)inflater.inflate(R.layout.fragment_profile, container, false);
-        datos = (EUserEDWIN) getArguments().getSerializable(USER);
-        text_usuario_nombres = viewGroup.findViewById(R.id.text_usuario_nombres);
-        text_usuario_nombres.setText(datos.name);
+
+        //datos = (EUserEDWIN) getArguments().getSerializable(USER);
+        //text_usuario_nombres = viewGroup.findViewById(R.id.text_usuario_nombres);
+        //text_usuario_nombres.setText(datos.name);
         /*textName = viewGroup.findViewById(R.id.timer);
         new ViewModelProvider(this).get(AuthViewModel.class).authenticatedUserLiveData.observe(this, new Observer<EUserEDWIN>() {
             @Override
@@ -97,7 +98,7 @@ public class Profile extends Fragment {
         //timeAnimation = (AnimationDrawable) imageAnimation.getBackground();
         //timeAnimation.start();
 
-        return view;
+        return viewGroup;
     }
      private void init(){
         context = getContext();
