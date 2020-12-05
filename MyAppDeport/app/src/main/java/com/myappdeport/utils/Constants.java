@@ -13,5 +13,5 @@ public interface Constants {
     // OTHER CONSTANTS
     int RC_SIGN_IN = 123;
     String USER = "user";
-    String USERS = "users";
+    String USERS = "EUser";
 }
