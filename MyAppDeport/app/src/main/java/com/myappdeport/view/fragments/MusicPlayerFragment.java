@@ -1,5 +1,5 @@
 package com.myappdeport.view.fragments;
-
+/*
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -17,13 +17,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.SearchView;
+import android.widget.SeekBar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.myappdeport.R;
 import com.myappdeport.model.entity.functional.Song;
@@ -32,13 +34,13 @@ import com.myappdeport.view.activitys.MainActivity;
 import com.myappdeport.view.adapters.MusicAdapter;
 import com.myappdeport.viewmodel.MusicViewModel;
 
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
 
-public class MusicPlayer extends Fragment {
-    private static final String TAG = MusicPlayer.class.getSimpleName();
+public class MusicPlayerFragment extends Fragment {
+    private static final String TAG = MusicPlayerFragment.class.getSimpleName();
     private MediaBrowserCompat mediaBrowserCompat;
     private ImageView btnPlayPause;
-    private TextView titleSong;
     private ImageView btnNext;
     private ImageView btnStop;
     private ImageView btnPrev;
@@ -46,13 +48,11 @@ public class MusicPlayer extends Fragment {
     private SeekBar musicProgress;
     private SearchView searchMusic;
     private RecyclerView listMusicView;
-    private MusicAdapter musicAdapter;
 
     private MediaPlayBackService mediaService;
     private boolean mBound = false;
 
     private MusicViewModel musicViewModel;
-    private MediaMetadataCompat currentMetadata;
 
     private final ServiceConnection connection = new ServiceConnection() {
 
@@ -63,11 +63,7 @@ public class MusicPlayer extends Fragment {
             mediaService = binder.getMediaPlaybackService();
             mBound = true;
             // Add to services to media service.
-            mediaService.setMediaQueue(musicViewModel.getAllSongs(MusicPlayer.this.getActivity()).getValue().subList(0, 100));
-            currentMetadata = mediaService.getCurrentMetadata();
-            if (currentMetadata != null) {
-                titleSong.setText(currentMetadata.getText(MediaMetadataCompat.METADATA_KEY_TITLE));
-            }
+            mediaService.setMediaQueue(musicViewModel.getAllSongs(MusicPlayerFragment.this.getActivity()).getValue());
         }
 
         @Override
@@ -78,55 +74,31 @@ public class MusicPlayer extends Fragment {
 
     public MediaControllerCompat.Callback mediaControllerCallback = new MediaControllerCompat.Callback() {
         private final String TAG = MediaControllerCompat.Callback.class.getSimpleName();
-        boolean isEnable = true;
 
         @Override
         public void onPlaybackStateChanged(PlaybackStateCompat state) {
             super.onPlaybackStateChanged(state);
             Log.e(TAG, "PlaybackStateChange: " + state);
-            isEnable = state.getState() != PlaybackStateCompat.STATE_PAUSED;
+
         }
 
         @Override
         public void onMetadataChanged(MediaMetadataCompat metadata) {
             super.onMetadataChanged(metadata);
-            Log.e(TAG, "SetMetadataChange: " + metadata.getDescription());
-            titleSong.setText(metadata.getText(MediaMetadataCompat.METADATA_KEY_TITLE));
-            int totalDuration = (int) metadata.getLong(MediaMetadataCompat.METADATA_KEY_DURATION);
-            musicProgress.setMax(totalDuration / 1000);
-            musicProgress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                @RequiresApi(api = Build.VERSION_CODES.Q)
-                @Override
-                public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                    if (b && mediaService.getCurrentPosition() != -1) {
-                        musicProgress.setMax(totalDuration / 1000);
-                        MediaControllerCompat.getMediaController(Objects.requireNonNull(MusicPlayer.this.getActivity())).getTransportControls().seekTo(i * 1000);
-                    }
-                }
-
-                @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {
-                }
-
-                @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {
-                }
-            });
-            musicProgress.setProgress(0);
+            Log.e(TAG, "SetMetadataChange: " + metadata.getDescription().getTitle());
         }
     };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Objects.requireNonNull(getActivity()).setContentView(R.layout.activity_main);
+        Objects.requireNonNull(getActivity()).setContentView(R.layout.activity_main);
         //this.connectionCallback = new MediaBrowserConnectionCallback();
-        this.mediaBrowserCompat = new MediaBrowserCompat(Objects.requireNonNull(this.getActivity()).getApplicationContext(),
+        this.mediaBrowserCompat = new MediaBrowserCompat(this.getActivity().getApplicationContext(),
                 new ComponentName(this.getActivity(), MediaPlayBackService.class),
                 connectionCallback,
                 null);
         this.musicViewModel = new ViewModelProvider(this).get(MusicViewModel.class);
-        this.musicAdapter = new MusicAdapter(this.getActivity(), Collections.emptyList());
     }
 
     @Nullable
@@ -136,41 +108,25 @@ public class MusicPlayer extends Fragment {
         this.btnPlayPause = viewGroup.findViewById(R.id.play);
         this.btnNext = viewGroup.findViewById(R.id.next);
         this.btnPrev = viewGroup.findViewById(R.id.previous);
-        this.btnStop = viewGroup.findViewById(R.id.stop);
         this.btnRefresh = viewGroup.findViewById(R.id.refresh);
         this.musicProgress = viewGroup.findViewById(R.id.progress_music);
         this.searchMusic = viewGroup.findViewById(R.id.searchMusic);
         this.listMusicView = viewGroup.findViewById(R.id.rvSongs);
-        this.listMusicView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        this.titleSong = viewGroup.findViewById(R.id.nameSong);
         this.initActionOfMediaControls();
-        //this.musicViewModel.getAllSongs(Objects.requireNonNull(this.getActivity()).getApplicationContext()).observe(getViewLifecycleOwner(), this::updateListMusicView);
-        new Timer().scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                if (mBound && mediaService.getCurrentPosition() != -1) {
-                    try {
-                        musicProgress.setProgress(mediaService.getCurrentPosition() / 1000);
-                    } catch (Exception e){
-                        Log.e(TAG, "ERROR SYNC");
-                    }
-                }
-            }
-        }, 0, 500);
-
         return viewGroup;
     }
 
     /**
      * Initial some components of media player.
-     */
+     *//*
     public void initActionOfMediaControls() {
         this.btnRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mBound) {
-                    List<Song> songList = musicViewModel.getAllSongs(MusicPlayer.this.getActivity()).getValue();
+                    List<Song> songList = musicViewModel.getAllSongs(MusicPlayerFragment.this.getActivity()).getValue();
                     // Actualizando la cola en el servicio.
+
                     mediaService.setMediaQueue(songList);
                     // Actualizando la vista en el fragment.
                     updateListMusicView(songList);
@@ -182,20 +138,14 @@ public class MusicPlayer extends Fragment {
     /**
      * Update Component
      */
+/*
     private void updateListMusicView(List<Song> songs) {
-        this.musicViewModel.getAllSongs(this.getActivity()).observe(getViewLifecycleOwner(), songsLiveData -> {
-            musicAdapter.setSongs(songsLiveData.subList(0, 100));
+        MusicAdapter musicAdapter = new MusicAdapter(this.getActivity(), songs);
+        this.musicViewModel.getAllSongs(this.getActivity()).observe(this, songsLiveData -> {
+            musicAdapter.setSongs(songsLiveData);
             musicAdapter.notifyDataSetChanged();
         });
         this.listMusicView.setAdapter(musicAdapter);
-        this.musicAdapter.setOnClickListener(new MusicAdapter.MusicClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mBound) {
-                    MediaControllerCompat.getMediaController(Objects.requireNonNull(MusicPlayer.this.getActivity())).getTransportControls().playFromMediaId(listMusicView.getChildAdapterPosition(v) + "", null);
-                }
-            }
-        });
     }
 
     @Override
@@ -238,8 +188,8 @@ public class MusicPlayer extends Fragment {
         public void onConnected() {
             super.onConnected();
             MediaSessionCompat.Token token = mediaBrowserCompat.getSessionToken();
-            MediaControllerCompat mediaController = new MediaControllerCompat(MusicPlayer.this.getActivity(), token);
-            MediaControllerCompat.setMediaController(Objects.requireNonNull(MusicPlayer.this.getActivity()), mediaController);
+            MediaControllerCompat mediaController = new MediaControllerCompat(MusicPlayerFragment.this.getActivity(), token);
+            MediaControllerCompat.setMediaController(Objects.requireNonNull(MusicPlayerFragment.this.getActivity()), mediaController);
             // Finish building the UI
             buildTransportControls();
         }
@@ -259,22 +209,24 @@ public class MusicPlayer extends Fragment {
         this.btnPlayPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int pdState = MediaControllerCompat.getMediaController(Objects.requireNonNull(MusicPlayer.this.getActivity())).getPlaybackState().getState();
+                int pdState = MediaControllerCompat.getMediaController(Objects.requireNonNull(MusicPlayerFragment.this.getActivity())).getPlaybackState().getState();
                 if (pdState == PlaybackStateCompat.STATE_PLAYING)
-                    MediaControllerCompat.getMediaController(MusicPlayer.this.getActivity()).getTransportControls().pause();
+                    MediaControllerCompat.getMediaController(MusicPlayerFragment.this.getActivity()).getTransportControls().pause();
                 if (pdState == PlaybackStateCompat.STATE_PAUSED || pdState == PlaybackStateCompat.STATE_CONNECTING || pdState == PlaybackStateCompat.STATE_STOPPED)
-                    MediaControllerCompat.getMediaController(MusicPlayer.this.getActivity()).getTransportControls().play();
+                    MediaControllerCompat.getMediaController(MusicPlayerFragment.this.getActivity()).getTransportControls().play();
             }
         });
-        this.btnNext.setOnClickListener(v -> MediaControllerCompat.getMediaController(Objects.requireNonNull(MusicPlayer.this.getActivity())).getTransportControls().skipToNext());
+        this.btnNext.setOnClickListener(v -> MediaControllerCompat.getMediaController(Objects.requireNonNull(MusicPlayerFragment.this.getActivity())).getTransportControls().skipToNext());
 
-        this.btnPrev.setOnClickListener(v -> MediaControllerCompat.getMediaController(Objects.requireNonNull(MusicPlayer.this.getActivity())).getTransportControls().skipToPrevious());
+        this.btnPrev.setOnClickListener(v -> MediaControllerCompat.getMediaController(Objects.requireNonNull(MusicPlayerFragment.this.getActivity())).getTransportControls().skipToPrevious());
 
-        this.btnStop.setOnClickListener(v -> MediaControllerCompat.getMediaController(Objects.requireNonNull(MusicPlayer.this.getActivity())).getTransportControls().stop());
+        this.btnStop.setOnClickListener(v -> MediaControllerCompat.getMediaController(Objects.requireNonNull(MusicPlayerFragment.this.getActivity())).getTransportControls().stop());
 
-        MediaControllerCompat mediaController = MediaControllerCompat.getMediaController(Objects.requireNonNull(MusicPlayer.this.getActivity()));
-        //MediaMetadataCompat metadata = mediaController.getMetadata();
+        MediaControllerCompat mediaController = MediaControllerCompat.getMediaController(Objects.requireNonNull(MusicPlayerFragment.this.getActivity()));
+//        MediaMetadataCompat metadata = mediaController.getMetadata();
 //        PlaybackStateCompat pbState = mediaController.getPlaybackState();
         mediaController.registerCallback(mediaControllerCallback);
     }
+
 }
+*/

@@ -12,51 +12,44 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class ESong extends EntityDatabase {
-    private String name;
+    private String title;
     private String album;
     private String artist;
-    private String duration;
-    private String songRoute;
+    private Long duration;
+    private String songPath;
 
-    public ESong(Long id, String name, String album, String artist, String duration, String songRoute) {
+    public ESong(Long id, String title, String album, String artist, Long duration, String songPath) {
         super(id, null);
-        this.name = name;
+        this.title = title;
         this.album = album;
         this.artist = artist;
         this.duration = duration;
-        this.songRoute = songRoute;
+        this.songPath = songPath;
     }
 
-    public String getName() {
-        return this.name;
-    }
 
-    public String getDuration() {
-        return this.duration;
-    }
-
-    public String getSongRoute() {
-        return this.songRoute;
+    public String getTitle() {
+        return this.title;
     }
 
     public String getAlbum() {
-        return album;
+        return this.album;
     }
 
     public String getArtist() {
-        return artist;
+        return this.artist;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public Long getDuration() {
+        return this.duration;
     }
 
-    public void setDuration(String duration) {
-        this.duration = duration;
+    public String getSongPath() {
+        return this.songPath;
     }
 
-    public void setSongRoute(String songRoute) {
-        this.songRoute = songRoute;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public void setAlbum(String album) {
@@ -67,5 +60,11 @@ public class ESong extends EntityDatabase {
         this.artist = artist;
     }
 
+    public void setDuration(Long duration) {
+        this.duration = duration;
+    }
 
+    public void setSongPath(String songPath) {
+        this.songPath = songPath;
+    }
 }

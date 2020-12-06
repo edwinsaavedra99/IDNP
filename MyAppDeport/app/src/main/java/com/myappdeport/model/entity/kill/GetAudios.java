@@ -20,7 +20,9 @@ public class GetAudios {
         return getAudios;
     }
     public MutableLiveData<List<Audio>> getAllAudioFromDevice(Cursor cursor) {
+        //Check
         dataSet.clear();
+        //====
         if (isSdPresent()) {
             int i = 0;
             if (cursor != null) {
