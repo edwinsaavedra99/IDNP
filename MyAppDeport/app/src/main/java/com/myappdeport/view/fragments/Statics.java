@@ -26,6 +26,7 @@ import android.widget.TextView;
 import com.google.android.material.datepicker.MaterialStyledDatePickerDialog;
 import com.google.android.material.theme.MaterialComponentsViewInflater;
 import com.myappdeport.R;
+import com.myappdeport.model.entity.database.EActivity;
 import com.myappdeport.model.entity.dto.DTOActivity;
 import com.myappdeport.model.mapper.ActivityMapper;
 import com.myappdeport.view.adapters.ActivityAdapter;
@@ -61,9 +62,8 @@ public class Statics extends Fragment {
     private Button btn_distances;
     private Button btn_actividades;
 
-    private ActivityAdapter activityAdapter;
     //lista de actividades fisicas
-    private List<DTOActivity> activitiList;
+    private List<EActivity> activitiList;
     private RecyclerView recyclerView;
     private AdapterStatics adapterStatics;
     //filtro de actividades fisicas
@@ -82,6 +82,7 @@ public class Statics extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
     private ActivityListViewModel activityListViewModel;
 
     public Statics() {
@@ -232,14 +233,12 @@ public class Statics extends Fragment {
 
 
         activityListViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(ActivityListViewModel.class);
+        recyclerView = view.findViewById(R.id.recicler_estatics);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         activityListViewModel.getActivityListLiveData().observe(getViewLifecycleOwner(), data -> {
-
-/*            adapterStatics = new AdapterStatics(data,getContext());
-            activityAdapter = new ActivityAdapter(this.getContext(), data);
-            // carga de data en UI
-            recyclerView = view.findViewById(R.id.recicler_estatics);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            recyclerView.setAdapter(this.activityAdapter);*/
+             this.activitiList = data;
+             adapterStatics = new AdapterStatics(activitiList,getContext());
+             recyclerView.setAdapter(adapterStatics);
         });
 
 

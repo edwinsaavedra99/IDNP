@@ -16,7 +16,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -48,6 +50,9 @@ public class MenuContainer extends AppCompatActivity {
     private Bundle args;
     BottomNavigationView bottomNavigationView;
     ImageButton configuration;
+    ImageButton locking;
+    TextView title;
+    FrameLayout frameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,11 @@ public class MenuContainer extends AppCompatActivity {
         args.putSerializable(USER,datos);
         profile = new Profile();
         profile.setArguments(args);
+
+        locking = findViewById(R.id.lock);
+        title = findViewById(R.id.textView_Main_title);
+        frameLayout = findViewById(R.id.container);
+
         bottomNavigationView = findViewById(R.id.menu);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
@@ -74,11 +84,27 @@ public class MenuContainer extends AppCompatActivity {
                     openConfiguration();
                 }
         });
+        locking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { LockScreen(); }
+        });
         //loadFragment(maps);
         //currentFragment = maps;
         //loadFragment(maps,Constants.TAG_F_MAP);
         permits();
         permitsMaps();
+    }
+    private  void LockScreen(){
+        bottomNavigationView.setVisibility(View.GONE );
+        locking.setVisibility(View.GONE);
+        title.setVisibility(View.GONE);
+        frameLayout.setVisibility(View.GONE);
+    }
+    private  void InLockScreen(){
+        bottomNavigationView.setVisibility(View.VISIBLE );
+        locking.setVisibility(View.VISIBLE);
+        title.setVisibility(View.VISIBLE);
+        frameLayout.setVisibility(View.VISIBLE);
     }
 
     private void openConfiguration() {

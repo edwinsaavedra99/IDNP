@@ -25,7 +25,6 @@ public class Configuration extends AppCompatActivity {
                 openMain();
             }
         });
-
     }
     private void openMain() {
         Intent intent = new Intent(this, MenuContainer.class);

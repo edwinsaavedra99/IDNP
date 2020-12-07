@@ -35,7 +35,7 @@ public class EatingTips extends Fragment {
         return view;
     }
     /**
-     * @ init is method for load the data of the repository the firebase
+     * @ init is method for load the data of the repository of firebase
      * */
     private void init(){
         EatTipsViewModel eatTipsViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(EatTipsViewModel.class);

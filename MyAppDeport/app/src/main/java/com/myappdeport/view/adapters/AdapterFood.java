@@ -5,7 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.myappdeport.R;
 import com.myappdeport.model.entity.database.ENutritionalAdvice;
+import com.myappdeport.view.Dialogs.DialogFood;
 import com.myappdeport.view.killme.Activiti;
 import com.myappdeport.view.killme.Food;
 
@@ -42,6 +45,15 @@ public class AdapterFood extends RecyclerView.Adapter<AdapterFood.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.bindData(foodList.get(position));
+        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(context," holi",Toast.LENGTH_SHORT).show();
+                new DialogFood(context, foodList.get(position));
+            }
+        });
+
+
     }
 
     @Override
@@ -55,8 +67,10 @@ public class AdapterFood extends RecyclerView.Adapter<AdapterFood.ViewHolder> {
         //aqui editar para añadir las imagenes
         TextView title, description;
         ImageView imageView;
+        RelativeLayout relativeLayout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            relativeLayout = itemView.findViewById(R.id.full_item_food);
             title = itemView.findViewById(R.id.text_item_food_title);
             description = itemView.findViewById(R.id.text_item_food_description_short);
             imageView = itemView.findViewById(R.id.image_item_food);
