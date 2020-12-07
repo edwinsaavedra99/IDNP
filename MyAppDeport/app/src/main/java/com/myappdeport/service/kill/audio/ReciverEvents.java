@@ -1,5 +1,5 @@
 package com.myappdeport.service.kill.audio;
-
+/*
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -110,3 +110,4 @@ public class ReciverEvents extends BroadcastReceiver {
         }
     }
 }
+*/

@@ -9,18 +9,18 @@ import lombok.*;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class Song extends Entity {
-    private String name;
+    private String title;
     private String album;
     private String artist;
-    private String duration;
-    private Uri songRoute;
+    private Long duration;
+    private Uri songPath;
 
-    public Song(Long id, String name, String album, String artist, String duration, Uri songRoute) {
-        super(id, null);
-        this.name = name;
+    public Song(Long id, String title, String album, String artist, Long duration, Uri songPath) {
+        this.id = id;
+        this.title = title;
         this.album = album;
         this.artist = artist;
         this.duration = duration;
-        this.songRoute = songRoute;
+        this.songPath = songPath;
     }
 }
