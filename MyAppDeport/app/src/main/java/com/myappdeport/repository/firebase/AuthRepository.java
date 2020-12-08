@@ -1,5 +1,6 @@
 package com.myappdeport.repository.firebase;
 
+import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -58,6 +59,7 @@ public class AuthRepository {
                     String name = firebaseUser.getDisplayName();
                     String email = firebaseUser.getEmail();
                     EUserEDWIN user = new EUserEDWIN(uid, name, email);
+                    user.photoUrl = firebaseUser.getPhotoUrl();
                     user.isNew = isNewUser;
                     authenticatedUserMutableLiveData.setValue(user);
                 }
@@ -110,6 +112,7 @@ public class AuthRepository {
                                 EUserEDWIN userg = new EUserEDWIN("", "", "");
                                 userg.uid = user.getUid();
                                 userg.email = user.getEmail();
+                                userg.photoUrl = user.getPhotoUrl();
                                 userg.isCreated = true;
                                 newUserMutableLiveData.setValue(userg);
                                 createUserInFirestoreIfNotExists(userg);

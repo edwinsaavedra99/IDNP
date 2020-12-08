@@ -19,8 +19,7 @@ import static com.myappdeport.utils.HelperClass.logErrorMessage;
 //import static ro.alexmamo.firebaseauthapp.utils.HelperClass.logErrorMessage;
 
 @SuppressWarnings("ConstantConditions")
-public
-class SplashRepository {
+public class SplashRepository {
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private EUserEDWIN user = new EUserEDWIN();
     private FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
@@ -34,6 +33,7 @@ class SplashRepository {
             isUserAuthenticateInFirebaseMutableLiveData.setValue(user);
         } else {
             user.uid = firebaseUser.getUid();
+
             user.isAuthenticated = true;
             isUserAuthenticateInFirebaseMutableLiveData.setValue(user);
         }
