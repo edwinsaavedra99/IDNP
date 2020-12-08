@@ -47,6 +47,27 @@ public class AuthRepository {
     private FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
     private CollectionReference usersRef = rootRef.collection(USERS);
 
+
+    public MutableLiveData<EUserEDWIN> userLogin(){
+        MutableLiveData<EUserEDWIN> userMutableLiveData = new MutableLiveData<>();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        if (firebaseUser != null) {
+            String uid = firebaseUser.getUid();
+            String name = firebaseUser.getDisplayName();
+            String email = firebaseUser.getEmail();
+            EUserEDWIN user = new EUserEDWIN(uid, name, email);
+            user.photoUrl = String.valueOf(firebaseUser.getPhotoUrl());
+            user.isAuthenticated = true;
+            userMutableLiveData.setValue(user);
+        }else{
+            EUserEDWIN user = new EUserEDWIN("", "", "");
+            user.isError = true;
+            userMutableLiveData.setValue(user);
+        }
+        return  userMutableLiveData;
+    }
+
+
     public MutableLiveData<EUserEDWIN> firebaseSignIn(AuthCredential authCredential) {
         MutableLiveData<EUserEDWIN> authenticatedUserMutableLiveData = new MutableLiveData<>();
         firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(authTask -> {
@@ -59,7 +80,7 @@ public class AuthRepository {
                     String name = firebaseUser.getDisplayName();
                     String email = firebaseUser.getEmail();
                     EUserEDWIN user = new EUserEDWIN(uid, name, email);
-                    user.photoUrl = firebaseUser.getPhotoUrl();
+                    user.photoUrl = String.valueOf(firebaseUser.getPhotoUrl());
                     user.isNew = isNewUser;
                     authenticatedUserMutableLiveData.setValue(user);
                 }
@@ -112,7 +133,7 @@ public class AuthRepository {
                                 EUserEDWIN userg = new EUserEDWIN("", "", "");
                                 userg.uid = user.getUid();
                                 userg.email = user.getEmail();
-                                userg.photoUrl = user.getPhotoUrl();
+                                userg.photoUrl = String.valueOf(user.getPhotoUrl());
                                 userg.isCreated = true;
                                 newUserMutableLiveData.setValue(userg);
                                 createUserInFirestoreIfNotExists(userg);
@@ -131,5 +152,7 @@ public class AuthRepository {
                 });
         return newUserMutableLiveData;
     }
-
+    public void cerrarSesion(){
+        firebaseAuth.signOut();
+    }
 }

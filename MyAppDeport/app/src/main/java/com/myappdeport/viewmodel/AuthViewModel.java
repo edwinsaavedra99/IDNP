@@ -14,6 +14,7 @@ public class AuthViewModel extends AndroidViewModel {
     public LiveData<EUserEDWIN> authenticatedUserLiveData;
     public LiveData<EUserEDWIN> createdUserLiveData;
     public LiveData<EUserEDWIN>  createdUserEmailLiveData;
+    public LiveData<EUserEDWIN>  userEDWINLiveData;
 
     public AuthViewModel(Application application) {
         super(application);
@@ -30,5 +31,13 @@ public class AuthViewModel extends AndroidViewModel {
 
     public void createUserEmail(EUserEDWIN eUserEDWIN){
         createdUserEmailLiveData = authRepository.createUserWithEmailAndPassword(eUserEDWIN);
+    }
+
+    public void cerrarSesion(){
+        authRepository.cerrarSesion();
+    }
+
+    public void userLogin(){
+        userEDWINLiveData = authRepository.userLogin();
     }
 }

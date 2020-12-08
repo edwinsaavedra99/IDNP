@@ -15,7 +15,7 @@ public class EUserEDWIN implements Serializable {
     public String altura;
     public String edad;
     public String peso;
-    public Uri photoUrl;
+    public String photoUrl;
 
     @SuppressWarnings("WeakerAccess")
     public String email;
@@ -39,7 +39,7 @@ public class EUserEDWIN implements Serializable {
         this.email = email;
     }
 
-    public EUserEDWIN(String uid, String name, String email,String edad,String peso,String altura,String fechaNacimiento,Uri photoUrl) {
+    public EUserEDWIN(String uid, String name, String email,String edad,String peso,String altura,String fechaNacimiento,String photoUrl) {
         this.uid = uid;
         this.name = name;
         this.email = email;
