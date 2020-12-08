@@ -10,15 +10,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.myappdeport.R;
+import com.myappdeport.model.entity.database.EActivity;
 import com.myappdeport.view.killme.Activiti;
 import java.util.List;
 
 public class AdapterStatics extends  RecyclerView.Adapter<AdapterStatics.ViewHolder> {
-    private final List<Activiti> list_statics;
+    private final List<EActivity> list_statics;
     private final LayoutInflater layoutInflater;
     private Context context;
 
-    public AdapterStatics(List<Activiti> list_statics, Context context) {
+    public AdapterStatics(List<EActivity> list_statics, Context context) {
         this.layoutInflater = LayoutInflater.from(context);
         this.list_statics = list_statics;
         this.context = context;
@@ -51,12 +52,12 @@ public class AdapterStatics extends  RecyclerView.Adapter<AdapterStatics.ViewHol
             num  = itemView.findViewById(R.id.text_item_date_number);
             km = itemView.findViewById(R.id.text_item_km);
         }
-        void bindData(final  Activiti activiti) {
-            title.setText(activiti.getTitle() );
-            description.setText(activiti.getDescription());
-            day.setText(activiti.getDateDay());
-            num.setText(activiti.getDateNum());
-            km.setText(activiti.getKm());
+        void bindData(final  EActivity eActivity) {
+            title.setText(eActivity.getTitle() );
+            description.setText(eActivity.getDescription());
+            day.setText(eActivity.getDate());
+            num.setText(eActivity.getDate());
+            km.setText(eActivity.getKiloCalories()+"");
         }
     }
 }

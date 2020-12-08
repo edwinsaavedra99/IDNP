@@ -16,18 +16,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.myappdeport.R;
 import com.myappdeport.model.entity.kill.EUserEDWIN;
 import com.myappdeport.utils.Constants;
-import com.myappdeport.view.fragments.EatingTips;
-import com.myappdeport.view.fragments.MapsFragment;
-import com.myappdeport.view.fragments.MusicPlayer;
-import com.myappdeport.view.fragments.Profile;
-import com.myappdeport.view.fragments.Statics;
+import com.myappdeport.view.fragments.*;
 
 import static com.myappdeport.utils.Constants.USER;
 
@@ -48,6 +46,9 @@ public class MenuContainer extends AppCompatActivity {
     private Bundle args;
     BottomNavigationView bottomNavigationView;
     ImageButton configuration;
+    ImageButton locking;
+    TextView title;
+    FrameLayout frameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +59,14 @@ public class MenuContainer extends AppCompatActivity {
 
         // Creamos un nuevo Bundle
         args = new Bundle();
-        args.putSerializable(USER,datos);
+        args.putSerializable(USER, datos);
         profile = new Profile();
         profile.setArguments(args);
+
+        locking = findViewById(R.id.lock);
+        title = findViewById(R.id.textView_Main_title);
+        frameLayout = findViewById(R.id.container);
+
         bottomNavigationView = findViewById(R.id.menu);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
@@ -71,14 +77,30 @@ public class MenuContainer extends AppCompatActivity {
         configuration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    openConfiguration();
-                }
+                openConfiguration();
+            }
+        });
+        locking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { LockScreen(); }
         });
         //loadFragment(maps);
         //currentFragment = maps;
         //loadFragment(maps,Constants.TAG_F_MAP);
         permits();
         permitsMaps();
+    }
+    private  void LockScreen(){
+        bottomNavigationView.setVisibility(View.GONE );
+        locking.setVisibility(View.GONE);
+        title.setVisibility(View.GONE);
+        frameLayout.setVisibility(View.GONE);
+    }
+    private  void InLockScreen(){
+        bottomNavigationView.setVisibility(View.VISIBLE );
+        locking.setVisibility(View.VISIBLE);
+        title.setVisibility(View.VISIBLE);
+        frameLayout.setVisibility(View.VISIBLE);
     }
 
     private void openConfiguration() {
@@ -94,41 +116,41 @@ public class MenuContainer extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.item1:
                     //currentFragment = eatingTips;
-                    loadFragment(eatingTips,Constants.TAG_F_NUTRITION);
+                    loadFragment(eatingTips, Constants.TAG_F_NUTRITION);
                     return true;
                 case R.id.item2:
                     //currentFragment = musicPlayer;
-                    loadFragment(musicPlayer,Constants.TAG_F_MUSIC);
+                    loadFragment(musicPlayer, Constants.TAG_F_MUSIC);
                     return true;
                 case R.id.item3:
                     //currentFragment = maps;
-                    loadFragment(maps2,Constants.TAG_F_MAP);
+                    loadFragment(maps2, Constants.TAG_F_MAP);
                     return true;
                 case R.id.item4:
                     //currentFragment = statics;
-                    loadFragment(statics,Constants.TAG_F_STATISTIC);
+                    loadFragment(statics, Constants.TAG_F_STATISTIC);
                     return true;
                 case R.id.item5:
                     //currentFragment = profile;
-                    loadFragment(profile,Constants.TAG_F_PROFILE);
+                    loadFragment(profile, Constants.TAG_F_PROFILE);
                     return true;
             }
             return false;
         }
     };
 
-    public void loadFragment(Fragment fragment,String tag) {
+    public void loadFragment(Fragment fragment, String tag) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
         transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
-        if(fragment.isAdded()){
-            if(currentFragment != null)
+        if (fragment.isAdded()) {
+            if (currentFragment != null)
                 transaction.hide(currentFragment).show(fragment);
-        }else{
-            if(currentFragment !=null)
-                transaction.hide(currentFragment).add(R.id.container,fragment, tag);
+        } else {
+            if (currentFragment != null)
+                transaction.hide(currentFragment).add(R.id.container, fragment, tag);
             else
-                transaction.add(R.id.container,fragment, tag);
+                transaction.add(R.id.container, fragment, tag);
         }
         //transaction.replace(R.id.container, fragment);
         //transaction.addToBackStack(null);
@@ -136,34 +158,34 @@ public class MenuContainer extends AppCompatActivity {
         currentFragment = fragment;
     }
 
-    public void permits(){
-        if (Build.VERSION.SDK_INT >= 23){
-            if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){ // Permits ready
+    public void permits() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) { // Permits ready
                 display();
-                Log.println(Log.INFO,TAG,"API >= 23");
-            } else{
-                if(shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) // Message of error
+                Log.println(Log.INFO, TAG, "API >= 23");
+            } else {
+                if (shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) // Message of error
                     Toast.makeText(getApplicationContext(), "External storage and camera permission required to read media", Toast.LENGTH_SHORT).show();
-                requestPermissions(new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE_EXTERNAL_STORAGE); // Callback for permits
+                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE_EXTERNAL_STORAGE); // Callback for permits
             }
         } else {
-            Log.println(Log.INFO,TAG,"API < 23");
+            Log.println(Log.INFO, TAG, "API < 23");
             display();
         }
     }
 
-    public void permitsMaps(){
-        if (Build.VERSION.SDK_INT >= 23){
-            if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){ // Permits ready
+    public void permitsMaps() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) { // Permits ready
                 display();
-                Log.println(Log.INFO,TAG,"API >= 23");
-            } else{
-                if(shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)) // Message of error
+                Log.println(Log.INFO, TAG, "API >= 23");
+            } else {
+                if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)) // Message of error
                     Toast.makeText(getApplicationContext(), "GPS required permits", Toast.LENGTH_SHORT).show();
-                requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_LOCATION); // Callback for permits
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_LOCATION); // Callback for permits
             }
         } else {
-            Log.println(Log.INFO,TAG,"API < 23");
+            Log.println(Log.INFO, TAG, "API < 23");
             display();
         }
     }
@@ -177,18 +199,19 @@ public class MenuContainer extends AppCompatActivity {
             } else {
                 Toast.makeText(getApplicationContext(), "External read permission has not been granted, cannot open media", Toast.LENGTH_SHORT).show();
             }
-        } else if (requestCode == PERMISSION_REQUEST_LOCATION){
+        } else if (requestCode == PERMISSION_REQUEST_LOCATION) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(getApplicationContext(), "External location permission", Toast.LENGTH_SHORT).show();
                 display();
             } else {
                 Toast.makeText(getApplicationContext(), "External location permission has not been granted, cannot use gps", Toast.LENGTH_SHORT).show();
             }
-        }else{
+        } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
-    void display(){
+
+    void display() {
         //get repository
     }
 }

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center_horizontal"
+    app:cardElevation="4dp"
+    app:cardCornerRadius="20dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_gravity="center_vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    app:cardBackgroundColor="#63F57F17"
+                    app:cardCornerRadius="20dp">
+
+                    <ImageView
+                        android:id="@+id/image_item_food_by_unity"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </androidx.cardview.widget.CardView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView_title_food_by_unity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/ubuntu"
+                        android:text="ENSALADA DE PALTA"
+                        android:textColor="#BE4F10"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/textView_content_food_by_unity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/ubuntu"
+                        android:text="Consumir 3 veces"
+                        android:textColor="#000000" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.cardview.widget.CardView>

@@ -1,13 +1,21 @@
 <resources>
-    <string name="app_name">MyAppDeport</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <!-- FACEBBOK APP ID : LOGIN APP -->
-    <string name="facebook_application_id" translatable="false">268347064606335</string>
-    <string name="facebook_login_protocol_scheme" translatable="false">fb268347064606335</string>
-    <string name="recomendaciones">RECOMENDACIONES</string>
-    <string name="myappdeport">MyAppDeport</string>
-    <string name="leer_mas">Leer mas</string>
-    <string name="iniciar_sesi_n_con">Iniciar Sesión con</string>
+	<string name="app_name">MyAppDeport</string>
+	<!-- TODO: Remove or change this placeholder text -->
+	<string name="hello_blank_fragment">Hello blank fragment</string>
+	<!-- FACEBBOK APP ID : LOGIN APP -->
+	<string name="facebook_application_id" translatable="false">268347064606335</string>
+	<string name="facebook_login_protocol_scheme" translatable="false">fb268347064606335</string>
+	<string name="recomendaciones">RECOMENDACIONES</string>
+	<string name="myappdeport">MyAppDeport</string>
+	<string name="leer_mas">Leer mas</string>
+	<string name="iniciar_sesi_n_con">Iniciar Sesión con</string>
+
+	<!--Media Player Controls Names-->
+	<string name="label_stop">Stop</string>
+	<string name="label_pause">Pause</string>
+	<string name="label_play">Play</string>
+	<string name="label_play_pause">Play and pause toggle</string>
+	<string name="label_previous">Previous track</string>
+	<string name="label_next">Next track</string>
 
 </resources>

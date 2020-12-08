@@ -33,6 +33,7 @@ public class Profile extends Fragment {
     // atributos del fragment
     private ImageView editProfile,photo;
     View view;
+    ViewGroup  viewGroup;
     Context context;
     private EUserEDWIN datos;
     private TextView text_usuario_nombres,text_usuario_email,text_usuario_cumpleanos,text_usuario_altura,text_usuario_edad,text_usuario_peso;
@@ -66,6 +67,23 @@ public class Profile extends Fragment {
                     .fallback(R.drawable.ic_add_a_photo_24) //imagen auxiliar
                     .into(photo); //8
         }
+        viewGroup = (ViewGroup)inflater.inflate(R.layout.fragment_profile, container, false);
+
+        //datos = (EUserEDWIN) getArguments().getSerializable(USER);
+        //text_usuario_nombres = viewGroup.findViewById(R.id.text_usuario_nombres);
+        //text_usuario_nombres.setText(datos.name);
+        /*textName = viewGroup.findViewById(R.id.timer);
+        new ViewModelProvider(this).get(AuthViewModel.class).authenticatedUserLiveData.observe(this, new Observer<EUserEDWIN>() {
+            @Override
+            public void onChanged(EUserEDWIN eUserEDWIN) {
+                textName.setText(eUserEDWIN.name);
+            }
+        });*/
+        //ImageView imageAnimation = (ImageView) viewGroup.findViewById(R.id.imageButton_imageUser);
+        //imageAnimation.setBackgroundResource(R.drawable.animation);
+        //timeAnimation = (AnimationDrawable) imageAnimation.getBackground();
+        //timeAnimation.start();
+        init();
         return viewGroup;
     }
 
