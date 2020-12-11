@@ -202,23 +202,25 @@ public class MediaPlayBackService extends MediaBrowserServiceCompat {
         @RequiresApi(api = Build.VERSION_CODES.Q)
         @Override
         public void onPrepare() {
-            Log.e(TAG, "PREPARING MEDIA");
-            Log.e(TAG, "current song : " + MediaPlayBackService.this.currentSong);
-            Log.e(TAG, "SONG DURATION: " + songs.get(currentSong).getDuration());
-            mediaSessionCompat.setMetadata(MediaUtils.getMediaMetadataFromSong(songs.get(currentSong), MediaPlayBackService.this.getApplicationContext()));
-            if (mediaPlayer == null) {
-                mediaPlayer = new MediaPlayer();
-                try {
-                    mediaPlayer.setDataSource(MediaPlayBackService.this.getApplication(), songs.get(currentSong).getSongPath());
-                    mediaPlayer.prepare();
-                    Log.e(TAG, "SONG DURATION: " + mediaPlayer.getDuration());
-                } catch (IOException e) {
-                    e.printStackTrace();
+            if (!songs.isEmpty()) {
+                Log.e(TAG, "PREPARING MEDIA");
+                mediaSessionCompat.setMetadata(MediaUtils.getMediaMetadataFromSong(songs.get(currentSong), MediaPlayBackService.this.getApplicationContext()));
+                if (mediaPlayer == null) {
+                    mediaPlayer = new MediaPlayer();
+                    try {
+                        mediaPlayer.setDataSource(MediaPlayBackService.this.getApplication(), songs.get(currentSong).getSongPath());
+                        mediaPlayer.prepare();
+                        Log.e(TAG, "SONG DURATION: " + mediaPlayer.getDuration());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
-            mediaSessionCompat.setPlaybackState(getBuilderByPlaybackAction(PlaybackStateCompat.STATE_CONNECTING, 0).build());
-            if (!mediaSessionCompat.isActive()) {
-                mediaSessionCompat.setActive(true);
+                mediaSessionCompat.setPlaybackState(getBuilderByPlaybackAction(PlaybackStateCompat.STATE_CONNECTING, 0).build());
+                if (!mediaSessionCompat.isActive()) {
+                    mediaSessionCompat.setActive(true);
+                }
+            } else {
+                Log.e(TAG, "DON'T EXIST MEDIA");
             }
             super.onPrepare();
         }

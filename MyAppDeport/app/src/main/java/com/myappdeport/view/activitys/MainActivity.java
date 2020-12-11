@@ -67,46 +67,6 @@ public class MainActivity extends AppCompatActivity {
                 openMenuContainer();
             }
         });
-        PositionFireStoreRepository repository = PositionFireStoreRepository.getInstance();
-        RouteFireStoreRepository repository2 = RouteFireStoreRepository.getInstance();
-        /*
-        repository.save(new EPosition(12.4, 32.4, 23.5)).addOnSuccessListener(
-                position -> {
-                    Log.e(TAG, position.toString());
-                }
-        ).continueWithTask(task -> {
-            return repository2.save(new ERoute(12.3, 32.4, Collections.singletonList(task.getResult().getDocumentId()), Collections.singletonList(task.getResult())));
-        }).addOnSuccessListener(
-                eRoute -> {
-                    Log.e(TAG, eRoute.toString());
-                }
-        ).continueWithTask(task -> {
-            return repository2.getRouteWithPositions(task.getResult().getDocumentId());
-        }).addOnSuccessListener(optionalERoute -> {
-            optionalERoute.ifPresent(eRoute -> {
-                for (EPosition ePosition : eRoute.getPositions())
-                    Log.e(TAG, ePosition.toString());
-            });
-        });
-    */
-        /*IRouteRepository<String> routeRepository = RouteFireStoreRepository.getInstance();
-        IActivityRepository<String> activityRepository = ActivityFireStoreRepository.getInstance();
-        EPosition ePosition = new EPosition(12.4, 524.5, 2345.0);
-        ERoute eRoute = new ERoute(12.5, 123.5, Collections.singletonList(ePosition));
-        EActivity eActivity = new EActivity("12:00:00", "12:00:00", "12/05/13", 123.5, eRoute);
-        routeRepository.saveWithPositions(eRoute).addOnSuccessListener(eRoute1 -> {
-            Log.e(TAG, eRoute1.toString());
-        });
-        activityRepository.saveWithRouteAndPositions(eActivity).addOnSuccessListener(eActivity1 -> {
-            Log.e(TAG, eActivity1.toString());
-        });
-        IPositionRepository<Long> positionRepository = PositionRoomRepository.getInstance(this);
-        positionRepository.save(ePosition).addOnSuccessListener(position -> {
-            Log.e(TAG, position.toString());
-        }).addOnFailureListener(e -> {
-            Log.e(TAG, e.getMessage(), e.getCause());
-        });*/
-
     }
 
     public void openIniciarSesion() {

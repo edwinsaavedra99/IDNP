@@ -7,8 +7,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
-import android.support.v4.media.MediaDescriptionCompat;
-import android.support.v4.media.MediaMetadataCompat;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 
@@ -16,14 +14,10 @@ import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
 
 import com.myappdeport.model.entity.functional.Song;
-import com.myappdeport.utils.MediaUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import static android.provider.BaseColumns._ID;
 import static android.provider.MediaStore.Audio.AudioColumns.ALBUM;
@@ -92,7 +86,9 @@ public class MusicScanner {
                 } else {
                     songUri = ContentUris.withAppendedId(INTERNAL_CONTENT_URI, thisId);
                 }
-                if (MimeTypeMap.getSingleton().getExtensionFromMimeType(context.getContentResolver().getType(songUri)).equalsIgnoreCase("mp3")) {
+                MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+                ContentResolver contentResolver = context.getContentResolver();
+                if (mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(songUri)).equalsIgnoreCase("mp3")) {
                     String thisTitle = cursor.getString(titleColumn);
                     String thisAlbumName = cursor.getString(albumNameColumn);
                     String thisArtist = cursor.getString(artistColumn);
@@ -132,17 +128,4 @@ public class MusicScanner {
         return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
     }
 
-    @Deprecated
-    @RequiresApi(api = Build.VERSION_CODES.Q)
-    public List<MediaDescriptionCompat> getMediaItems() {
-        List<Song> allSongInDevice = this.listLiveData.getValue();
-        return MediaUtils.songToMediaDescription(Objects.requireNonNull(allSongInDevice), this.context);
-    }
-
-    @Deprecated
-    @RequiresApi(api = Build.VERSION_CODES.Q)
-    public List<MediaMetadataCompat> getMetadataItems() {
-        List<Song> allSongInDevice = this.listLiveData.getValue();
-        return MediaUtils.songToMetadata(Objects.requireNonNull(allSongInDevice));
-    }
 }
