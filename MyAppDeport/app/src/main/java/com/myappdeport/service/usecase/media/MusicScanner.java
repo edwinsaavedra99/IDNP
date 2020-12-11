@@ -11,8 +11,10 @@ import android.support.v4.media.MediaDescriptionCompat;
 import android.support.v4.media.MediaMetadataCompat;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
+
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
+
 import com.myappdeport.model.entity.functional.Song;
 import com.myappdeport.utils.MediaUtils;
 
@@ -20,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static android.provider.BaseColumns._ID;
 import static android.provider.MediaStore.Audio.AudioColumns.ALBUM;
@@ -33,6 +37,7 @@ public class MusicScanner {
     private final String TAG;
     private final Context context;
     private final MutableLiveData<List<Song>> listLiveData = new MutableLiveData<>();
+    //private ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public MutableLiveData<List<Song>> getListLiveData() {
         return listLiveData;
@@ -42,7 +47,8 @@ public class MusicScanner {
     public MusicScanner(Context context) {
         this.context = context;
         this.TAG = MusicScanner.class.getSimpleName();
-        this.scanAllDevice();
+        new Thread(this::scanAllDevice).start();
+        //executorService.submit(this::scanAllDevice);
     }
 
     private Cursor scanExternalDevice() {
@@ -95,6 +101,7 @@ public class MusicScanner {
                     songs.add(new Song(thisId, thisTitle, thisAlbumName, thisArtist, thisDuration, songUri));
                 }
             } while (cursor.moveToNext());
+            Log.e(TAG, String.valueOf(cursor.getCount()));
             return songs;
         }
         return Collections.emptyList();
@@ -102,7 +109,9 @@ public class MusicScanner {
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
     public void scanAllDevice() {
+        Log.e(TAG, "Ending Scanning Internal");
         List<Song> internalSDCard = this.cursorToSong(this.scanInternalDevice(), false);
+        Log.e(TAG, "Ending Scanning External");
         List<Song> externalSDCard = this.cursorToSong(this.scanExternalDevice(), true);
         List<Song> allSongs = new ArrayList<>();
         if (!internalSDCard.isEmpty()) {
@@ -111,7 +120,12 @@ public class MusicScanner {
         if (!externalSDCard.isEmpty()) {
             allSongs.addAll(externalSDCard);
         }
-        this.listLiveData.setValue(allSongs);
+        Log.e(TAG, "Setting all scanning music.");
+        try {
+            this.listLiveData.postValue(allSongs);
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e.getCause());
+        }
     }
 
     private boolean isSDCardPresent() {

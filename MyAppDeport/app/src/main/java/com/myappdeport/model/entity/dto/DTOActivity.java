@@ -1,6 +1,10 @@
 package com.myappdeport.model.entity.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
@@ -12,22 +16,11 @@ public class DTOActivity extends DTOEntity {
     private String endTime;
     private String kiloCalories;
     private String date;
-    /**
-     * Id del documento route firebase.
-     */
-    private String routeDocumentId;
-    /**
-     * Id del documento user firebase.
-     */
-    private String userDocumentId;
-    /**
-     * Id de la ruta SQLite.
-     */
-    private String idERoute;
-    /**
-     * Id del usuario SQLite.
-     */
-    private String idEUser;
-
+    private String title;
+    private String description;
     private DTORoute dtoRoute;
+    private String routeDocumentId;
+    private String userDocumentId;
+    private String idERoute;
+    private String idEUser;
 }

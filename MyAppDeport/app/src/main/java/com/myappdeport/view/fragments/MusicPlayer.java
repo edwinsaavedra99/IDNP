@@ -1,5 +1,6 @@
 package com.myappdeport.view.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -17,7 +18,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.ImageView;
+import android.widget.SearchView;
+import android.widget.SeekBar;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -25,14 +30,22 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.myappdeport.R;
 import com.myappdeport.model.entity.functional.Song;
 import com.myappdeport.service.usecase.media.MediaPlayBackService;
-import com.myappdeport.view.activitys.MainActivity;
 import com.myappdeport.view.adapters.MusicAdapter;
 import com.myappdeport.viewmodel.MusicViewModel;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
+
+import static com.myappdeport.utils.ParseMetrics.milliSecondsToTimer;
 
 public class MusicPlayer extends Fragment {
     private static final String TAG = MusicPlayer.class.getSimpleName();
@@ -47,6 +60,7 @@ public class MusicPlayer extends Fragment {
     private SearchView searchMusic;
     private RecyclerView listMusicView;
     private MusicAdapter musicAdapter;
+    private TextView textTimer;
 
     private MediaPlayBackService mediaService;
     private boolean mBound = false;
@@ -63,11 +77,15 @@ public class MusicPlayer extends Fragment {
             mediaService = binder.getMediaPlaybackService();
             mBound = true;
             // Add to services to media service.
-            mediaService.setMediaQueue(musicViewModel.getAllSongs(MusicPlayer.this.getActivity()).getValue().subList(0, 100));
-            currentMetadata = mediaService.getCurrentMetadata();
-            if (currentMetadata != null) {
-                titleSong.setText(currentMetadata.getText(MediaMetadataCompat.METADATA_KEY_TITLE));
-            }
+            musicViewModel.getAllSongs(MusicPlayer.this.getActivity()).observe(MusicPlayer.this.getViewLifecycleOwner(), songs -> {
+                mediaService.setMediaQueue(songs);
+                currentMetadata = mediaService.getCurrentMetadata();
+                if (currentMetadata != null) {
+                    titleSong.setText(currentMetadata.getText(MediaMetadataCompat.METADATA_KEY_TITLE));
+                }
+            });
+            //mediaService.setMediaQueue(musicViewModel.getAllSongs(MusicPlayer.this.getActivity()).getValue().subList(0, 100));
+
         }
 
         @Override
@@ -129,6 +147,8 @@ public class MusicPlayer extends Fragment {
         this.musicAdapter = new MusicAdapter(this.getActivity(), Collections.emptyList());
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    @SuppressLint("SetTextI18n")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -143,17 +163,51 @@ public class MusicPlayer extends Fragment {
         this.listMusicView = viewGroup.findViewById(R.id.rvSongs);
         this.listMusicView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         this.titleSong = viewGroup.findViewById(R.id.nameSong);
+        this.textTimer = viewGroup.findViewById(R.id.timer);
+        this.searchMusic = viewGroup.findViewById(R.id.searchMusic);
+        this.searchMusic.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                String queryNormative = query.toLowerCase().trim();
+                AtomicBoolean queryResult = new AtomicBoolean(false);
+                musicViewModel.getAllSongs(MusicPlayer.this.getContext()).observe(MusicPlayer.this.getViewLifecycleOwner(), songs -> {
+                    List<Song> querySongs = songs
+                            .parallelStream()
+                            .filter(song -> song.getTitle().toLowerCase().contains(queryNormative)
+                                    || song.getAlbum().toLowerCase().contains(queryNormative)
+                                    || song.getArtist().toLowerCase().contains(queryNormative))
+                            .collect(Collectors.toList());
+                    musicAdapter.setSongs(querySongs);
+                    mediaService.setMediaQueue(querySongs);
+                    musicAdapter.notifyDataSetChanged();
+                    queryResult.set(querySongs.isEmpty());
+                });
+                return queryResult.get();
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
         this.initActionOfMediaControls();
         //this.musicViewModel.getAllSongs(Objects.requireNonNull(this.getActivity()).getApplicationContext()).observe(getViewLifecycleOwner(), this::updateListMusicView);
+        this.updateListMusicView();
+        this.titleSong.setText("Cargando su musica espere ...");
         new Timer().scheduleAtFixedRate(new TimerTask() {
+            @RequiresApi(api = Build.VERSION_CODES.Q)
             @Override
             public void run() {
-                if (mBound && mediaService.getCurrentPosition() != -1) {
-                    try {
-                        musicProgress.setProgress(mediaService.getCurrentPosition() / 1000);
-                    } catch (Exception e){
-                        Log.e(TAG, "ERROR SYNC");
+                try {
+                    if (mBound && mediaService.getCurrentPosition() != -1) {
+                        musicProgress.post(() -> musicProgress.setProgress(mediaService.getCurrentPosition() / 1000));
+                        textTimer.post(() -> textTimer.setText(milliSecondsToTimer(mediaService.getCurrentPosition())));
+                    } else {
+                        musicProgress.post(() -> musicProgress.setProgress(0));
+                        textTimer.post(() -> textTimer.setText(milliSecondsToTimer(0)));
                     }
+                } catch (Exception e) {
+                    Log.e(TAG, "ERROR SYNC");
                 }
             }
         }, 0, 500);
@@ -164,17 +218,20 @@ public class MusicPlayer extends Fragment {
     /**
      * Initial some components of media player.
      */
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     public void initActionOfMediaControls() {
-        this.btnRefresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mBound) {
-                    List<Song> songList = musicViewModel.getAllSongs(MusicPlayer.this.getActivity()).getValue();
+        this.btnRefresh.setOnClickListener(v -> {
+            Log.e(TAG, "udpate Reclycler");
+            if (mBound) {
+                Log.e(TAG, "Reclycler updating");
+                musicViewModel.getAllSongs(MusicPlayer.this.getActivity()).observe(MusicPlayer.this.getViewLifecycleOwner(), songs -> {
+                    musicAdapter.setSongs(songs);
+                    musicAdapter.notifyDataSetChanged();
                     // Actualizando la cola en el servicio.
-                    mediaService.setMediaQueue(songList);
+                    mediaService.setMediaQueue(songs);
                     // Actualizando la vista en el fragment.
-                    updateListMusicView(songList);
-                }
+                    updateListMusicView();
+                });
             }
         });
     }
@@ -182,9 +239,10 @@ public class MusicPlayer extends Fragment {
     /**
      * Update Component
      */
-    private void updateListMusicView(List<Song> songs) {
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    private void updateListMusicView() {
         this.musicViewModel.getAllSongs(this.getActivity()).observe(getViewLifecycleOwner(), songsLiveData -> {
-            musicAdapter.setSongs(songsLiveData.subList(0, 100));
+            musicAdapter.setSongs(songsLiveData);
             musicAdapter.notifyDataSetChanged();
         });
         this.listMusicView.setAdapter(musicAdapter);
@@ -202,7 +260,6 @@ public class MusicPlayer extends Fragment {
     public void onStart() {
         super.onStart();
         mediaBrowserCompat.connect();
-
         Intent intent = new Intent(this.getActivity(), MediaPlayBackService.class);
         Objects.requireNonNull(this.getActivity()).bindService(intent, connection, Context.BIND_AUTO_CREATE);
     }
@@ -256,15 +313,12 @@ public class MusicPlayer extends Fragment {
     };
 
     private void buildTransportControls() {
-        this.btnPlayPause.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int pdState = MediaControllerCompat.getMediaController(Objects.requireNonNull(MusicPlayer.this.getActivity())).getPlaybackState().getState();
-                if (pdState == PlaybackStateCompat.STATE_PLAYING)
-                    MediaControllerCompat.getMediaController(MusicPlayer.this.getActivity()).getTransportControls().pause();
-                if (pdState == PlaybackStateCompat.STATE_PAUSED || pdState == PlaybackStateCompat.STATE_CONNECTING || pdState == PlaybackStateCompat.STATE_STOPPED)
-                    MediaControllerCompat.getMediaController(MusicPlayer.this.getActivity()).getTransportControls().play();
-            }
+        this.btnPlayPause.setOnClickListener(v -> {
+            int pdState = MediaControllerCompat.getMediaController(Objects.requireNonNull(MusicPlayer.this.getActivity())).getPlaybackState().getState();
+            if (pdState == PlaybackStateCompat.STATE_PLAYING)
+                MediaControllerCompat.getMediaController(MusicPlayer.this.getActivity()).getTransportControls().pause();
+            if (pdState == PlaybackStateCompat.STATE_PAUSED || pdState == PlaybackStateCompat.STATE_CONNECTING || pdState == PlaybackStateCompat.STATE_STOPPED)
+                MediaControllerCompat.getMediaController(MusicPlayer.this.getActivity()).getTransportControls().play();
         });
         this.btnNext.setOnClickListener(v -> MediaControllerCompat.getMediaController(Objects.requireNonNull(MusicPlayer.this.getActivity())).getTransportControls().skipToNext());
 

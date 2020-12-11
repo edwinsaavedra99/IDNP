@@ -82,7 +82,9 @@ public class MenuContainer extends AppCompatActivity {
         });
         locking.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { LockScreen(); }
+            public void onClick(View v) {
+                LockScreen();
+            }
         });
         //loadFragment(maps);
         //currentFragment = maps;
@@ -90,14 +92,16 @@ public class MenuContainer extends AppCompatActivity {
         permits();
         permitsMaps();
     }
-    private  void LockScreen(){
-        bottomNavigationView.setVisibility(View.GONE );
+
+    private void LockScreen() {
+        bottomNavigationView.setVisibility(View.GONE);
         locking.setVisibility(View.GONE);
         title.setVisibility(View.GONE);
         frameLayout.setVisibility(View.GONE);
     }
-    private  void InLockScreen(){
-        bottomNavigationView.setVisibility(View.VISIBLE );
+
+    private void InLockScreen() {
+        bottomNavigationView.setVisibility(View.VISIBLE);
         locking.setVisibility(View.VISIBLE);
         title.setVisibility(View.VISIBLE);
         frameLayout.setVisibility(View.VISIBLE);
@@ -116,22 +120,27 @@ public class MenuContainer extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.item1:
                     //currentFragment = eatingTips;
+                    Log.e(TAG, "Eating Tips");
                     loadFragment(eatingTips, Constants.TAG_F_NUTRITION);
                     return true;
                 case R.id.item2:
                     //currentFragment = musicPlayer;
+                    Log.e(TAG, "Music Player");
                     loadFragment(musicPlayer, Constants.TAG_F_MUSIC);
                     return true;
                 case R.id.item3:
                     //currentFragment = maps;
+                    Log.e(TAG, "Map");
                     loadFragment(maps2, Constants.TAG_F_MAP);
                     return true;
                 case R.id.item4:
                     //currentFragment = statics;
+                    Log.e(TAG, "Statistics");
                     loadFragment(statics, Constants.TAG_F_STATISTIC);
                     return true;
                 case R.id.item5:
                     //currentFragment = profile;
+                    Log.e(TAG, "Profile");
                     loadFragment(profile, Constants.TAG_F_PROFILE);
                     return true;
             }

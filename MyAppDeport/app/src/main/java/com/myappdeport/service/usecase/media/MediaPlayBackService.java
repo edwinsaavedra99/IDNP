@@ -12,11 +12,13 @@ import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.media.MediaBrowserServiceCompat;
+
 import com.myappdeport.model.entity.functional.Song;
 import com.myappdeport.utils.MediaUtils;
 
@@ -96,7 +98,11 @@ public class MediaPlayBackService extends MediaBrowserServiceCompat {
     }
 
     public MediaMetadataCompat getCurrentMetadata() {
-        return MediaUtils.getMediaMetadataFromSong(songs.get(currentSong), MediaPlayBackService.this.getApplicationContext());
+        if (songs == null || songs.isEmpty()) {
+            return null;
+        } else {
+            return MediaUtils.getMediaMetadataFromSong(songs.get(currentSong), MediaPlayBackService.this.getApplicationContext());
+        }
     }
 
     // ==================== FOR MAIN ACTIVITY CONTROLLER DATA ================================
