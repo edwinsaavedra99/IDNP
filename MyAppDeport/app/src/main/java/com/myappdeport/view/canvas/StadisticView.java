@@ -82,17 +82,18 @@ public class StadisticView extends View {
     @SuppressLint("CanvasSize")
     protected void onDraw(Canvas canvas) {
         //int margen_inferior = Math.round(200*metrics.heightPixels/854f);
-        int margen_inferior = 750;
-        int altoMax =  metrics.heightPixels;
+        int margen_inferior = 25;
+        int altoMax =  getHeight();
         int anchoMax = metrics.widthPixels;
         System.out.println(altoMax + " ---------------");
         System.out.println(anchoMax + " ---------------");
-        int margen_y = 10;
+        int margen_y = 0;
         int margen_x = 120;
-        int alto_disponible = altoMax - margen_y * 2;
-        int ancho_disponible = anchoMax - margen_x * 2;
+        //int alto_disponible = altoMax - margen_y * 2;
+        int ancho_disponible = anchoMax - margen_x * 2 ;
+        int alto_disponible = getHeight() ;
         int cantidad_lineas = 10;
-        int distancia_lineas = (alto_disponible - margen_inferior) / cantidad_lineas-40;
+        int distancia_lineas = (alto_disponible - margen_inferior) / cantidad_lineas;
         //int distancia_lineas = getHeight()*2 / cantidad_lineas-40;
         double max_value_data = getMaxValue(data);
         double intervalo = max_value_data / (cantidad_lineas - 1);

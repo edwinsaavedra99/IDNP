@@ -58,7 +58,7 @@
         android:layout_height="match_parent"
         android:layout_above="@id/menu"
         android:layout_below="@+id/textView18"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="70dp"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="6dp"
         tools:layout_editor_absoluteY="6dp"
