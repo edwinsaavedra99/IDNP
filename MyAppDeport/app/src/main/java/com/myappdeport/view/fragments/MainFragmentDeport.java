@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.TextView;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -78,6 +80,7 @@ public class MainFragmentDeport extends Fragment implements TimerInterface.Timer
         chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             public void onChronometerTick(Chronometer c) {
                 //CODIGO CANDIDATO A IR EN UTILS
+
                 long elapsedMillis = SystemClock.elapsedRealtime() -c.getBase();
                 if(elapsedMillis > 3600000L){
                     c.setFormat("0%s");
@@ -86,7 +89,8 @@ public class MainFragmentDeport extends Fragment implements TimerInterface.Timer
                 }
             }
         });
-        mUCTimer = new ChronometerUseCase(this,chronometer);
+        /*TextView dsa
+        mUCTimer = new ChronometerUseCase(this,chronometer,new TextView());
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,7 +99,7 @@ public class MainFragmentDeport extends Fragment implements TimerInterface.Timer
                 btnPause.setVisibility(View.VISIBLE);
                 btnStop.setVisibility(View.VISIBLE);
             }
-        });
+        });*/
         btnPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

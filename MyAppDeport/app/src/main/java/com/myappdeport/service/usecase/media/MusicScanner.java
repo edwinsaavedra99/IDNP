@@ -88,14 +88,17 @@ public class MusicScanner {
                 }
                 MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
                 ContentResolver contentResolver = context.getContentResolver();
-                if (mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(songUri)).equalsIgnoreCase("mp3")) {
-                    String thisTitle = cursor.getString(titleColumn);
-                    String thisAlbumName = cursor.getString(albumNameColumn);
-                    String thisArtist = cursor.getString(artistColumn);
-                    //String thisGenre = cursor.getString(genreColumn);
-                    long thisDuration = cursor.getLong(durationColumn);
-                    songs.add(new Song(thisId, thisTitle, thisAlbumName, thisArtist, thisDuration, songUri));
+                if(mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(songUri))!=null){
+                    if (mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(songUri)).equalsIgnoreCase("mp3")) {
+                        String thisTitle = cursor.getString(titleColumn);
+                        String thisAlbumName = cursor.getString(albumNameColumn);
+                        String thisArtist = cursor.getString(artistColumn);
+                        //String thisGenre = cursor.getString(genreColumn);
+                        long thisDuration = cursor.getLong(durationColumn);
+                        songs.add(new Song(thisId, thisTitle, thisAlbumName, thisArtist, thisDuration, songUri));
+                    }
                 }
+
             } while (cursor.moveToNext());
             Log.e(TAG, String.valueOf(cursor.getCount()));
             return songs;
