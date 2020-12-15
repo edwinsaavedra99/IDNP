@@ -86,7 +86,8 @@ public class MusicScanner {
                 } else {
                     songUri = ContentUris.withAppendedId(INTERNAL_CONTENT_URI, thisId);
                 }
-                if (thisDisplayName.endsWith("mp3")) {
+                if(thisDisplayName!=null){
+                //if (thisDisplayName.endsWith("mp3")) {
                     String thisTitle = cursor.getString(titleColumn);
                     String thisAlbumName = cursor.getString(albumNameColumn);
                     String thisArtist = cursor.getString(artistColumn);
