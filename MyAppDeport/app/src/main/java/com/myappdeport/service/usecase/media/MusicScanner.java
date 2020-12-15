@@ -24,8 +24,7 @@ import static android.provider.MediaStore.Audio.AudioColumns.ALBUM;
 import static android.provider.MediaStore.Audio.AudioColumns.ARTIST;
 import static android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
 import static android.provider.MediaStore.Audio.Media.INTERNAL_CONTENT_URI;
-import static android.provider.MediaStore.MediaColumns.DURATION;
-import static android.provider.MediaStore.MediaColumns.TITLE;
+import static android.provider.MediaStore.MediaColumns.*;
 
 public class MusicScanner {
     private final String TAG;
@@ -74,18 +73,21 @@ public class MusicScanner {
             List<Song> songs = new ArrayList<>();
             int idColumn = cursor.getColumnIndex(_ID);
             int titleColumn = cursor.getColumnIndex(TITLE);
+            int displayName = cursor.getColumnIndex(DISPLAY_NAME);
             int albumNameColumn = cursor.getColumnIndex(ALBUM);
             int artistColumn = cursor.getColumnIndex(ARTIST);
             int durationColumn = cursor.getColumnIndex(DURATION);
             //int genreColumn = cursor.getColumnIndex(GENRE);
             do {
                 long thisId = cursor.getLong(idColumn);
+                String thisDisplayName = cursor.getString(displayName);
                 Uri songUri;
                 if (isExternalOrInternal) {
                     songUri = ContentUris.withAppendedId(EXTERNAL_CONTENT_URI, thisId);
                 } else {
                     songUri = ContentUris.withAppendedId(INTERNAL_CONTENT_URI, thisId);
                 }
+
                 MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
                 ContentResolver contentResolver = context.getContentResolver();
                 if(mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(songUri))!=null){
@@ -97,6 +99,7 @@ public class MusicScanner {
                         long thisDuration = cursor.getLong(durationColumn);
                         songs.add(new Song(thisId, thisTitle, thisAlbumName, thisArtist, thisDuration, songUri));
                     }
+
                 }
 
             } while (cursor.moveToNext());
