@@ -7,12 +7,10 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.provider.OpenableColumns;
 import android.util.Log;
-import android.webkit.MimeTypeMap;
-
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
-
 import com.myappdeport.model.entity.functional.Song;
 
 import java.util.ArrayList;
@@ -24,7 +22,8 @@ import static android.provider.MediaStore.Audio.AudioColumns.ALBUM;
 import static android.provider.MediaStore.Audio.AudioColumns.ARTIST;
 import static android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
 import static android.provider.MediaStore.Audio.Media.INTERNAL_CONTENT_URI;
-import static android.provider.MediaStore.MediaColumns.*;
+import static android.provider.MediaStore.MediaColumns.DURATION;
+import static android.provider.MediaStore.MediaColumns.TITLE;
 
 public class MusicScanner {
     private final String TAG;
@@ -73,7 +72,7 @@ public class MusicScanner {
             List<Song> songs = new ArrayList<>();
             int idColumn = cursor.getColumnIndex(_ID);
             int titleColumn = cursor.getColumnIndex(TITLE);
-            int displayName = cursor.getColumnIndex(DISPLAY_NAME);
+            int displayName = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
             int albumNameColumn = cursor.getColumnIndex(ALBUM);
             int artistColumn = cursor.getColumnIndex(ARTIST);
             int durationColumn = cursor.getColumnIndex(DURATION);
