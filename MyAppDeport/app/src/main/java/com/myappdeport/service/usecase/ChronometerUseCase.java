@@ -2,6 +2,8 @@ package com.myappdeport.service.usecase;
 
 import android.os.SystemClock;
 import android.widget.Chronometer;
+import android.widget.TextView;
+
 import com.myappdeport.service.usecase.interfaces.TimerInterface;
 
 public class ChronometerUseCase implements TimerInterface.TimerInterfaceUseCase {
@@ -10,13 +12,15 @@ public class ChronometerUseCase implements TimerInterface.TimerInterfaceUseCase 
     private boolean running;
     private long pauseOffSet;
     private Chronometer chronometer;
+    private TextView textView;
 
     /**
      * Constructor de presentador para el activity deport, inicializa el cronometro
      **/
-    public ChronometerUseCase(TimerInterface.TimerInterfaceView view, Chronometer chronometer){
+    public ChronometerUseCase(TimerInterface.TimerInterfaceView view, Chronometer chronometer,TextView textView){
         mView = view;
         this.chronometer = chronometer;
+        this.textView = textView;
         initPresenter();
     }
 
@@ -31,6 +35,8 @@ public class ChronometerUseCase implements TimerInterface.TimerInterfaceUseCase 
         if(!running){
             chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffSet);
             chronometer.start();
+            String d = chronometer.getText().toString();
+            System.out.println(d);
             running = true;
         }
     }

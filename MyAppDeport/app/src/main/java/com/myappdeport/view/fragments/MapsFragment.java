@@ -43,14 +43,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import lombok.SneakyThrows;
+
 public class MapsFragment extends Fragment implements TimerInterface.TimerInterfaceView,OnMapReadyCallback {
 
     GoogleMap map;
     private Chronometer chronometer;
-    private TextView textView;
+    private TextView textView,textViewCrono;
     private TimerInterface.TimerInterfaceUseCase mUCTimer;
     private FloatingActionButton btnStart;
     private LocationManager locationManager;
+    private LocationListener locationListener;
     private Location location;
     private LatLng previoL;
     private List<LatLng> latLngList = new ArrayList<>();
@@ -70,7 +73,7 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
             //map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(.getLatitude(),location.getLongitude()));
             //CameraPosition cameraPosition =  new CameraPosition.Builder().target(latLng).zoom(16)/*.bearing(90).tilt(45)*/.build();
             //map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-            LocationListener locationListener = new LocationListener() {
+            locationListener = new LocationListener() {
                 @SuppressLint("SetTextI18n")
                 @Override
                 public void onLocationChanged(Location location) {
@@ -83,6 +86,12 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
                             map.addPolyline((new PolylineOptions()).color(Color.argb(255,186,74,0)).width(10).addAll(latLngList));
                             DecimalFormat df = new DecimalFormat("0.00");
                             textView.setText(df.format(ParseMetrics.mtoKm(distaceAll(latLngList))) + " Km");
+
+                            /*
+                            * llamar para guardar
+                            * */
+
+
                         }
                     }
                     map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
@@ -111,6 +120,7 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
         btnStart = viewGroup.findViewById(R.id.floatingActionButtonStartActivity);
         chronometer = viewGroup.findViewById(R.id.timeChr);
         textView = viewGroup.findViewById(R.id.textView20);
+        textViewCrono = viewGroup.findViewById(R.id.timer);
         initView();
         return viewGroup;
     }
@@ -141,7 +151,7 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
                 }
             }
         });
-        mUCTimer = new ChronometerUseCase(this,chronometer);
+        mUCTimer = new ChronometerUseCase(this,chronometer,textViewCrono);
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
