@@ -11,16 +11,18 @@ public class ChronometerUseCase implements TimerInterface.TimerInterfaceUseCase 
     private TimerInterface.TimerInterfaceView mView;
     private boolean running;
     private long pauseOffSet;
-    private Chronometer chronometer;
-    private TextView textView;
+    private Chronometer chronometer,chronometer2,chronometerExt;
+    //private TextView textView;
 
     /**
      * Constructor de presentador para el activity deport, inicializa el cronometro
      **/
-    public ChronometerUseCase(TimerInterface.TimerInterfaceView view, Chronometer chronometer,TextView textView){
+    public ChronometerUseCase(TimerInterface.TimerInterfaceView view, Chronometer chronometer,Chronometer chronometer2 , Chronometer chronometerExt ){
         mView = view;
         this.chronometer = chronometer;
-        this.textView = textView;
+        this.chronometer2 = chronometer2;
+        this.chronometerExt = chronometerExt;
+
         initPresenter();
     }
 
@@ -35,8 +37,12 @@ public class ChronometerUseCase implements TimerInterface.TimerInterfaceUseCase 
         if(!running){
             chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffSet);
             chronometer.start();
+            chronometer2.setBase(SystemClock.elapsedRealtime() - pauseOffSet);
+            chronometer2.start();
+            chronometerExt.setBase(SystemClock.elapsedRealtime() - pauseOffSet);
+            chronometerExt.start();
             String d = chronometer.getText().toString();
-            System.out.println(d);
+            //System.out.println(d);
             running = true;
         }
     }
@@ -46,7 +52,9 @@ public class ChronometerUseCase implements TimerInterface.TimerInterfaceUseCase 
     public void pauseChronometer() {
         if(running){
             chronometer.stop();
-            pauseOffSet = SystemClock.elapsedRealtime() - chronometer.getBase();
+            chronometer2.stop();
+            chronometerExt.stop();
+            pauseOffSet = SystemClock.elapsedRealtime() - chronometer2.getBase();
             running = false;
         }else {
             startChronometer();
@@ -57,6 +65,8 @@ public class ChronometerUseCase implements TimerInterface.TimerInterfaceUseCase 
     @Override
     public void stopChronometer() {
         chronometer.setBase(SystemClock.elapsedRealtime());
+        chronometer2.setBase(SystemClock.elapsedRealtime());
+        chronometerExt.setBase(SystemClock.elapsedRealtime());
         pauseOffSet = 0;
     }
 }

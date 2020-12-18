@@ -37,6 +37,7 @@ import com.myappdeport.R;
 import com.myappdeport.service.usecase.ChronometerUseCase;
 import com.myappdeport.service.usecase.interfaces.TimerInterface;
 import com.myappdeport.utils.ParseMetrics;
+import com.myappdeport.view.activitys.MenuContainer;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -48,8 +49,8 @@ import lombok.SneakyThrows;
 public class MapsFragment extends Fragment implements TimerInterface.TimerInterfaceView,OnMapReadyCallback {
 
     GoogleMap map;
-    private Chronometer chronometer;
-    private TextView textView,textViewCrono;
+    private Chronometer chronometer,chronometer2;
+    private TextView textView;
     private TimerInterface.TimerInterfaceUseCase mUCTimer;
     private FloatingActionButton btnStart;
     private LocationManager locationManager;
@@ -120,7 +121,7 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
         btnStart = viewGroup.findViewById(R.id.floatingActionButtonStartActivity);
         chronometer = viewGroup.findViewById(R.id.timeChr);
         textView = viewGroup.findViewById(R.id.textView20);
-        textViewCrono = viewGroup.findViewById(R.id.timer);
+        chronometer2 = viewGroup.findViewById(R.id.time);
         initView();
         return viewGroup;
     }
@@ -151,7 +152,7 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
                 }
             }
         });
-        mUCTimer = new ChronometerUseCase(this,chronometer,textViewCrono);
+        mUCTimer = new ChronometerUseCase(this,chronometer,chronometer2, MenuContainer.chronometerExt);
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

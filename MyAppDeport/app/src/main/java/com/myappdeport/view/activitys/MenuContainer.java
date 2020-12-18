@@ -3,6 +3,7 @@ package com.myappdeport.view.activitys;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GestureDetectorCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -14,10 +15,14 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Chronometer;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,11 +30,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.myappdeport.R;
 import com.myappdeport.model.entity.kill.EUserEDWIN;
 import com.myappdeport.utils.Constants;
+import com.myappdeport.utils.onFragmentBtnSelected;
 import com.myappdeport.view.fragments.*;
 
 import static com.myappdeport.utils.Constants.USER;
 
-public class MenuContainer extends AppCompatActivity {
+public class MenuContainer extends AppCompatActivity implements onFragmentBtnSelected {
 
     private static final String TAG = "MenuContainer";
     private static final int PERMISSION_REQUEST_CODE_EXTERNAL_STORAGE = 1;
@@ -40,6 +46,10 @@ public class MenuContainer extends AppCompatActivity {
     Profile profile;
     MapsFragment maps = new MapsFragment();
     MapsFragment maps2 = new MapsFragment();
+    LinearLayout linearLayoutBlock;
+    private GestureDetectorCompat gestureDetectorCompat;
+    private boolean flag;
+    public static Chronometer chronometerExt;
 
 
     private Fragment currentFragment;
@@ -51,7 +61,7 @@ public class MenuContainer extends AppCompatActivity {
     FrameLayout frameLayout;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_container);
         Intent recibir = getIntent();
@@ -62,8 +72,13 @@ public class MenuContainer extends AppCompatActivity {
         args.putSerializable(USER, datos);
         profile = new Profile();
         profile.setArguments(args);
-
+        linearLayoutBlock = findViewById(R.id.lock_screen_hide);
+            linearLayoutBlock.setVisibility(View.GONE);
         locking = findViewById(R.id.lock);
+        gestureDetectorCompat = new GestureDetectorCompat(this, new GestureListener());
+        chronometerExt = findViewById(R.id.lock_cronometer);
+
+        flag = false;
         title = findViewById(R.id.textView_Main_title);
         frameLayout = findViewById(R.id.container);
 
@@ -89,6 +104,7 @@ public class MenuContainer extends AppCompatActivity {
         //loadFragment(maps);
         //currentFragment = maps;
         //loadFragment(maps,Constants.TAG_F_MAP);
+
         permits();
         permitsMaps();
     }
@@ -98,14 +114,21 @@ public class MenuContainer extends AppCompatActivity {
         locking.setVisibility(View.GONE);
         title.setVisibility(View.GONE);
         frameLayout.setVisibility(View.GONE);
+        configuration.setVisibility(View.GONE);
+        linearLayoutBlock.setVisibility(View.VISIBLE);
+        flag=true;
     }
 
     private void InLockScreen() {
+        linearLayoutBlock.setVisibility(View.GONE);
         bottomNavigationView.setVisibility(View.VISIBLE);
         locking.setVisibility(View.VISIBLE);
         title.setVisibility(View.VISIBLE);
         frameLayout.setVisibility(View.VISIBLE);
+        configuration.setVisibility(View.VISIBLE);
+        flag=false;
     }
+
 
     private void openConfiguration() {
         Intent intent = new Intent(this, Configuration.class);
@@ -222,5 +245,26 @@ public class MenuContainer extends AppCompatActivity {
 
     void display() {
         //get repository
+    }
+
+    @Override
+    public void onButtonSelected(Fragment fragment) {
+        loadFragment(fragment,"ISF");
+    }
+
+    private  class  GestureListener  extends GestureDetector.SimpleOnGestureListener {
+         @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            if(flag){
+                InLockScreen();
+            }
+            return super.onFling(e1, e2, velocityX, velocityY);
+        }
+        }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        this.gestureDetectorCompat.onTouchEvent(event);
+        return super.onTouchEvent(event);
     }
 }
