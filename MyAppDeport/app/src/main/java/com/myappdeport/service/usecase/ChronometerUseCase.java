@@ -38,7 +38,6 @@ public class ChronometerUseCase implements TimerInterface.TimerInterfaceUseCase 
     public void startChronometer() {
         if(!running){
             chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffSet);
-            textView.setBase(SystemClock.elapsedRealtime() - pauseOffSet);
             chronometer.start();
 
             chronometer2.setBase(SystemClock.elapsedRealtime() - pauseOffSet);
