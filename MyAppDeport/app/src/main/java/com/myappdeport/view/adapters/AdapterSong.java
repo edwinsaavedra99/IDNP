@@ -124,7 +124,7 @@ public class AdapterSong extends RecyclerView.Adapter<AdapterSong.MyViewHolder> 
             textViewNombre = itemView.findViewById(R.id.nameSong);
             textViewArtista = itemView.findViewById(R.id.artistaSong);
             textViewAlbum = itemView.findViewById(R.id.albumSong);
-            imgEspCard = itemView.findViewById(R.id.imgEspCard);
+            //imgEspCard = itemView.findViewById(R.id.imgEspCard);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
