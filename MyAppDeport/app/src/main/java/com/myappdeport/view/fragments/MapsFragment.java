@@ -64,7 +64,7 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
 
     GoogleMap map;
     private Chronometer chronometer,chronometer2;
-    private TextView textView;
+    private TextView textView,min_dist,distance;
     private TimerInterface.TimerInterfaceUseCase mUCTimer;
     private FloatingActionButton btnStart,floatingMetaButton,floatingPauseButton;
     private LocationManager locationManager;
@@ -109,7 +109,8 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
                             map.addPolyline((new PolylineOptions()).color(Color.argb(255,186,74,0)).width(10).addAll(latLngList));
                             DecimalFormat df = new DecimalFormat("0.00");
                             textView.setText(df.format(ParseMetrics.mtoKm(distaceAll(latLngList))) + " Km");
-
+                            distance.setText(df.format(ParseMetrics.mtoKm(distaceAll(latLngList))) + " Km");
+                            min_dist.setText(distaceAll(latLngList)/12+"");
                             /*
                             * llamar para guardar
                             * */
@@ -146,7 +147,8 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
         chronometer = viewGroup.findViewById(R.id.timeChr);
         chronometer2 = viewGroup.findViewById(R.id.time);
         textView = viewGroup.findViewById(R.id.textView20);
-
+        min_dist = viewGroup.findViewById(R.id.min_dist);
+        distance = viewGroup.findViewById(R.id.distance);
         initAuthViewModel();
         //textViewCrono = viewGroup.findViewById(R.id.timer);
         chronometer2 = viewGroup.findViewById(R.id.time);
@@ -229,7 +231,7 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
                 floatingMetaButton.setVisibility(GONE);
                 floatingPauseButton.setVisibility(GONE);
                 btnStart.setVisibility(View.VISIBLE);
-                route = new ERoute(12.3,123.3,ePositions);
+                route = new ERoute(Double.valueOf(textView.getText().toString()),123.3,ePositions);
                 Toast.makeText(getActivity(),"Su información fue guardada ... ",Toast.LENGTH_SHORT).show();
                 mUCTimer.stopChronometer();
                 String strDateFormat = "hh: mm: ss a";
