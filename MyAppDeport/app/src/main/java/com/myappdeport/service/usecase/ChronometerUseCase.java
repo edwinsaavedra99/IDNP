@@ -72,6 +72,10 @@ public class ChronometerUseCase implements TimerInterface.TimerInterfaceUseCase 
 
         chronometer2.setBase(SystemClock.elapsedRealtime());
         chronometerExt.setBase(SystemClock.elapsedRealtime());
+        chronometer.stop();
+
+        chronometer2.stop();
+        chronometerExt.stop();
         pauseOffSet = 0;
     }
 }
