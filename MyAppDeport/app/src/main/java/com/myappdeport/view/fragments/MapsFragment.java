@@ -199,6 +199,8 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
                 ePositions.clear();
                 mUCTimer.startChronometer();
                 btnStart.setVisibility(GONE);
+                floatingMetaButton.setVisibility(View.VISIBLE);
+                floatingPauseButton.setVisibility(View.VISIBLE);
                 flag = true;
                 flagDistance = true;
             }
