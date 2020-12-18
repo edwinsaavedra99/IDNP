@@ -72,16 +72,21 @@ public class DetalleStaticsFragment extends Fragment {
         textViewDate = view.findViewById(R.id.txtview_actividadDetalle_date);
     }
     private void initActovity(){
+        try{
+            textViewStartTime.setText(eActivity.getDate());
+            textViewEndTime.setText(eActivity.getEndTime());
+            textViewK.setText(eActivity.getKiloCalories()+"");
+            textViewDate.setText(eActivity.getDate());
+            Double totalDistance=0d;
+            for (int i =0; i< eActivity.getERoute().getPositions().size(); i++ ){
+                totalDistance+=eActivity.getERoute().getPositions().get(i).getDistance();
+            }
+            textViewDistncia.setText(totalDistance+"");
+        }catch(Exception e){
+            System.out.println("vizacarraaaa");
 
-        textViewStartTime.setText(eActivity.getDate());
-        textViewEndTime.setText(eActivity.getEndTime());
-        textViewK.setText(eActivity.getKiloCalories()+"");
-        textViewDate.setText(eActivity.getDate());
-        Double totalDistance=0d;
-        for (int i =0; i< eActivity.getERoute().getPositions().size(); i++ ){
-            totalDistance+=eActivity.getERoute().getPositions().get(i).getDistance();
         }
-        textViewDistncia.setText(totalDistance+"");
+
     }
 
 }

@@ -68,16 +68,17 @@ public class AdapterStatics extends  RecyclerView.Adapter<AdapterStatics.ViewHol
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.text_item_title);
-            description = itemView.findViewById(R.id.text_item_description);
-            day = itemView.findViewById(R.id.text_item_date_day);
+            //description = itemView.findViewById(R.id.text_item_description);
+            //day = itemView.findViewById(R.id.text_item_date_day);
             num  = itemView.findViewById(R.id.text_item_date_number);
             km = itemView.findViewById(R.id.text_item_km);
             linearLayout = itemView.findViewById(R.id.liner_item_statics);
         }
         void bindData(final  EActivity eActivity) {
-            title.setText(eActivity.getTitle() );
-            description.setText(eActivity.getDescription());
-            day.setText(eActivity.getDate());
+            title.setText("ACTIVIDAD");
+            //title.setText(eActivity.getTitle() );
+            //description.setText(eActivity.getDescription());
+            //day.setText(eActivity.getDate());
             num.setText(eActivity.getDate());
             km.setText(eActivity.getKiloCalories()+"");
         }
