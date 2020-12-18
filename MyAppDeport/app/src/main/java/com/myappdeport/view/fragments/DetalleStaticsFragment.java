@@ -73,7 +73,7 @@ public class DetalleStaticsFragment extends Fragment {
     }
     private void initActovity(){
         try{
-            textViewStartTime.setText(eActivity.getDate());
+            textViewStartTime.setText(eActivity.getStartTime());
             textViewEndTime.setText(eActivity.getEndTime());
             textViewK.setText(eActivity.getKiloCalories()+"");
             textViewDate.setText(eActivity.getDate());
@@ -84,7 +84,6 @@ public class DetalleStaticsFragment extends Fragment {
             textViewDistncia.setText(totalDistance+"");
         }catch(Exception e){
             System.out.println("vizacarraaaa");
-
         }
 
     }
