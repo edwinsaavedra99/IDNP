@@ -16,7 +16,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.myappdeport.R;
+import com.myappdeport.model.entity.database.EUser;
 import com.myappdeport.model.entity.kill.EUserEDWIN;
+import com.myappdeport.repository.firebase.AuthFireStoreRepository;
 import com.myappdeport.view.Dialogs.DialogProfile;
 import com.myappdeport.viewmodel.AuthViewModel;
 
@@ -35,12 +37,12 @@ public class Profile extends Fragment {
     private AuthViewModel authViewModel;
     private TextView textName;
     // atributos del fragment
-    private ImageView editProfile,photo;
+    private ImageView editProfile, photo;
     View view;
-    ViewGroup  viewGroup;
+    ViewGroup viewGroup;
     Context context;
     private EUserEDWIN datos;
-    private TextView text_usuario_nombres,text_usuario_email,text_usuario_cumpleanos,text_usuario_altura,text_usuario_edad,text_usuario_peso;
+    private TextView text_usuario_nombres, text_usuario_email, text_usuario_cumpleanos, text_usuario_altura, text_usuario_edad, text_usuario_peso;
 
     public Profile() { /* Required empty public constructor */}
 
@@ -53,9 +55,21 @@ public class Profile extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        viewGroup = (ViewGroup)inflater.inflate(R.layout.fragment_profile, container, false);
+        viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_profile, container, false);
         initialComponents(viewGroup);
         //datos = (EUserEDWIN) getArguments().getSerializable(USER);
+        AuthFireStoreRepository authFireStoreRepository = AuthFireStoreRepository.getInstance();
+        authFireStoreRepository.getCurrentUser().addOnCompleteListener(task -> {
+            EUser eUser = task.getResult();
+            text_usuario_email.setText(eUser.getEmail());
+            text_usuario_nombres.setText(eUser.getName());
+            text_usuario_edad.setText(String.valueOf(eUser.getAge()));
+            text_usuario_cumpleanos.setText(eUser.getBirthday());
+            text_usuario_peso.setText(String.valueOf(eUser.getWeight()));
+            text_usuario_altura.setText(String.valueOf(eUser.getHeight()));
+        });
+
+
         AuthViewModel authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
         authViewModel.userLogin();
         authViewModel.userEDWINLiveData.observe(Objects.requireNonNull(getActivity()), user -> {
@@ -74,8 +88,8 @@ public class Profile extends Fragment {
                         .error(R.drawable.ic_add_a_photo_24) // si no se encuentra nada
                         .fallback(R.drawable.ic_add_a_photo_24) //imagen auxiliar
                         .into(photo); //8
-            } else if(user.isError) {
-                Toast.makeText(getActivity(),"Error load data User",Toast.LENGTH_SHORT).show();
+            } else if (user.isError) {
+                Toast.makeText(getActivity(), "Error load data User", Toast.LENGTH_SHORT).show();
                 System.out.println("errrrrrrrrrrorr");
             }
         });
@@ -86,7 +100,7 @@ public class Profile extends Fragment {
         return viewGroup;
     }
 
-    private void initialComponents(ViewGroup viewGroup){
+    private void initialComponents(ViewGroup viewGroup) {
         text_usuario_nombres = viewGroup.findViewById(R.id.text_usuario_nombres);
         text_usuario_email = viewGroup.findViewById(R.id.text_usuario_email);
         text_usuario_cumpleanos = viewGroup.findViewById(R.id.text_usuario_cumpleanos);
@@ -98,13 +112,13 @@ public class Profile extends Fragment {
     }
 
 
-     private void init(){
+    private void init() {
         context = getContext();
         editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DialogProfile(context,null);
+                new DialogProfile(context, null);
             }
         });
-     }
+    }
 }
