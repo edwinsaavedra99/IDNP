@@ -2,12 +2,14 @@ package com.myappdeport.view.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +32,7 @@ import com.myappdeport.R;
 import com.myappdeport.model.entity.database.EActivity;
 import com.myappdeport.model.entity.dto.DTOActivity;
 import com.myappdeport.model.mapper.ActivityMapper;
+import com.myappdeport.utils.onFragmentBtnSelected;
 import com.myappdeport.view.adapters.ActivityAdapter;
 import com.myappdeport.view.adapters.AdapterFood;
 import com.myappdeport.view.adapters.AdapterStatics;
@@ -36,6 +40,7 @@ import com.myappdeport.view.canvas.ActivitiView;
 import com.myappdeport.view.canvas.BarrasView;
 import com.myappdeport.view.canvas.StadisticView;
 import com.myappdeport.view.killme.Activiti;
+import com.myappdeport.viewmodel.firebase.ActivityListUserViewModel;
 import com.myappdeport.viewmodel.firebase.ActivityListViewModel;
 import com.myappdeport.viewmodel.firebase.EatTipsViewModel;
 
@@ -52,7 +57,8 @@ import java.util.Objects;
  * create an instance of this fragment.
  */
 public class Statics extends Fragment {
-
+    //transactions
+    private onFragmentBtnSelected listener;
     //  grafico de estadisticas
     public LinearLayout linearLayout;
     private StadisticView stadisticView;
@@ -83,21 +89,12 @@ public class Statics extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private ActivityListViewModel activityListViewModel;
+    private ActivityListUserViewModel activityListUserViewModel;
 
     public Statics() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Statics.
-     */
-    // TODO: Rename and change types and number of parameters
     public static Statics newInstance(String param1, String param2) {
         Statics fragment = new Statics();
         Bundle args = new Bundle();
@@ -115,7 +112,17 @@ public class Statics extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if( context instanceof  onFragmentBtnSelected ){
+            listener=(onFragmentBtnSelected) context;
+        }
+        else{
+            Log.d("LPF","Implemeentar listener");
+        }
 
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -232,10 +239,10 @@ public class Statics extends Fragment {
         });
 
 
-        activityListViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(ActivityListViewModel.class);
+        activityListUserViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(ActivityListUserViewModel.class);
         recyclerView = view.findViewById(R.id.recicler_estatics);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        activityListViewModel.getActivityListLiveData().observe(getViewLifecycleOwner(), data -> {
+        activityListUserViewModel.getActivityListLiveDataByUserId("testUser").observe(getViewLifecycleOwner(), data -> {
              this.activitiList = data;
              adapterStatics = new AdapterStatics(activitiList,getContext());
              recyclerView.setAdapter(adapterStatics);

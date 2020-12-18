@@ -44,8 +44,10 @@ import com.myappdeport.model.entity.functional.Route;
 import com.myappdeport.service.usecase.ChronometerUseCase;
 import com.myappdeport.service.usecase.interfaces.TimerInterface;
 import com.myappdeport.utils.ParseMetrics;
+
 import com.myappdeport.viewmodel.AuthViewModel;
 import com.myappdeport.viewmodel.MainDeportViewModel;
+import com.myappdeport.view.activitys.MenuContainer;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -137,8 +139,10 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
         chronometer = viewGroup.findViewById(R.id.timeChr);
         chronometer2 = viewGroup.findViewById(R.id.time);
         textView = viewGroup.findViewById(R.id.textView20);
+
         initAuthViewModel();
         //textViewCrono = viewGroup.findViewById(R.id.timer);
+        chronometer2 = viewGroup.findViewById(R.id.time);
         initView();
         return viewGroup;
     }
@@ -170,6 +174,7 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
                 }
             }
         });
+
         chronometer2.setBase(SystemClock.elapsedRealtime());
 
         chronometer2.setFormat("00:%s");
@@ -185,7 +190,9 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
                 }
             }
         });
-        mUCTimer = new ChronometerUseCase(this,chronometer,chronometer2);
+  
+        mUCTimer = new ChronometerUseCase(this,chronometer,chronometer2, MenuContainer.chronometerExt);
+
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
