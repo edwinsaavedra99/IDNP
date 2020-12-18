@@ -50,7 +50,9 @@ import com.myappdeport.viewmodel.MainDeportViewModel;
 import com.myappdeport.view.activitys.MenuContainer;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -75,7 +77,12 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
     private MainDeportViewModel mainDeportViewModel;
     private boolean flag = false;
     private boolean flagDistance = false;
-        @Override
+    private Date objDateinicial = new Date();
+    private Date objDateinicia2 = new Date();
+    private Date objDateinicia3 = new Date();
+    String initialTimeFecha;
+    private String initialFecha;
+    @Override
         public void onMapReady(GoogleMap googleMap) {
             if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                     ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -159,6 +166,7 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
 
     @Override
     public void initView() {
+        String initialFecha;
         chronometer.setBase(SystemClock.elapsedRealtime());
 
         chronometer.setFormat("00:%s");
@@ -194,6 +202,7 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
         mUCTimer = new ChronometerUseCase(this,chronometer,chronometer2, MenuContainer.chronometerExt);
 
         btnStart.setOnClickListener(new View.OnClickListener() {
+            private Date objDateinicial=new Date();
             @Override
             public void onClick(View v) {
                 ePositions.clear();
@@ -203,9 +212,15 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
                 floatingPauseButton.setVisibility(View.VISIBLE);
                 flag = true;
                 flagDistance = true;
+                String strDateFormat2 = "hh: mm: ss a";
+                SimpleDateFormat objSDF = new SimpleDateFormat(strDateFormat2);
+                initialTimeFecha = objSDF.format(this.objDateinicial);
             }
         });
         floatingMetaButton.setOnClickListener(new View.OnClickListener() {
+
+            private Date objDateinicial=new Date();
+
             @SneakyThrows
             @Override
             public void onClick(View v) {
@@ -217,9 +232,16 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
                 route = new ERoute(12.3,123.3,ePositions);
                 Toast.makeText(getActivity(),"Su información fue guardada ... ",Toast.LENGTH_SHORT).show();
                 mUCTimer.stopChronometer();
-                EActivity  eActivity = new EActivity("start","end",
-                        12.2,"date","title",
-                        "des","",
+                String strDateFormat = "hh: mm: ss a";
+                String strDateFormat2 = "hh: mm: ss a";
+                String strDateFormat3 = "dd-MMM-aaaa";
+                SimpleDateFormat objSDF = new SimpleDateFormat(strDateFormat);
+                SimpleDateFormat objSDF2 = new SimpleDateFormat(strDateFormat3);
+                System.out.println(objSDF.format(this.objDateinicial));
+                System.out.println(objSDF2.format(this.objDateinicial));
+                EActivity  eActivity = new EActivity(initialTimeFecha,objSDF.format(this.objDateinicial),
+                        12.2,objSDF2.format(this.objDateinicial),"Actividad",
+                        "Actividad definida","exclude",
                         "",null,null,route);
                mainDeportViewModel.saveActivity(eActivity);
             }

@@ -68,6 +68,7 @@ public class AuthRepository {
                         user.edad = document.getString("edad");
                         user.name = document.getString("name");
                         user.peso = document.getString("peso");
+                        userMutableLiveData.setValue(user);
                     } else {
                         logErrorMessage(uidTask.getException().getMessage());
                     }
@@ -154,6 +155,9 @@ public class AuthRepository {
                                 authenticatedUser.uid = user.getUid();
                                 authenticatedUser.email = user.getEmail();
                                 authenticatedUser.photoUrl = String.valueOf(user.getPhotoUrl());
+                                authenticatedUser.name = user.getDisplayName();
+                                /*authenticatedUser.edad =
+                                authenticatedUser.peso =*/
                                 authenticatedUser.isCreated = true;
                                 newUserMutableLiveData.setValue(authenticatedUser);
                                 createUserInFirestoreIfNotExists(authenticatedUser);
