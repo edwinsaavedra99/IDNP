@@ -20,7 +20,7 @@ import com.myappdeport.repository.room.dao.UserRoomDao;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {EActivity.class, EPosition.class, ERoute.class, ESong.class, EUser.class}, version = 3, exportSchema = false)
+@Database(entities = {EActivity.class, EPosition.class, ERoute.class, ESong.class, EUser.class}, version = 4, exportSchema = false)
 public abstract class ConnectionRoomDatabase extends RoomDatabase {
     public abstract PositionRoomDao getPositionRoomDao();
 
