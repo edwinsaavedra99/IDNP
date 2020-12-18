@@ -37,7 +37,7 @@ public class MediaNotificationManager {
     private final int ICON_PAUSE = R.drawable.ic_pause_white_24dp;
     private final int ICON_NEXT = R.drawable.ic_skip_next_white_24dp;
     private final int ICON_PREV = R.drawable.ic_skip_previous_white_24dp;
-    private final int ICON_PLAY_NOT = R.drawable.icon_music;
+    private final int ICON_PLAY_NOT = R.mipmap.ic_launcher;
 
 
     public MediaNotificationManager(MediaPlayBackService service) {
