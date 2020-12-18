@@ -50,17 +50,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Statics#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.concurrent.ExecutionException;
 public class Statics extends Fragment {
     //transactions
     private onFragmentBtnSelected listener;
     //  grafico de estadisticas
-    public LinearLayout linearLayout;
+    public  LinearLayout linearLayout;
     private StadisticView stadisticView;
     private BarrasView barrasView;
     private ActivitiView activitiView;
@@ -247,18 +242,14 @@ public class Statics extends Fragment {
              adapterStatics = new AdapterStatics(activitiList,getContext());
              recyclerView.setAdapter(adapterStatics);
         });
-
-
-/*      EatTipsViewModel eatTipsViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(EatTipsViewModel.class);
-        recyclerView = view.findViewById(R.id.recicler_foos);
-        recyclerView.setLayoutManager( new LinearLayoutManager(getContext()));
-        eatTipsViewModel.findAll();
-        eatTipsViewModel.listLiveData.observe(getViewLifecycleOwner(), data->{
-            foodList = data;
-            adapterFood = new AdapterFood(foodList,getContext());
-            recyclerView.setAdapter(adapterFood);
-        });*/
-
+        try{
+            if(activitiList.size() >0){
+                editTextDate.setText(activitiList.get(0).getDate());
+                editTextDate2.setText(activitiList.get(activitiList.size()-1).getDate());
+            }
+        }catch (Exception e){
+            Log.d("S","exception in acitivity List");
+        }
 
     }
 
