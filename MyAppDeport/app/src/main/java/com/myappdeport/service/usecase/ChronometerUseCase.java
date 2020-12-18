@@ -11,13 +11,13 @@ public class ChronometerUseCase implements TimerInterface.TimerInterfaceUseCase 
     private TimerInterface.TimerInterfaceView mView;
     private boolean running;
     private long pauseOffSet;
-    private Chronometer chronometer;
-    private TextView textView;
+    public static Chronometer chronometer;
+    public static Chronometer textView;
 
     /**
      * Constructor de presentador para el activity deport, inicializa el cronometro
      **/
-    public ChronometerUseCase(TimerInterface.TimerInterfaceView view, Chronometer chronometer,TextView textView){
+    public ChronometerUseCase(TimerInterface.TimerInterfaceView view, Chronometer chronometer,Chronometer textView){
         mView = view;
         this.chronometer = chronometer;
         this.textView = textView;
@@ -34,9 +34,12 @@ public class ChronometerUseCase implements TimerInterface.TimerInterfaceUseCase 
     public void startChronometer() {
         if(!running){
             chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffSet);
+            textView.setBase(SystemClock.elapsedRealtime() - pauseOffSet);
             chronometer.start();
-            String d = chronometer.getText().toString();
-            System.out.println(d);
+            textView.start();
+            /*String d = chronometer.getText().toString();
+            System.out.println(d);*/
+
             running = true;
         }
     }
@@ -46,6 +49,7 @@ public class ChronometerUseCase implements TimerInterface.TimerInterfaceUseCase 
     public void pauseChronometer() {
         if(running){
             chronometer.stop();
+            textView.stop();
             pauseOffSet = SystemClock.elapsedRealtime() - chronometer.getBase();
             running = false;
         }else {
@@ -57,6 +61,9 @@ public class ChronometerUseCase implements TimerInterface.TimerInterfaceUseCase 
     @Override
     public void stopChronometer() {
         chronometer.setBase(SystemClock.elapsedRealtime());
+        textView.setBase(SystemClock.elapsedRealtime());
+        chronometer.stop();
+        textView.stop();
         pauseOffSet = 0;
     }
 }

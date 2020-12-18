@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 
 import com.myappdeport.model.entity.database.EActivity;
+import com.myappdeport.model.entity.database.ERoute;
 import com.myappdeport.repository.IActivityRepository;
 import com.myappdeport.repository.IAuthRepository;
 import com.myappdeport.repository.IPositionRepository;
@@ -35,15 +36,13 @@ public class MainDeportViewModel extends AndroidViewModel {
 
     }
 
-    public void createNewActivity(EActivity eActivity) throws InstantiationException, IllegalAccessException {
+    /*public void createNewActivity(EActivity eActivity)
+    }*/
+
+    public void saveActivity(EActivity eActivity)  throws InstantiationException, IllegalAccessException {
         //EActivity activity = new EActivity("","",12,)
-        iActivityRepository.saveWithRouteAndPositions(eActivity).addOnSuccessListener(eActivity1->{
-            eActivity1.toString();
-
+        iActivityRepository.saveWithRouteAndPositions(eActivity).addOnSuccessListener(eActivity1 -> {
+            System.out.println(eActivity1.toString());
         });
-    }
-
-    public void saveActivity(){
-
     }
 }

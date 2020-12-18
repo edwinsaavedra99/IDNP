@@ -120,7 +120,11 @@ public class Register extends AppCompatActivity {
                     EUserEDWIN eUserEDWIN = new EUserEDWIN();
                     eUserEDWIN.password = password_s;
                     eUserEDWIN.email = email_s;
-                    eUserEDWIN.name = email_s.substring(email_s.indexOf("@"));
+                    eUserEDWIN.fechaNacimiento = fecha_s;
+                    eUserEDWIN.altura = estatura_s;
+                    eUserEDWIN.peso = peso_s;
+                    eUserEDWIN.edad = "0";
+                    eUserEDWIN.name = email_s.substring(0,email_s.indexOf("@"));
                     createNewUser(eUserEDWIN);
 
                 }

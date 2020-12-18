@@ -18,6 +18,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.myappdeport.model.entity.kill.EUserEDWIN;
+import com.myappdeport.repository.IUserRepository;
+import com.myappdeport.repository.room.UserRoomRepository;
 
 
 import java.util.concurrent.Executor;
@@ -52,10 +54,28 @@ public class AuthRepository {
         MutableLiveData<EUserEDWIN> userMutableLiveData = new MutableLiveData<>();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         if (firebaseUser != null) {
+            final EUserEDWIN user = new EUserEDWIN();
             String uid = firebaseUser.getUid();
             String name = firebaseUser.getDisplayName();
             String email = firebaseUser.getEmail();
-            EUserEDWIN user = new EUserEDWIN(uid, name, email);
+            DocumentReference uidRef = usersRef.document(uid);
+            uidRef.get().addOnCompleteListener(uidTask -> {
+                if (uidTask.isSuccessful()) {
+                    DocumentSnapshot document = uidTask.getResult();
+                    if (document.exists()) {
+                        user.fechaNacimiento = document.getString("fechaNacimiento");
+                        user.altura = document.getString("altura");
+                        user.edad = document.getString("edad");
+                        user.name = document.getString("name");
+                        user.peso = document.getString("peso");
+                    } else {
+                        logErrorMessage(uidTask.getException().getMessage());
+                    }
+                } else {
+                    logErrorMessage(uidTask.getException().getMessage());
+                }
+            });
+            //ser =
             user.photoUrl = String.valueOf(firebaseUser.getPhotoUrl());
             user.isAuthenticated = true;
             userMutableLiveData.setValue(user);
@@ -131,12 +151,12 @@ public class AuthRepository {
                             FirebaseUser user = firebaseAuth.getCurrentUser();
                             if(user!=null){
                                 EUserEDWIN userg = new EUserEDWIN("", "", "");
-                                userg.uid = user.getUid();
-                                userg.email = user.getEmail();
-                                userg.photoUrl = String.valueOf(user.getPhotoUrl());
-                                userg.isCreated = true;
-                                newUserMutableLiveData.setValue(userg);
-                                createUserInFirestoreIfNotExists(userg);
+                                authenticatedUser.uid = user.getUid();
+                                authenticatedUser.email = user.getEmail();
+                                authenticatedUser.photoUrl = String.valueOf(user.getPhotoUrl());
+                                authenticatedUser.isCreated = true;
+                                newUserMutableLiveData.setValue(authenticatedUser);
+                                createUserInFirestoreIfNotExists(authenticatedUser);
                             }else{
                                 EUserEDWIN userg = new EUserEDWIN("", "", "");
                                 userg.isError = true;

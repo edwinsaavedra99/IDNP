@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -22,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Chronometer;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -34,9 +36,16 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.myappdeport.R;
+import com.myappdeport.model.entity.database.EActivity;
+import com.myappdeport.model.entity.database.EPosition;
+import com.myappdeport.model.entity.database.ERoute;
+import com.myappdeport.model.entity.functional.Activity;
+import com.myappdeport.model.entity.functional.Route;
 import com.myappdeport.service.usecase.ChronometerUseCase;
 import com.myappdeport.service.usecase.interfaces.TimerInterface;
 import com.myappdeport.utils.ParseMetrics;
+import com.myappdeport.viewmodel.AuthViewModel;
+import com.myappdeport.viewmodel.MainDeportViewModel;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -45,18 +54,23 @@ import java.util.Map;
 
 import lombok.SneakyThrows;
 
+import static android.view.View.GONE;
+
 public class MapsFragment extends Fragment implements TimerInterface.TimerInterfaceView,OnMapReadyCallback {
 
     GoogleMap map;
-    private Chronometer chronometer;
-    private TextView textView,textViewCrono;
+    private Chronometer chronometer,chronometer2;
+    private TextView textView;
     private TimerInterface.TimerInterfaceUseCase mUCTimer;
-    private FloatingActionButton btnStart;
+    private FloatingActionButton btnStart,floatingMetaButton,floatingPauseButton;
     private LocationManager locationManager;
     private LocationListener locationListener;
     private Location location;
     private LatLng previoL;
     private List<LatLng> latLngList = new ArrayList<>();
+    private List<EPosition> ePositions = new ArrayList<>();
+    private ERoute route = new ERoute();
+    private MainDeportViewModel mainDeportViewModel;
     private boolean flag = false;
     private boolean flagDistance = false;
         @Override
@@ -90,8 +104,8 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
                             /*
                             * llamar para guardar
                             * */
-
-
+                            //EPosition ePosition = ;
+                            ePositions.add(new EPosition(latLng.latitude,latLng.longitude,distaceAll(latLngList)));
                         }
                     }
                     map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
@@ -118,9 +132,13 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
                              @Nullable Bundle savedInstanceState) {
         ViewGroup viewGroup  = (ViewGroup) inflater.inflate(R.layout.fragment_maps, container, false);
         btnStart = viewGroup.findViewById(R.id.floatingActionButtonStartActivity);
+        floatingMetaButton = viewGroup.findViewById(R.id.floatingMetaButton);
+        floatingPauseButton = viewGroup.findViewById(R.id.floatingPauseButton);
         chronometer = viewGroup.findViewById(R.id.timeChr);
+        chronometer2 = viewGroup.findViewById(R.id.time);
         textView = viewGroup.findViewById(R.id.textView20);
-        textViewCrono = viewGroup.findViewById(R.id.timer);
+        initAuthViewModel();
+        //textViewCrono = viewGroup.findViewById(R.id.timer);
         initView();
         return viewGroup;
     }
@@ -138,6 +156,7 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
     @Override
     public void initView() {
         chronometer.setBase(SystemClock.elapsedRealtime());
+
         chronometer.setFormat("00:%s");
         //Listener en escuchador de reloj , cambia el formato a hh:mm:ss
         chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
@@ -151,14 +170,57 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
                 }
             }
         });
-        mUCTimer = new ChronometerUseCase(this,chronometer,textViewCrono);
+        chronometer2.setBase(SystemClock.elapsedRealtime());
+
+        chronometer2.setFormat("00:%s");
+        //Listener en escuchador de reloj , cambia el formato a hh:mm:ss
+        chronometer2.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+            public void onChronometerTick(Chronometer c) {
+                //CODIGO CANDIDATO A IR EN UTILS
+                long elapsedMillis = SystemClock.elapsedRealtime() -c.getBase();
+                if(elapsedMillis > 3600000L){
+                    c.setFormat("0%s");
+                }else{
+                    c.setFormat("00:%s");
+                }
+            }
+        });
+        mUCTimer = new ChronometerUseCase(this,chronometer,chronometer2);
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ePositions.clear();
                 mUCTimer.startChronometer();
-                btnStart.setVisibility(View.GONE);
+                btnStart.setVisibility(GONE);
                 flag = true;
                 flagDistance = true;
+            }
+        });
+        floatingMetaButton.setOnClickListener(new View.OnClickListener() {
+            @SneakyThrows
+            @Override
+            public void onClick(View v) {
+                flag = false;
+                flagDistance = false;
+                floatingMetaButton.setVisibility(GONE);
+                floatingPauseButton.setVisibility(GONE);
+                btnStart.setVisibility(View.VISIBLE);
+                route = new ERoute(12.3,123.3,ePositions);
+                Toast.makeText(getActivity(),"Su información fue guardada ... ",Toast.LENGTH_SHORT).show();
+                mUCTimer.stopChronometer();
+                EActivity  eActivity = new EActivity("start","end",
+                        12.2,"date","title",
+                        "des","",
+                        "",null,null,route);
+               mainDeportViewModel.saveActivity(eActivity);
+            }
+        });
+        floatingPauseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flag = false;
+                mUCTimer.pauseChronometer();
+                //floatingPauseButton.setBackground(R.drawable.play);
             }
         });
     }
@@ -191,5 +253,8 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
             sum += locationA.distanceTo(locationB);
         }
         return sum;
+    }
+    private void initAuthViewModel() {
+        mainDeportViewModel = new ViewModelProvider(this).get(MainDeportViewModel.class);
     }
 }
