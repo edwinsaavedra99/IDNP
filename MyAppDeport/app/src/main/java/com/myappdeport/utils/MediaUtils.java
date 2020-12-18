@@ -24,7 +24,7 @@ public class MediaUtils {
     /**
      * Default Icon for application notification or albumArt
      */
-    public static int DEFAULT_ALBUM_ART = R.mipmap.ic_launcher;
+    public static int DEFAULT_ALBUM_ART = R.drawable.icon_music;
 
     /**
      * Transforma las musicas en metadatos pero sin cargar su albumArt.
