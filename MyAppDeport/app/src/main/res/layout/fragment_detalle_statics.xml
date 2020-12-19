@@ -1,23 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".view.fragments.DetalleStaticsFragment">
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="15dp"
-        android:fontFamily="@font/ubuntu"
-        android:text="ACTIVIDAD DETALLE"
-        android:textAlignment="center"
-        android:textColor="#000000"
-        android:textSize="14sp"
-        android:textStyle="normal" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:src="?attr/actionModeCloseDrawable" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="228dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="63dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="95dp"
+            android:layout_toEndOf="@+id/imageView9"
+            android:fontFamily="@font/ubuntu"
+            android:text="ACTIVIDAD DETALLE"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            android:textStyle="normal" />
+    </RelativeLayout>
 
     <TextView
         android:layout_width="match_parent"
