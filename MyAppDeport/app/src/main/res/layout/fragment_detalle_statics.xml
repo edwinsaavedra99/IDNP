@@ -153,4 +153,14 @@
 
         </LinearLayout>
     </LinearLayout>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/map_detalle"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+    </androidx.fragment.app.FragmentContainerView>
+
 </androidx.appcompat.widget.LinearLayoutCompat>

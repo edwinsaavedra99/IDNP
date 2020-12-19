@@ -31,6 +31,7 @@ import com.google.android.material.theme.MaterialComponentsViewInflater;
 import com.myappdeport.R;
 import com.myappdeport.model.entity.database.EActivity;
 import com.myappdeport.model.entity.dto.DTOActivity;
+import com.myappdeport.model.entity.kill.EUserEDWIN;
 import com.myappdeport.model.mapper.ActivityMapper;
 import com.myappdeport.utils.onFragmentBtnSelected;
 import com.myappdeport.view.adapters.ActivityAdapter;
@@ -40,6 +41,7 @@ import com.myappdeport.view.canvas.ActivitiView;
 import com.myappdeport.view.canvas.BarrasView;
 import com.myappdeport.view.canvas.StadisticView;
 import com.myappdeport.view.killme.Activiti;
+import com.myappdeport.viewmodel.AuthViewModel;
 import com.myappdeport.viewmodel.firebase.ActivityListUserViewModel;
 import com.myappdeport.viewmodel.firebase.ActivityListViewModel;
 import com.myappdeport.viewmodel.firebase.EatTipsViewModel;
@@ -73,7 +75,7 @@ public class Statics extends Fragment {
     private TextView editTextDate2;
     private int editText;
     View view;
-
+    private EUserEDWIN datos;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -85,6 +87,7 @@ public class Statics extends Fragment {
     private String mParam2;
 
     private ActivityListUserViewModel activityListUserViewModel;
+    String id;
 
     public Statics() {
         // Required empty public constructor
@@ -139,6 +142,9 @@ public class Statics extends Fragment {
         btn_distances = view.findViewById(R.id.buttonDistance);
         btn_actividades = view.findViewById(R.id.buttonActivity);
 
+
+
+
         //llenar grafico prueba
         DisplayMetrics metrics = new DisplayMetrics();
         try {
@@ -154,48 +160,6 @@ public class Statics extends Fragment {
         }
         //DEFINICION DE BOTONES
 
-        editTextDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editText = 1;
-                Calendar calendar = Calendar.getInstance();
-                int year = calendar.get(Calendar.YEAR);
-                int month = calendar.get(Calendar.MONTH);
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog dialog = new DatePickerDialog(
-                        getActivity(), R.style.DialogThemeCalendar, dateSetListener, year, month, day);
-                //Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
-            }
-        });
-
-        editTextDate2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editText = 2;
-                Calendar calendar = Calendar.getInstance();
-                int year = calendar.get(Calendar.YEAR);
-                int month = calendar.get(Calendar.MONTH);
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog dialog = new DatePickerDialog(
-                        getActivity(), R.style.DialogThemeCalendar, dateSetListener, year, month, day);
-                //Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
-            }
-        });
-
-        dateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                month = month + 1;
-                String date = dayOfMonth + "/" + month + "/" + year;
-
-                if (editText == 1) editTextDate.setText(date);
-                else {
-                    editTextDate2.setText(date);
-                }
-            }
-        };
 
 
         //botones para cargar graficas
@@ -232,6 +196,23 @@ public class Statics extends Fragment {
                 linearLayout.addView(activitiView);
             }
         });
+
+
+
+        AuthViewModel authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+        authViewModel.userLogin();
+        authViewModel.userEDWINLiveData.observe(Objects.requireNonNull(getActivity()), user -> {
+            if (user.isAuthenticated) {
+                datos = user;
+            }
+            });
+        id ="";
+        if (datos == null ){
+            id = "testUser";
+        }else{
+            if(datos.uid!=null) id = datos.uid;
+            else id = "testUser";
+        }
 
 
         activityListUserViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(ActivityListUserViewModel.class);
