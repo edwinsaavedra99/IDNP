@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/button_stroke"
-                app:srcCompat="@drawable/ic_profile" />
+                app:srcCompat="@drawable/ic_baseline_person_add_alt_1_50" />
 
         </androidx.cardview.widget.CardView>
 
@@ -37,6 +37,14 @@
             android:paddingTop="30dp"
             android:paddingRight="40dp">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Nombre"
+                android:inputType="textPersonName"
+                android:textSize="12sp" />
+
             <EditText
                 android:id="@+id/editTextTextPersonName2"
                 android:layout_width="match_parent"
@@ -46,17 +54,29 @@
                 android:inputType="textPersonName"
                 android:textSize="12sp" />
 
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Estatura"
+                android:inputType="textPersonName"
+                android:textSize="12sp" />
 
             <EditText
                 android:id="@+id/editTextTextPersonName6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Estatura"
+                android:hint="Estatura (cm)"
                 android:inputType="number"
                 android:textSize="12sp" />
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Peso"
+                android:inputType="numberDecimal"
+                android:textSize="12sp" />
 
 
             <EditText
@@ -64,8 +84,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Peso"
-                android:inputType="number"
+                android:hint="Peso (Kg)"
+                android:inputType="numberDecimal"
+                android:textSize="12sp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Fecha de Nacimiento"
+                android:textSize="12sp" />
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/auxiliar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/editTextTextPersonName9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:focusable="false"
+                android:clickable="true"
+                android:hint="Fecha de Nacimiento"
+                android:inputType="date"
                 android:textSize="12sp" />
 
             <LinearLayout
@@ -95,7 +136,19 @@
                     android:background="@drawable/date_background_orange"
                     android:text="Aceptar"
                     android:textColor="@color/colorPrimary" />
+
             </LinearLayout>
+            <ProgressBar
+                android:id="@+id/progress_barr"
+                android:visibility="invisible"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </ProgressBar>
         </LinearLayout>
 
     </LinearLayout>

@@ -129,6 +129,13 @@ public class MenuContainer extends AppCompatActivity implements onFragmentBtnSel
         flag=false;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Fragment fragment = profile;
+        fragment.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
 
     private void openConfiguration() {
         Intent intent = new Intent(this, Configuration.class);

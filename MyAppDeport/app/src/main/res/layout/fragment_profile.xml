@@ -116,11 +116,13 @@
                             android:textColorHint="#000000"
                             android:textSize="18sp"
                             android:textStyle="bold" />
+
                     </LinearLayout>
 
                 </LinearLayout>
 
             </LinearLayout>
+
 
             <TextView
                 android:id="@+id/textView2"
@@ -128,16 +130,29 @@
                 android:layout_height="wrap_content"
                 android:background="#BE4F10"
                 android:textSize="3sp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:fontFamily="@font/ubuntu"
-                android:text="Informacion Personal"
-                android:textColor="#000000"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                    android:fontFamily="@font/ubuntu"
+                    android:text="Informacion Personal"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+                <ImageView
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="25dp"
+                    android:id="@+id/image_user_profile_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_pencil_edit_36" />
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -326,15 +341,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/image_user_profile_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:layout_gravity="bottom|right"
-                android:layout_margin="30dp"
-                app:srcCompat="@drawable/ic_pencil_edit_36" />
-        </LinearLayout>
+              </LinearLayout>
 
     </ScrollView>
 

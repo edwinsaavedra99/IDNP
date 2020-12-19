@@ -1,12 +1,20 @@
 package com.myappdeport.view.fragments;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.ImageDecoder;
 import android.graphics.drawable.AnimationDrawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +23,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.myappdeport.R;
 import com.myappdeport.model.entity.database.EUser;
 import com.myappdeport.model.entity.kill.EUserEDWIN;
@@ -22,8 +34,11 @@ import com.myappdeport.repository.firebase.AuthFireStoreRepository;
 import com.myappdeport.view.Dialogs.DialogProfile;
 import com.myappdeport.viewmodel.AuthViewModel;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.Objects;
 
+import static android.app.Activity.RESULT_OK;
 import static com.myappdeport.utils.Constants.USER;
 
 /**
@@ -42,6 +57,7 @@ public class Profile extends Fragment {
     ViewGroup viewGroup;
     Context context;
     private EUserEDWIN datos;
+    private  DialogProfile dialogProfile;
     private TextView text_usuario_nombres, text_usuario_email, text_usuario_cumpleanos, text_usuario_altura, text_usuario_edad, text_usuario_peso;
 
     public Profile() { /* Required empty public constructor */}
@@ -57,19 +73,6 @@ public class Profile extends Fragment {
         // Inflate the layout for this fragment
         viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_profile, container, false);
         initialComponents(viewGroup);
-        //datos = (EUserEDWIN) getArguments().getSerializable(USER);
-        AuthFireStoreRepository authFireStoreRepository = AuthFireStoreRepository.getInstance();
-        authFireStoreRepository.getCurrentUser().addOnCompleteListener(task -> {
-            EUser eUser = task.getResult();
-            text_usuario_email.setText(eUser.getEmail());
-            text_usuario_nombres.setText(eUser.getName());
-            text_usuario_edad.setText(String.valueOf(eUser.getAge()));
-            text_usuario_cumpleanos.setText(eUser.getBirthday());
-            text_usuario_peso.setText(String.valueOf(eUser.getWeight()));
-            text_usuario_altura.setText(String.valueOf(eUser.getHeight()));
-        });
-
-
         AuthViewModel authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
         authViewModel.userLogin();
         authViewModel.userEDWINLiveData.observe(Objects.requireNonNull(getActivity()), user -> {
@@ -93,13 +96,12 @@ public class Profile extends Fragment {
                 System.out.println("errrrrrrrrrrorr");
             }
         });
-
         //viewGroup = (ViewGroup)inflater.inflate(R.layout.fragment_profile, container, false);
         context = getContext();
         editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DialogProfile(context, datos,authViewModel);
+                dialogProfile = new DialogProfile(context, datos,authViewModel,getActivity());
             }
         });
         init();
@@ -117,6 +119,9 @@ public class Profile extends Fragment {
         editProfile = viewGroup.findViewById(R.id.image_user_profile_edit);
     }
 
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        dialogProfile.onActivityResult(requestCode,resultCode,data);
+    };
 
     private void init() {
 

@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -16,7 +17,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.SetOptions;
 import com.myappdeport.model.entity.kill.EUserEDWIN;
 import com.myappdeport.repository.IUserRepository;
@@ -53,6 +56,43 @@ public class AuthRepository {
     private CollectionReference usersRef = rootRef.collection(USERS);
 
 
+    public MutableLiveData<EUserEDWIN> userLoginInicial(){
+        MutableLiveData<EUserEDWIN> userMutableLiveData = new MutableLiveData<>();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        final EUserEDWIN user;
+        if (firebaseUser != null) {
+            user = new EUserEDWIN();
+            String uid = firebaseUser.getUid();
+            String name = firebaseUser.getDisplayName();
+            String email = firebaseUser.getEmail();
+            DocumentReference uidRef = usersRef.document(uid);
+            uidRef.get().addOnCompleteListener(uidTask -> {
+                if (uidTask.isSuccessful()) {
+                    DocumentSnapshot document = uidTask.getResult();
+                    if (document.exists()) {
+                        user.fechaNacimiento = document.getString("fechaNacimiento").toString();
+                        user.altura = document.getString("altura").toString();
+                        user.edad = document.getString("edad");
+                        user.name = document.getString("name");
+                        user.peso = document.getString("peso");
+                        user.photoUrl = document.getString("photoUrl");
+                        if (user.photoUrl == null || user.photoUrl.isEmpty() || user.photoUrl.equals("")|| user.photoUrl.equals("null")) {
+                            user.photoUrl = String.valueOf(firebaseUser.getPhotoUrl());
+                        }
+                        userMutableLiveData.setValue(user);
+                    } else {
+                        logErrorMessage(uidTask.getException().getMessage());
+                    }
+                } else {
+                    logErrorMessage(uidTask.getException().getMessage());
+                }
+            });
+            user.isAuthenticated = true;
+            userMutableLiveData.setValue(user);
+        }
+        return  userMutableLiveData;
+    }
+
     public MutableLiveData<EUserEDWIN> userLogin(){
         MutableLiveData<EUserEDWIN> userMutableLiveData = new MutableLiveData<>();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
@@ -62,25 +102,31 @@ public class AuthRepository {
             String name = firebaseUser.getDisplayName();
             String email = firebaseUser.getEmail();
             DocumentReference uidRef = usersRef.document(uid);
-            uidRef.get().addOnCompleteListener(uidTask -> {
-                if (uidTask.isSuccessful()) {
-                    DocumentSnapshot document = uidTask.getResult();
-                    if (document.exists()) {
-                        user.fechaNacimiento = document.getString("fechaNacimiento");
-                        user.altura = document.getString("altura");
-                        user.edad = document.getString("edad");
-                        user.name = document.getString("name");
-                        user.peso = document.getString("peso");
+            uidRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(@Nullable DocumentSnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+                    if (e != null) {
+                        Log.w(TAG, "Listen failed.", e);
+                        return;
+                    }
+                    String source = snapshot != null && snapshot.getMetadata().hasPendingWrites()
+                            ? "Local" : "Server";
+                    if (snapshot != null && snapshot.exists()) {
+                        Log.d(TAG, source + " data: " + snapshot.getData());
+                        user.fechaNacimiento = snapshot.getString("fechaNacimiento");
+                        user.altura = snapshot.getString("altura");
+                        user.edad = snapshot.getString("edad");
+                        user.name = snapshot.getString("name");
+                        user.peso = snapshot.getString("peso");
+                        user.photoUrl = snapshot.getString("photoUrl");
                         userMutableLiveData.setValue(user);
                     } else {
-                        logErrorMessage(uidTask.getException().getMessage());
+                        Log.d(TAG, source + " data: null");
                     }
-                } else {
-                    logErrorMessage(uidTask.getException().getMessage());
                 }
             });
             //ser =
-            user.photoUrl = String.valueOf(firebaseUser.getPhotoUrl());
+            //user.photoUrl = String.valueOf(firebaseUser.getPhotoUrl());
             user.isAuthenticated = true;
             userMutableLiveData.setValue(user);
         }else{
@@ -126,7 +172,9 @@ public class AuthRepository {
             data.put("altura", user.altura);
             data.put("name", user.name);
             data.put("peso",user.peso);
-            //data.put("fechaNacimiento",user.fechaNacimiento);
+            data.put("photoUrl",user.photoUrl);
+            data.put("fechaNacimiento",user.fechaNacimiento);
+            data.put("edad",user.edad);
             usersRef.document(uid).set(data, SetOptions.merge());
             //user.photoUrl = String.valueOf(firebaseUser.getPhotoUrl());
             user.isAuthenticated = true;
