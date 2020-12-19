@@ -9,13 +9,16 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.ContentFrameLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -27,17 +30,23 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.myappdeport.R;
 import com.myappdeport.model.entity.database.EActivity;
 import com.myappdeport.model.entity.database.EUser;
+import com.myappdeport.utils.onFragmentBtnSelected;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DetalleStaticsFragment extends Fragment implements OnMapReadyCallback {
     //Transacciones
     private View view;
+    //transactions
+    private onFragmentBtnSelected listener;
+
     private EActivity eActivity;
     private GoogleMap googleMap;
     private LocationListener locationListener;
     LatLng latLng;
     List<LatLng> latLngList;
+
 
     // widgets
     private TextView textViewStartTime;
@@ -45,7 +54,7 @@ public class DetalleStaticsFragment extends Fragment implements OnMapReadyCallba
     private TextView textViewDistncia;
     private TextView textViewK;
     private TextView textViewDate;
-
+    private ImageView imageView;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
@@ -76,7 +85,17 @@ public class DetalleStaticsFragment extends Fragment implements OnMapReadyCallba
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if( context instanceof  onFragmentBtnSelected ){
+            listener=(onFragmentBtnSelected) context;
+        }
+        else{
+            Log.d("LPF","Implemeentar listener");
+        }
 
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -92,9 +111,11 @@ public class DetalleStaticsFragment extends Fragment implements OnMapReadyCallba
         textViewK = view.findViewById(R.id.txtview_actividadDetalle_kilocalories);
         textViewDistncia = view.findViewById(R.id.txtview_actividadDetalle_distanciaRecorrida);
         textViewDate = view.findViewById(R.id.txtview_actividadDetalle_date);
+        imageView = view.findViewById(R.id.imageView9);
     }
 
     private void initActovity() {
+
         try {
             textViewStartTime.setText(eActivity.getStartTime());
             textViewEndTime.setText(eActivity.getEndTime());
@@ -108,6 +129,12 @@ public class DetalleStaticsFragment extends Fragment implements OnMapReadyCallba
         } catch (Exception e) {
             System.out.println("vizacarraaaa");
         }
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onButtonSelected( new Statics());
+            }
+        });
 
     }
 
@@ -120,23 +147,29 @@ public class DetalleStaticsFragment extends Fragment implements OnMapReadyCallba
 
         this.googleMap.setMyLocationEnabled(true);
         this.googleMap.getUiSettings().setMyLocationButtonEnabled(false);
-        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        latLngList=new ArrayList<>();
 
-        locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                latLng = new LatLng(location.getLatitude(),location.getLongitude());
-            }
+        try{
 
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {}
-            @Override
-            public void onProviderEnabled(String provider) {  }
+                if (eActivity.getERoute() != null){
+                    if (eActivity.getERoute().getPositions() != null){
+                        latLng =  new LatLng(eActivity.getERoute().getPositions().get(0).getLatitude() , eActivity.getERoute().getPositions().get(0).getLongitude() ) ;
+                        for (  int i =0; i < eActivity.getERoute().getPositions().size()  ;i++ ){
+                            latLngList.add( new LatLng(eActivity.getERoute().getPositions().get(i).getLatitude() , eActivity.getERoute().getPositions().get(i).getLongitude()  ));
+                        }
+                    }
+                }
 
-            @Override
-            public void onProviderDisabled(String provider) { }
+        }catch (Exception e){
+            latLng = new LatLng(135,-45);
 
-        };
+        }finally {
+            //latLng = new LatLng(135,-45);
+            latLngList.add(latLng);
+        }
+
+        //latLng = new LatLng(135,-45);
+
         googleMap.addPolyline((new PolylineOptions()).color(Color.argb(255,186,74,0)).width(10).addAll(latLngList));
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         CameraPosition cameraPosition =  new CameraPosition.Builder().target(latLng).zoom(16).build();
