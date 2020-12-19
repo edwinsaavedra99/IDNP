@@ -95,7 +95,13 @@ public class Profile extends Fragment {
         });
 
         //viewGroup = (ViewGroup)inflater.inflate(R.layout.fragment_profile, container, false);
-
+        context = getContext();
+        editProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DialogProfile(context, datos,authViewModel);
+            }
+        });
         init();
         return viewGroup;
     }
@@ -113,12 +119,6 @@ public class Profile extends Fragment {
 
 
     private void init() {
-        context = getContext();
-        editProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DialogProfile(context, null);
-            }
-        });
+
     }
 }

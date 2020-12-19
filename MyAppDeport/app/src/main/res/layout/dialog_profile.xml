@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/button_stroke"
-                app:srcCompat="@drawable/ic_baseline_person_add_alt_1_50" />
+                app:srcCompat="@drawable/ic_profile" />
 
         </androidx.cardview.widget.CardView>
 
@@ -46,23 +46,7 @@
                 android:inputType="textPersonName"
                 android:textSize="12sp" />
 
-            <EditText
-                android:id="@+id/editTextTextPersonName3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="e-mail"
-                android:inputType="textEmailAddress"
-                android:textSize="12sp" />
 
-            <EditText
-                android:id="@+id/editTextTextPersonName4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Nacionalidad"
-                android:inputType="textPersonName"
-                android:textSize="12dp" />
 
             <EditText
                 android:id="@+id/editTextTextPersonName6"
@@ -73,14 +57,7 @@
                 android:inputType="number"
                 android:textSize="12sp" />
 
-            <EditText
-                android:id="@+id/editTextTextPersonName7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Edad"
-                android:inputType="number"
-                android:textSize="12sp" />
+
 
             <EditText
                 android:id="@+id/editTextTextPersonName8"

@@ -17,11 +17,14 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.myappdeport.model.entity.kill.EUserEDWIN;
 import com.myappdeport.repository.IUserRepository;
 import com.myappdeport.repository.room.UserRoomRepository;
 
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Executor;
 
 import static com.myappdeport.utils.Constants.TAG;
@@ -84,6 +87,55 @@ public class AuthRepository {
             EUserEDWIN user = new EUserEDWIN("", "", "");
             user.isError = true;
             userMutableLiveData.setValue(user);
+        }
+        return  userMutableLiveData;
+    }
+
+
+    public MutableLiveData<EUserEDWIN> userCompleteRegisterData(EUserEDWIN user){
+        MutableLiveData<EUserEDWIN> userMutableLiveData = new MutableLiveData<>();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        if (firebaseUser != null) {
+            String uid = firebaseUser.getUid();
+            Map<String, Object> data = new HashMap<>();
+            data.put("altura", user.altura);
+            data.put("edad", user.edad);
+            data.put("name", firebaseUser.getDisplayName());
+            data.put("peso",user.peso);
+            data.put("fechaNacimiento",user.fechaNacimiento);
+            usersRef.document(uid).set(data, SetOptions.merge());
+            user.photoUrl = String.valueOf(firebaseUser.getPhotoUrl());
+            user.isAuthenticated = true;
+            user.isCreated = true;
+            userMutableLiveData.setValue(user);
+        }else{
+            EUserEDWIN users = new EUserEDWIN("", "", "");
+            users.isError = true;
+            userMutableLiveData.setValue(users);
+        }
+        return  userMutableLiveData;
+    }
+
+
+    public MutableLiveData<EUserEDWIN> updateDataUser(EUserEDWIN user){
+        MutableLiveData<EUserEDWIN> userMutableLiveData = new MutableLiveData<>();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        if (firebaseUser != null) {
+            String uid = firebaseUser.getUid();
+            Map<String, Object> data = new HashMap<>();
+            data.put("altura", user.altura);
+            data.put("name", user.name);
+            data.put("peso",user.peso);
+            //data.put("fechaNacimiento",user.fechaNacimiento);
+            usersRef.document(uid).set(data, SetOptions.merge());
+            //user.photoUrl = String.valueOf(firebaseUser.getPhotoUrl());
+            user.isAuthenticated = true;
+            user.isCreated = true;
+            userMutableLiveData.setValue(user);
+        }else{
+            EUserEDWIN users = new EUserEDWIN("", "", "");
+            users.isError = true;
+            userMutableLiveData.setValue(users);
         }
         return  userMutableLiveData;
     }
@@ -155,7 +207,7 @@ public class AuthRepository {
                                 authenticatedUser.uid = user.getUid();
                                 authenticatedUser.email = user.getEmail();
                                 authenticatedUser.photoUrl = String.valueOf(user.getPhotoUrl());
-                                authenticatedUser.name = user.getDisplayName();
+                                //authenticatedUser.name = user.getDisplayName();
                                 /*authenticatedUser.edad =
                                 authenticatedUser.peso =*/
                                 authenticatedUser.isCreated = true;

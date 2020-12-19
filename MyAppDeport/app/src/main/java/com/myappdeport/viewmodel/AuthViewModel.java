@@ -20,6 +20,8 @@ public class AuthViewModel extends AndroidViewModel {
     private final IAuthRepository iAuthRepository;
     public LiveData<EUserEDWIN> authenticatedUserLiveData;
     public LiveData<EUserEDWIN> createdUserLiveData;
+    public LiveData<EUserEDWIN> completeUserLiveData;
+    public LiveData<EUserEDWIN> updateUserLiveData;
     public LiveData<EUserEDWIN>  createdUserEmailLiveData;
     public LiveData<EUserEDWIN>  userEDWINLiveData;
 
@@ -35,20 +37,16 @@ public class AuthViewModel extends AndroidViewModel {
 
     public void createUser(EUserEDWIN authenticatedUser) {
         createdUserLiveData = authRepository.createUserInFirestoreIfNotExists(authenticatedUser);
-        if(!Objects.requireNonNull(createdUserLiveData.getValue()).isError){
-            EUser I = new EUser(createdUserLiveData.getValue().name,createdUserLiveData.getValue().email,true,true,true);
-            I.setDocumentId(createdUserLiveData.getValue().uid);
-            iAuthRepository.register(I);
-        }
+    }
+    public void completeUser(EUserEDWIN authenticatedUser) {
+        completeUserLiveData = authRepository.userCompleteRegisterData(authenticatedUser);
+    }
+    public void updateUser(EUserEDWIN authenticatedUser) {
+        updateUserLiveData = authRepository.updateDataUser(authenticatedUser);
     }
 
     public void createUserEmail(EUserEDWIN eUserEDWIN){
         createdUserEmailLiveData = authRepository.createUserWithEmailAndPassword(eUserEDWIN);
-/*        if(!Objects.requireNonNull(createdUserEmailLiveData.getValue()).isError){
-            EUser I = new EUser(createdUserEmailLiveData.getValue().name,createdUserEmailLiveData.getValue().email,true,true,true);
-            I.setDocumentId(createdUserEmailLiveData.getValue().uid);
-            iAuthRepository.register(I);
-        }*/
     }
 
     public void cerrarSesion(){

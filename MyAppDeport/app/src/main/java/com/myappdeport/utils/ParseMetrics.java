@@ -2,6 +2,9 @@ package com.myappdeport.utils;
 
 import android.util.Log;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 public class ParseMetrics {
 
     public static double Km2Mill(double distance){
@@ -76,5 +79,15 @@ public class ParseMetrics {
      */
     public static double kCal(double peso, double tiempo, double rhythm){
         return 0;
+    }
+
+
+    public static int edad(int anho,int moth,int day) {
+        Calendar fechaNacimiento = new GregorianCalendar(anho, moth, day);
+        Calendar ahora = Calendar.getInstance();
+        long edadEnDias = (ahora.getTimeInMillis() - fechaNacimiento.getTimeInMillis())
+                / 1000 / 60 / 60 / 24;
+        int anos = Double.valueOf(edadEnDias / 365.25d).intValue();
+        return anos;
     }
 }

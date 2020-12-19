@@ -3,6 +3,7 @@ package com.myappdeport.view.activitys;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.myappdeport.R;
 import com.myappdeport.model.entity.kill.EUserEDWIN;
+import com.myappdeport.utils.ParseMetrics;
 import com.myappdeport.viewmodel.AuthViewModel;
 
 import java.util.Calendar;
@@ -35,6 +37,7 @@ public class Register extends AppCompatActivity {
     private EditText peso;
     private EditText estatura;
     private Button register;
+    private TextView auxiliar;
     private EditText dateTextView;
     private DatePickerDialog.OnDateSetListener dateSetListener;
 
@@ -75,14 +78,19 @@ public class Register extends AppCompatActivity {
     }
 
     private void initialUIComponents(){
+
+        //final int year;
+
         email = findViewById(R.id.editTextTextPersonName);
         password = findViewById(R.id.password);
         passwordRepet = findViewById(R.id.rewritePassword);
         peso = findViewById(R.id.editPeso);
         estatura = findViewById(R.id.editEstatura);
         register = findViewById(R.id.registrate);
+        auxiliar = findViewById(R.id.auxiliar);
         dateTextView = findViewById(R.id.editFecha);
         dateTextView.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
                 //editText = 2;
@@ -91,7 +99,7 @@ public class Register extends AppCompatActivity {
                 int month = calendar.get(Calendar.MONTH);
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
                 DatePickerDialog dialog = new DatePickerDialog(
-                       Register.this, R.style.DialogTheme, dateSetListener, year, month, day);
+                       Register.this, R.style.DialogTheme, dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
                 Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.WHITE));
                 //dialog.getDatePicker().mode
                 dialog.show();
@@ -99,11 +107,13 @@ public class Register extends AppCompatActivity {
             }
         });
         dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month = month + 1;
                 String date = dayOfMonth + "/" + month + "/" + year;
                 dateTextView.setText(date);
+                auxiliar.setText(ParseMetrics.edad(year,month,dayOfMonth)+"");
             }
         };
         register.setOnClickListener(new View.OnClickListener() {
@@ -123,8 +133,8 @@ public class Register extends AppCompatActivity {
                     eUserEDWIN.fechaNacimiento = fecha_s;
                     eUserEDWIN.altura = estatura_s;
                     eUserEDWIN.peso = peso_s;
-                    eUserEDWIN.edad = "0";
-                    eUserEDWIN.name = email_s.substring(0,email_s.indexOf("@"));
+                    eUserEDWIN.edad = auxiliar.getText()+"";
+                    eUserEDWIN.name = email_s.substring(0,email_s.indexOf("@")+1);
                     createNewUser(eUserEDWIN);
 
                 }

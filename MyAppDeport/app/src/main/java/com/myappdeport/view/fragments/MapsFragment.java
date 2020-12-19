@@ -110,7 +110,7 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
                             DecimalFormat df = new DecimalFormat("0.00");
                             textView.setText(df.format(ParseMetrics.mtoKm(distaceAll(latLngList))) + " Km");
                             distance.setText(df.format(ParseMetrics.mtoKm(distaceAll(latLngList))) + " Km");
-                            min_dist.setText(df.format(distaceAll(latLngList)+""));
+//                            min_dist.setText(df.format(distaceAll(latLngList)+""));
                             /*
                             * llamar para guardar
                             * */

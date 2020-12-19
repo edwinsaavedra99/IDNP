@@ -193,8 +193,13 @@ public class Login extends AppCompatActivity {
         authViewModel.createdUserLiveData.observe(this, user -> {
             if (user.isCreated) {
                 toastMessage(user.name);
+                Intent intent = new Intent(Login.this, CompleteRegister.class);
+                //intent.putExtra(USER, user);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
             }
-            goToMainActivity(user);
+            //goToMainActivity(user);
         });
     }
     private void toastMessage(String name) {
@@ -203,7 +208,7 @@ public class Login extends AppCompatActivity {
     private void goToMainActivity(EUserEDWIN user) {
         Toast.makeText(this, "Welcome !.", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(Login.this, MenuContainer.class);
-        intent.putExtra(USER, user);
+        //intent.putExtra(USER, user);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
