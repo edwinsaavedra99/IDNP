@@ -41,6 +41,7 @@ import com.myappdeport.model.entity.database.EPosition;
 import com.myappdeport.model.entity.database.ERoute;
 import com.myappdeport.model.entity.functional.Activity;
 import com.myappdeport.model.entity.functional.Route;
+import com.myappdeport.model.entity.kill.EUserEDWIN;
 import com.myappdeport.service.usecase.ChronometerUseCase;
 import com.myappdeport.service.usecase.interfaces.TimerInterface;
 import com.myappdeport.utils.ParseMetrics;
@@ -55,6 +56,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import lombok.SneakyThrows;
 
@@ -82,6 +84,11 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
     private Date objDateinicia3 = new Date();
     String initialTimeFecha;
     private String initialFecha;
+    // L
+    private EUserEDWIN datos;
+    String id;
+
+
     @Override
         public void onMapReady(GoogleMap googleMap) {
             if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
@@ -103,20 +110,25 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
                     LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
                     //map.addMarker(new MarkerOptions().position(latLng).title("Mi posicion"));
                     if(flag) {
-                        if(flagDistance || distanceLtnLong(latLngList.get(latLngList.size()-1),latLng)>15 ) {
-                            latLngList.add(latLng);
-                            flagDistance = false;
-                            map.addPolyline((new PolylineOptions()).color(Color.argb(255,186,74,0)).width(10).addAll(latLngList));
-                            DecimalFormat df = new DecimalFormat("0.00");
-                            textView.setText(df.format(ParseMetrics.mtoKm(distaceAll(latLngList))) + " Km");
-                            distance.setText(df.format(ParseMetrics.mtoKm(distaceAll(latLngList))) + " Km");
-                            min_dist.setText(df.format(distaceAll(latLngList)+""));
-                            /*
-                            * llamar para guardar
-                            * */
-                            //EPosition ePosition = ;
-                            ePositions.add(new EPosition(latLng.latitude,latLng.longitude,distaceAll(latLngList)));
+                        try{
+                            if(flagDistance || distanceLtnLong(latLngList.get(latLngList.size()-1),latLng)>15 ) {
+                                latLngList.add(latLng);
+                                flagDistance = false;
+                                map.addPolyline((new PolylineOptions()).color(Color.argb(255,186,74,0)).width(10).addAll(latLngList));
+                                DecimalFormat df = new DecimalFormat("0.00");
+                                textView.setText(df.format(ParseMetrics.mtoKm(distaceAll(latLngList))) +"");
+                                distance.setText(df.format(ParseMetrics.mtoKm(distaceAll(latLngList))) +"");
+                                min_dist.setText(df.format(distaceAll(latLngList)+""));
+                                /*
+                                 * llamar para guardar
+                                 * */
+                                //EPosition ePosition = ;
+                                ePositions.add(new EPosition(latLng.latitude,latLng.longitude,distaceAll(latLngList)));
+                            }
+                        }catch (Exception e){
+                            System.out.print("error in activity ");
                         }
+
                     }
                     map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                     CameraPosition cameraPosition =  new CameraPosition.Builder().target(latLng).zoom(16)/*.bearing(90).tilt(45)*/.build();
@@ -153,6 +165,23 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
         //textViewCrono = viewGroup.findViewById(R.id.timer);
         chronometer2 = viewGroup.findViewById(R.id.time);
         initView();
+            //L
+
+        AuthViewModel authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+        authViewModel.userLogin();
+        authViewModel.userEDWINLiveData.observe(Objects.requireNonNull(getActivity()), user -> {
+            if (user.isAuthenticated) {
+                datos = user;
+            }
+        });
+        id ="";
+        if (datos == null ){
+            id = "testUser";
+        }else{
+            if(datos.uid!=null) id = datos.uid;
+            else id = "testUser";
+        }
+            //L
         return viewGroup;
     }
 
@@ -244,7 +273,7 @@ public class MapsFragment extends Fragment implements TimerInterface.TimerInterf
                 EActivity  eActivity = new EActivity(initialTimeFecha,objSDF.format(this.objDateinicial),
                         12.2,objSDF2.format(this.objDateinicial),"Actividad",
                         "Actividad definida","exclude",
-                        "",null,null,route);
+                        id,null,null,route);
                mainDeportViewModel.saveActivity(eActivity);
             }
         });
